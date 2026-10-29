@@ -19,6 +19,10 @@ class CellarController extends ChangeNotifier {
   String _query = '';
   WineType? _typeFilter;
   DrinkingStatus? _statusFilter;
+  bool _disposed = false;
+
+  /// Where the wines are stored; also used for their tasting notes.
+  WineRepository get repository => _repository;
 
   bool get loading => _loading;
   Object? get error => _error;
@@ -108,5 +112,17 @@ class CellarController extends ChangeNotifier {
   Future<void> drinkOne(Wine wine) async {
     if (wine.quantity == 0) return;
     await save(wine.withQuantity(wine.quantity - 1));
+  }
+
+  // A load can finish after sign-out closed the screen; don't notify then.
+  @override
+  void notifyListeners() {
+    if (!_disposed) super.notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
   }
 }

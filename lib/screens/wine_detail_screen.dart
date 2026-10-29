@@ -1,13 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
+import '../models/tasting_note.dart';
 import '../models/wine.dart';
 import '../state/cellar_controller.dart';
+import '../state/tasting_notes_controller.dart';
 import '../widgets/display_helpers.dart';
+import '../widgets/rating_stars.dart';
 import 'add_edit_wine_screen.dart';
+import 'tasting_note_dialog.dart';
 
-class WineDetailScreen extends StatelessWidget {
+class WineDetailScreen extends StatefulWidget {
   const WineDetailScreen({
     super.key,
     required this.cellar,
@@ -17,13 +23,37 @@ class WineDetailScreen extends StatelessWidget {
   final CellarController cellar;
   final String wineId;
 
-  Future<void> _confirmDelete(BuildContext context, Wine wine) async {
+  @override
+  State<WineDetailScreen> createState() => _WineDetailScreenState();
+}
+
+class _WineDetailScreenState extends State<WineDetailScreen> {
+  late final _notes = TastingNotesController(
+    widget.cellar.repository,
+    widget.wineId,
+  );
+
+  CellarController get _cellar => widget.cellar;
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(_notes.load());
+  }
+
+  @override
+  void dispose() {
+    _notes.dispose();
+    super.dispose();
+  }
+
+  Future<bool> _confirm(String title, String message, String action) async {
     final l10n = AppLocalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.deleteWine),
-        content: Text(l10n.deleteConfirm(wine.name)),
+        title: Text(title),
+        content: Text(message),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -31,30 +61,61 @@ class WineDetailScreen extends StatelessWidget {
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: Text(l10n.delete),
+            child: Text(action),
           ),
         ],
       ),
     );
-    if (confirmed != true || !context.mounted) return;
+    return confirmed ?? false;
+  }
+
+  Future<void> _deleteWine(Wine wine) async {
+    final l10n = AppLocalizations.of(context);
+    final confirmed = await _confirm(
+      l10n.deleteWine,
+      l10n.deleteConfirm(wine.name),
+      l10n.delete,
+    );
+    if (!confirmed || !mounted) return;
     final deleted = await runOrShowError(
       context,
-      () => cellar.delete(wine.id!),
+      () => _cellar.delete(wine.id!),
     );
-    if (deleted && context.mounted) Navigator.of(context).pop();
+    if (deleted && mounted) Navigator.of(context).pop();
+  }
+
+  Future<void> _writeNote([TastingNote? note]) async {
+    final result = await showTastingNoteDialog(
+      context,
+      wineId: widget.wineId,
+      note: note,
+    );
+    if (result == null || !mounted) return;
+    await runOrShowError(context, () => _notes.save(result));
+  }
+
+  Future<void> _deleteNote(TastingNote note) async {
+    final l10n = AppLocalizations.of(context);
+    final confirmed = await _confirm(
+      l10n.deleteNote,
+      l10n.deleteNoteConfirm,
+      l10n.delete,
+    );
+    if (!confirmed || !mounted) return;
+    await runOrShowError(context, () => _notes.delete(note.id!));
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return ListenableBuilder(
-      listenable: cellar,
+      listenable: Listenable.merge([_cellar, _notes]),
       builder: (context, _) {
-        final wine = cellar.byId(wineId);
+        final wine = _cellar.byId(widget.wineId);
         // The wine is gone while the screen pops after a delete.
         if (wine == null) return const Scaffold();
 
-        final status = wine.drinkingStatus(cellar.currentYear);
+        final status = wine.drinkingStatus(_cellar.currentYear);
         return Scaffold(
           appBar: AppBar(
             title: Text(wine.name),
@@ -65,14 +126,14 @@ class WineDetailScreen extends StatelessWidget {
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute<void>(
                     builder: (_) =>
-                        AddEditWineScreen(cellar: cellar, wine: wine),
+                        AddEditWineScreen(cellar: _cellar, wine: wine),
                   ),
                 ),
               ),
               IconButton(
                 tooltip: l10n.deleteWine,
                 icon: const Icon(Icons.delete_outline),
-                onPressed: () => _confirmDelete(context, wine),
+                onPressed: () => _deleteWine(wine),
               ),
             ],
           ),
@@ -114,7 +175,7 @@ class WineDetailScreen extends StatelessWidget {
                         ? null
                         : () => runOrShowError(
                             context,
-                            () => cellar.drinkOne(wine),
+                            () => _cellar.drinkOne(wine),
                           ),
                     icon: const Icon(Icons.local_bar),
                     label: Text(l10n.drinkOne),
@@ -135,6 +196,10 @@ class WineDetailScreen extends StatelessWidget {
                 wine.price == null ? null : formatMoney(context, wine.price!),
               ),
               _InfoRow(
+                l10n.purchase,
+                wine.hasPurchaseInfo ? formatPurchase(context, wine) : null,
+              ),
+              _InfoRow(
                 l10n.location,
                 wine.hasLocation ? formatLocation(l10n, wine) : null,
               ),
@@ -151,11 +216,122 @@ class WineDetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              _InfoRow(l10n.notes, wine.notes),
+              const Divider(height: 32),
+              _NotesSection(
+                notes: _notes,
+                onAdd: _writeNote,
+                onEdit: _writeNote,
+                onDelete: _deleteNote,
+              ),
             ],
           ),
         );
       },
+    );
+  }
+}
+
+class _NotesSection extends StatelessWidget {
+  const _NotesSection({
+    required this.notes,
+    required this.onAdd,
+    required this.onEdit,
+    required this.onDelete,
+  });
+
+  final TastingNotesController notes;
+  final VoidCallback onAdd;
+  final ValueChanged<TastingNote> onEdit;
+  final ValueChanged<TastingNote> onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final error = notes.error;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                l10n.myNotes,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            TextButton.icon(
+              onPressed: onAdd,
+              icon: const Icon(Icons.add),
+              label: Text(l10n.addNote),
+            ),
+          ],
+        ),
+        if (notes.loading && notes.notes.isEmpty)
+          const Padding(
+            padding: EdgeInsets.all(16),
+            child: Center(child: CircularProgressIndicator()),
+          )
+        else if (error != null)
+          Column(
+            children: [
+              Text(errorMessage(l10n, error), textAlign: TextAlign.center),
+              TextButton(onPressed: notes.load, child: Text(l10n.retry)),
+            ],
+          )
+        else if (notes.notes.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(l10n.noNotes),
+          )
+        else
+          for (final note in notes.notes)
+            _NoteTile(
+              note: note,
+              onEdit: () => onEdit(note),
+              onDelete: () => onDelete(note),
+            ),
+      ],
+    );
+  }
+}
+
+enum _NoteAction { edit, delete }
+
+class _NoteTile extends StatelessWidget {
+  const _NoteTile({
+    required this.note,
+    required this.onEdit,
+    required this.onDelete,
+  });
+
+  final TastingNote note;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      onTap: onEdit,
+      title: Row(
+        children: [
+          Text(formatDate(context, note.date)),
+          const SizedBox(width: 8),
+          RatingStars(rating: note.rating),
+        ],
+      ),
+      subtitle: Text(note.text),
+      trailing: PopupMenuButton<_NoteAction>(
+        onSelected: (action) => switch (action) {
+          _NoteAction.edit => onEdit(),
+          _NoteAction.delete => onDelete(),
+        },
+        itemBuilder: (_) => [
+          PopupMenuItem(value: _NoteAction.edit, child: Text(l10n.edit)),
+          PopupMenuItem(value: _NoteAction.delete, child: Text(l10n.delete)),
+        ],
+      ),
     );
   }
 }

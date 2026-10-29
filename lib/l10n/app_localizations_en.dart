@@ -169,9 +169,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get drinkUntil => 'Drink until (year)';
 
   @override
-  String get notes => 'Notes';
-
-  @override
   String get requiredField => 'Required';
 
   @override
@@ -247,4 +244,66 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorTooManyAttempts =>
       'Too many attempts. Wait a moment and try again.';
+
+  @override
+  String get purchase => 'Purchase';
+
+  @override
+  String get purchaseDate => 'Purchase date';
+
+  @override
+  String get purchasedFrom => 'Bought from';
+
+  @override
+  String get purchasedFromHint => 'E.g. a shop or an importer';
+
+  @override
+  String get chooseDate => 'Choose date';
+
+  @override
+  String get clearDate => 'Clear date';
+
+  @override
+  String get myNotes => 'My notes';
+
+  @override
+  String get addNote => 'New note';
+
+  @override
+  String get editNote => 'Edit note';
+
+  @override
+  String get deleteNote => 'Delete note';
+
+  @override
+  String get deleteNoteConfirm => 'Delete this note?';
+
+  @override
+  String get noNotes => 'No notes yet. Add one when you open a bottle!';
+
+  @override
+  String get noteDate => 'Date';
+
+  @override
+  String get rating => 'Rating';
+
+  @override
+  String ratingStars(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count stars',
+      one: '1 star',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noteText => 'Note';
+
+  @override
+  String get noteHint => 'Taste, smell, food, occasion…';
+
+  @override
+  String get edit => 'Edit';
 }

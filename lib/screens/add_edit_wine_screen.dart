@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
+import '../models/dates.dart';
 import '../models/wine.dart';
 import '../state/cellar_controller.dart';
 import '../widgets/display_helpers.dart';
@@ -21,7 +22,7 @@ enum _WineField {
   position,
   drinkFrom,
   drinkUntil,
-  notes,
+  purchasedFrom,
 }
 
 /// Adds a new wine, or edits [wine] when it is given.
@@ -39,6 +40,7 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
   final _formKey = GlobalKey<FormState>();
   late final Map<_WineField, TextEditingController> _controllers;
   late WineType _type;
+  DateTime? _purchaseDate;
   var _saving = false;
   Object? _error;
 
@@ -47,6 +49,7 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
     super.initState();
     final w = widget.wine;
     _type = w?.type ?? WineType.red;
+    _purchaseDate = w?.purchaseDate;
     String text(Object? value) => value?.toString() ?? '';
     _controllers = {
       _WineField.name: TextEditingController(text: w?.name),
@@ -62,7 +65,9 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
       _WineField.position: TextEditingController(text: text(w?.position)),
       _WineField.drinkFrom: TextEditingController(text: text(w?.drinkFrom)),
       _WineField.drinkUntil: TextEditingController(text: text(w?.drinkUntil)),
-      _WineField.notes: TextEditingController(text: text(w?.notes)),
+      _WineField.purchasedFrom: TextEditingController(
+        text: text(w?.purchasedFrom),
+      ),
     };
   }
 
@@ -117,7 +122,8 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
         position: _text(_WineField.position),
         drinkFrom: _int(_WineField.drinkFrom),
         drinkUntil: _int(_WineField.drinkUntil),
-        notes: _text(_WineField.notes),
+        purchaseDate: _purchaseDate,
+        purchasedFrom: _text(_WineField.purchasedFrom),
       );
       await widget.cellar.save(wine);
       if (mounted) Navigator.of(context).pop();
@@ -129,6 +135,18 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
         _error = error;
       });
     }
+  }
+
+  Future<void> _pickPurchaseDate() async {
+    final today = dateOnly(DateTime.now());
+    final first = DateTime(1900);
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: clampDate(_purchaseDate ?? today, first, today),
+      firstDate: first,
+      lastDate: today,
+    );
+    if (picked != null) setState(() => _purchaseDate = picked);
   }
 
   @override
@@ -308,7 +326,37 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
                   ),
                 ],
               ),
-              field(_WineField.notes, l10n.notes, maxLines: 4),
+              section(l10n.purchase),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: InkWell(
+                  onTap: _pickPurchaseDate,
+                  child: InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: l10n.purchaseDate,
+                      suffixIcon: _purchaseDate == null
+                          ? const Icon(Icons.calendar_today)
+                          : IconButton(
+                              tooltip: l10n.clearDate,
+                              icon: const Icon(Icons.clear),
+                              onPressed: () =>
+                                  setState(() => _purchaseDate = null),
+                            ),
+                    ),
+                    isEmpty: _purchaseDate == null,
+                    child: Text(
+                      _purchaseDate == null
+                          ? ''
+                          : formatDate(context, _purchaseDate!),
+                    ),
+                  ),
+                ),
+              ),
+              field(
+                _WineField.purchasedFrom,
+                l10n.purchasedFrom,
+                hint: l10n.purchasedFromHint,
+              ),
             ],
           ),
         ),

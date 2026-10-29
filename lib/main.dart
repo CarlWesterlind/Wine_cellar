@@ -25,7 +25,7 @@ Future<void> main() async {
     runApp(
       WineCellarApp(
         settings: settings,
-        createRepository: () => InMemoryWineRepository(sampleWines),
+        createRepository: InMemoryWineRepository.demo,
       ),
     );
     return;

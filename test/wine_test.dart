@@ -49,7 +49,8 @@ void main() {
       position: '4',
       drinkFrom: 2027,
       drinkUntil: 2040,
-      notes: 'Decant',
+      purchaseDate: DateTime(2026, 3, 14),
+      purchasedFrom: 'Systembolaget',
     );
     final copy = Wine.fromMap({...wine.toMap(), 'id': 'abc'});
     expect(copy.toMap(), wine.toMap());
@@ -137,6 +138,38 @@ void main() {
     test('unknown wine type falls back to red instead of failing', () {
       final wine = Wine.fromMap({'id': '1', 'name': 'X', 'type': 'orange'});
       expect(wine.type, WineType.red);
+    });
+  });
+
+  group('purchase info', () {
+    test('the purchase date has no time of day', () {
+      final wine = Wine(name: 'X', purchaseDate: DateTime(2026, 3, 14, 15, 45));
+      expect(wine.purchaseDate, DateTime(2026, 3, 14));
+      expect(wine.toMap()['purchase_date'], '2026-03-14');
+    });
+
+    test('withQuantity and withId keep the purchase info', () {
+      final wine = Wine(
+        name: 'X',
+        purchaseDate: DateTime(2026, 3, 14),
+        purchasedFrom: 'Systembolaget',
+      );
+      for (final copy in [wine.withQuantity(5), wine.withId('9')]) {
+        expect(copy.purchaseDate, DateTime(2026, 3, 14));
+        expect(copy.purchasedFrom, 'Systembolaget');
+      }
+    });
+
+    test('fromMap rejects an invalid purchase date', () {
+      expect(
+        () => Wine.fromMap({'id': '1', 'name': 'X', 'purchase_date': '14/3'}),
+        throwsFormatException,
+      );
+    });
+
+    test('search finds wines by the shop they were bought from', () {
+      final wine = Wine(name: 'X', purchasedFrom: 'Vinoteket');
+      expect(wine.matchesSearch('vinotek'), isTrue);
     });
   });
 }

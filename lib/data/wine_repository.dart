@@ -1,6 +1,7 @@
+import '../models/tasting_note.dart';
 import '../models/wine.dart';
 
-/// Storage for the signed-in user's wines.
+/// Storage for the signed-in user's wines and their tasting notes.
 abstract interface class WineRepository {
   Future<List<Wine>> fetchAll();
 
@@ -9,7 +10,18 @@ abstract interface class WineRepository {
 
   Future<Wine> update(Wine wine);
 
+  /// Deletes the wine and all its tasting notes.
   Future<void> delete(String id);
+
+  /// The tasting notes of one wine, oldest saved first.
+  Future<List<TastingNote>> fetchNotes(String wineId);
+
+  /// Saves a new note and returns it with its id set.
+  Future<TastingNote> addNote(TastingNote note);
+
+  Future<TastingNote> updateNote(TastingNote note);
+
+  Future<void> deleteNote(String id);
 }
 
 /// Keeps wines in memory. Used in demo mode and in tests.
@@ -20,7 +32,37 @@ class InMemoryWineRepository implements WineRepository {
     }
   }
 
+  /// Sample wines with a few tasting notes, for demo mode.
+  factory InMemoryWineRepository.demo() {
+    final repository = InMemoryWineRepository(sampleWines);
+    final barolo = repository._wines.values.first;
+    final rioja = repository._wines.values.last;
+    for (final note in [
+      TastingNote(
+        wineId: barolo.id!,
+        date: DateTime(2026, 3, 14),
+        text: 'Köpt efter provning hos importören. Lovande, men behöver tid.',
+      ),
+      TastingNote(
+        wineId: barolo.id!,
+        date: DateTime(2026, 10, 12),
+        rating: 4,
+        text: 'Körsbär, ros och tjära. Fortfarande stramt – vänta 2–3 år.',
+      ),
+      TastingNote(
+        wineId: rioja.id!,
+        date: DateTime(2025, 12, 24),
+        rating: 5,
+        text: 'Perfekt till julskinkan. Mjuk vanilj och torkad frukt.',
+      ),
+    ]) {
+      repository._addNote(note);
+    }
+    return repository;
+  }
+
   final _wines = <String, Wine>{};
+  final _notes = <String, TastingNote>{};
   var _nextId = 1;
 
   Wine _add(Wine wine) {
@@ -45,7 +87,38 @@ class InMemoryWineRepository implements WineRepository {
   }
 
   @override
-  Future<void> delete(String id) async => _wines.remove(id);
+  Future<void> delete(String id) async {
+    _wines.remove(id);
+    _notes.removeWhere((_, note) => note.wineId == id);
+  }
+
+  @override
+  Future<List<TastingNote>> fetchNotes(String wineId) async =>
+      _notes.values.where((note) => note.wineId == wineId).toList();
+
+  TastingNote _addNote(TastingNote note) {
+    if (!_wines.containsKey(note.wineId)) {
+      throw StateError('No wine with id ${note.wineId}');
+    }
+    final saved = note.withId('${_nextId++}');
+    _notes[saved.id!] = saved;
+    return saved;
+  }
+
+  @override
+  Future<TastingNote> addNote(TastingNote note) async => _addNote(note);
+
+  @override
+  Future<TastingNote> updateNote(TastingNote note) async {
+    if (!_notes.containsKey(note.id)) {
+      throw StateError('No tasting note with id ${note.id}');
+    }
+    _notes[note.id!] = note;
+    return note;
+  }
+
+  @override
+  Future<void> deleteNote(String id) async => _notes.remove(id);
 }
 
 final sampleWines = [
@@ -64,6 +137,8 @@ final sampleWines = [
     position: '4',
     drinkFrom: 2027,
     drinkUntil: 2040,
+    purchaseDate: DateTime(2026, 3, 14),
+    purchasedFrom: 'Systembolaget',
   ),
   Wine(
     name: 'Chablis Premier Cru Montée de Tonnerre',
@@ -103,5 +178,7 @@ final sampleWines = [
     price: 279,
     drinkFrom: 2016,
     drinkUntil: 2024,
+    purchaseDate: DateTime(2019, 11, 2),
+    purchasedFrom: 'Vinoteket',
   ),
 ];

@@ -169,9 +169,6 @@ class AppLocalizationsSv extends AppLocalizations {
   String get drinkUntil => 'Drick senast (år)';
 
   @override
-  String get notes => 'Anteckningar';
-
-  @override
   String get requiredField => 'Obligatoriskt';
 
   @override
@@ -247,4 +244,67 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get errorTooManyAttempts =>
       'För många försök. Vänta en stund och försök igen.';
+
+  @override
+  String get purchase => 'Köp';
+
+  @override
+  String get purchaseDate => 'Köpdatum';
+
+  @override
+  String get purchasedFrom => 'Köpt hos';
+
+  @override
+  String get purchasedFromHint => 'T.ex. Systembolaget eller en importör';
+
+  @override
+  String get chooseDate => 'Välj datum';
+
+  @override
+  String get clearDate => 'Rensa datum';
+
+  @override
+  String get myNotes => 'Mina anteckningar';
+
+  @override
+  String get addNote => 'Ny anteckning';
+
+  @override
+  String get editNote => 'Redigera anteckning';
+
+  @override
+  String get deleteNote => 'Ta bort anteckning';
+
+  @override
+  String get deleteNoteConfirm => 'Ta bort den här anteckningen?';
+
+  @override
+  String get noNotes =>
+      'Inga anteckningar än. Skriv en när du öppnar en flaska!';
+
+  @override
+  String get noteDate => 'Datum';
+
+  @override
+  String get rating => 'Betyg';
+
+  @override
+  String ratingStars(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count stjärnor',
+      one: '1 stjärna',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noteText => 'Anteckning';
+
+  @override
+  String get noteHint => 'Smak, doft, mat, tillfälle…';
+
+  @override
+  String get edit => 'Redigera';
 }

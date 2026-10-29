@@ -81,3 +81,15 @@ class DrinkingStatusChip extends StatelessWidget {
     );
   }
 }
+
+/// A date like "14 mars 2026", in the app's current language.
+String formatDate(BuildContext context, DateTime date) {
+  final locale = Localizations.localeOf(context).toString();
+  return DateFormat.yMMMd(locale).format(date);
+}
+
+/// "14 mars 2026 · Systembolaget", leaving out the parts that are not set.
+String formatPurchase(BuildContext context, Wine wine) => [
+  if (wine.purchaseDate != null) formatDate(context, wine.purchaseDate!),
+  if (wine.purchasedFrom != null) wine.purchasedFrom!,
+].join(' · ');

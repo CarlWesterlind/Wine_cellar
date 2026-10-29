@@ -1,3 +1,5 @@
+import 'dates.dart';
+
 enum WineType { red, white, rose, sparkling, dessert, fortified }
 
 /// Where a wine is relative to its drinking window in a given year.
@@ -22,8 +24,9 @@ class Wine {
     this.position,
     this.drinkFrom,
     this.drinkUntil,
-    this.notes,
-  }) {
+    DateTime? purchaseDate,
+    this.purchasedFrom,
+  }) : purchaseDate = purchaseDate == null ? null : dateOnly(purchaseDate) {
     if (name.trim().isEmpty) {
       throw ArgumentError.value(name, 'name', 'must not be empty');
     }
@@ -65,9 +68,15 @@ class Wine {
   final int? drinkFrom;
   final int? drinkUntil;
 
-  final String? notes;
+  /// The day the bottles were bought, without time of day.
+  final DateTime? purchaseDate;
+
+  /// Shop or importer the bottles were bought from.
+  final String? purchasedFrom;
 
   bool get hasLocation => rack != null || shelf != null || position != null;
+
+  bool get hasPurchaseInfo => purchaseDate != null || purchasedFrom != null;
 
   double get totalValue => (price ?? 0) * quantity;
 
@@ -79,27 +88,12 @@ class Wine {
     return DrinkingStatus.ready;
   }
 
-  Wine withQuantity(int quantity) => Wine(
-    id: id,
-    name: name,
-    producer: producer,
-    vintage: vintage,
-    type: type,
-    country: country,
-    region: region,
-    grapes: grapes,
-    quantity: quantity,
-    price: price,
-    rack: rack,
-    shelf: shelf,
-    position: position,
-    drinkFrom: drinkFrom,
-    drinkUntil: drinkUntil,
-    notes: notes,
-  );
+  Wine withQuantity(int quantity) => _copy(quantity: quantity);
 
-  Wine withId(String id) => Wine(
-    id: id,
+  Wine withId(String id) => _copy(id: id);
+
+  Wine _copy({String? id, int? quantity}) => Wine(
+    id: id ?? this.id,
     name: name,
     producer: producer,
     vintage: vintage,
@@ -107,14 +101,15 @@ class Wine {
     country: country,
     region: region,
     grapes: grapes,
-    quantity: quantity,
+    quantity: quantity ?? this.quantity,
     price: price,
     rack: rack,
     shelf: shelf,
     position: position,
     drinkFrom: drinkFrom,
     drinkUntil: drinkUntil,
-    notes: notes,
+    purchaseDate: purchaseDate,
+    purchasedFrom: purchasedFrom,
   );
 
   /// Columns of the `wines` table (see supabase/migrations). `id` and
@@ -134,13 +129,15 @@ class Wine {
     'position': position,
     'drink_from': drinkFrom,
     'drink_until': drinkUntil,
-    'notes': notes,
+    'purchase_date': purchaseDate == null ? null : toIsoDate(purchaseDate!),
+    'purchased_from': purchasedFrom,
   };
 
   /// Reads a row from the database. Throws [FormatException] if the row is
   /// missing fields or has values of the wrong type.
   factory Wine.fromMap(Map<String, dynamic> map) {
     try {
+      final purchaseDate = map['purchase_date'] as String?;
       return Wine(
         id: map['id'] as String?,
         name: map['name'] as String,
@@ -157,7 +154,8 @@ class Wine {
         position: map['position'] as String?,
         drinkFrom: map['drink_from'] as int?,
         drinkUntil: map['drink_until'] as int?,
-        notes: map['notes'] as String?,
+        purchaseDate: purchaseDate == null ? null : parseIsoDate(purchaseDate),
+        purchasedFrom: map['purchased_from'] as String?,
       );
     } on TypeError catch (e) {
       throw FormatException('Invalid wine data: $e', map);
@@ -166,7 +164,8 @@ class Wine {
     }
   }
 
-  /// True if [query] appears in the name, producer, region, country or a grape.
+  /// True if [query] appears in the name, producer, region, country, a grape
+  /// or the shop it was bought from.
   bool matchesSearch(String query) {
     final q = query.trim().toLowerCase();
     if (q.isEmpty) return true;
@@ -175,6 +174,7 @@ class Wine {
       producer,
       region,
       country,
+      purchasedFrom,
       ...grapes,
     ].whereType<String>().any((field) => field.toLowerCase().contains(q));
   }

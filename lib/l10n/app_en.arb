@@ -76,7 +76,6 @@
   "drinkingWindow": "Drinking window",
   "drinkFrom": "Drink from (year)",
   "drinkUntil": "Drink until (year)",
-  "notes": "Notes",
   "requiredField": "Required",
   "invalidNumber": "Enter a valid number",
   "invalidYear": "Enter a valid year",
@@ -100,5 +99,30 @@
   "errorEmailNotConfirmed": "Confirm your email address before signing in.",
   "errorUserExists": "An account with this email already exists.",
   "errorWeakPassword": "Choose a stronger password.",
-  "errorTooManyAttempts": "Too many attempts. Wait a moment and try again."
+  "errorTooManyAttempts": "Too many attempts. Wait a moment and try again.",
+  "purchase": "Purchase",
+  "purchaseDate": "Purchase date",
+  "purchasedFrom": "Bought from",
+  "purchasedFromHint": "E.g. a shop or an importer",
+  "chooseDate": "Choose date",
+  "clearDate": "Clear date",
+  "myNotes": "My notes",
+  "addNote": "New note",
+  "editNote": "Edit note",
+  "deleteNote": "Delete note",
+  "deleteNoteConfirm": "Delete this note?",
+  "noNotes": "No notes yet. Add one when you open a bottle!",
+  "noteDate": "Date",
+  "rating": "Rating",
+  "ratingStars": "{count, plural, =1{1 star} other{{count} stars}}",
+  "noteText": "Note",
+  "noteHint": "Taste, smell, food, occasion…",
+  "edit": "Edit",
+  "@ratingStars": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

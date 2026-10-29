@@ -390,12 +390,6 @@ abstract class AppLocalizations {
   /// **'Drink until (year)'**
   String get drinkUntil;
 
-  /// No description provided for @notes.
-  ///
-  /// In en, this message translates to:
-  /// **'Notes'**
-  String get notes;
-
   /// No description provided for @requiredField.
   ///
   /// In en, this message translates to:
@@ -539,6 +533,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Too many attempts. Wait a moment and try again.'**
   String get errorTooManyAttempts;
+
+  /// No description provided for @purchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase'**
+  String get purchase;
+
+  /// No description provided for @purchaseDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase date'**
+  String get purchaseDate;
+
+  /// No description provided for @purchasedFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Bought from'**
+  String get purchasedFrom;
+
+  /// No description provided for @purchasedFromHint.
+  ///
+  /// In en, this message translates to:
+  /// **'E.g. a shop or an importer'**
+  String get purchasedFromHint;
+
+  /// No description provided for @chooseDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose date'**
+  String get chooseDate;
+
+  /// No description provided for @clearDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear date'**
+  String get clearDate;
+
+  /// No description provided for @myNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'My notes'**
+  String get myNotes;
+
+  /// No description provided for @addNote.
+  ///
+  /// In en, this message translates to:
+  /// **'New note'**
+  String get addNote;
+
+  /// No description provided for @editNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit note'**
+  String get editNote;
+
+  /// No description provided for @deleteNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete note'**
+  String get deleteNote;
+
+  /// No description provided for @deleteNoteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this note?'**
+  String get deleteNoteConfirm;
+
+  /// No description provided for @noNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'No notes yet. Add one when you open a bottle!'**
+  String get noNotes;
+
+  /// No description provided for @noteDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get noteDate;
+
+  /// No description provided for @rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating'**
+  String get rating;
+
+  /// No description provided for @ratingStars.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 star} other{{count} stars}}'**
+  String ratingStars(int count);
+
+  /// No description provided for @noteText.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get noteText;
+
+  /// No description provided for @noteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Taste, smell, food, occasion…'**
+  String get noteHint;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
 }
 
 class _AppLocalizationsDelegate

@@ -1,4 +1,5 @@
 import 'package:wine_cellar/data/wine_repository.dart';
+import 'package:wine_cellar/models/tasting_note.dart';
 import 'package:wine_cellar/models/wine.dart';
 
 /// An in-memory repository that throws [error] from every call while it is
@@ -35,5 +36,29 @@ class FailingWineRepository extends InMemoryWineRepository {
   Future<void> delete(String id) {
     _maybeFail();
     return super.delete(id);
+  }
+
+  @override
+  Future<List<TastingNote>> fetchNotes(String wineId) {
+    _maybeFail();
+    return super.fetchNotes(wineId);
+  }
+
+  @override
+  Future<TastingNote> addNote(TastingNote note) {
+    _maybeFail();
+    return super.addNote(note);
+  }
+
+  @override
+  Future<TastingNote> updateNote(TastingNote note) {
+    _maybeFail();
+    return super.updateNote(note);
+  }
+
+  @override
+  Future<void> deleteNote(String id) {
+    _maybeFail();
+    return super.deleteNote(id);
   }
 }

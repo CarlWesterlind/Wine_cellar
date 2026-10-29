@@ -12,6 +12,8 @@ Available in Swedish, Danish, Norwegian (Bokmål) and English.
 - **Drinking window**: See when each wine is at its best, so nothing gets opened too early or too late.
 - **Search and filters**: Find wines by name, producer, region or grape, and filter by type or drinking window.
 - **Stock and value**: Track bottles per wine, "drink a bottle" in one tap, and see the total value of the cellar.
+- **Purchase info**: When and where you bought each wine.
+- **Tasting notes**: A dated log of notes per wine, with an optional 1–5 star rating.
 - **Accounts**: Sign in to keep your cellar in sync across devices.
 
 Planned:
@@ -35,10 +37,11 @@ wines, and nothing is saved.
 ## Connecting Supabase
 
 1. Create a free project at [supabase.com](https://supabase.com).
-2. In the project's **SQL Editor**, run
-   [`supabase/migrations/0001_create_wines.sql`](supabase/migrations/0001_create_wines.sql).
-   It creates the `wines` table with row level security, so each user only
-   sees their own wines.
+2. In the project's **SQL Editor**, run each file in
+   [`supabase/migrations/`](supabase/migrations/) in order (`0001_…`, then
+   `0002_…`). They create the `wines` and `tasting_notes` tables with row
+   level security, so each user only sees their own data. When a new
+   migration is added later, run just that one.
 3. Copy `supabase.example.json` to `supabase.json` and fill in the project
    URL and publishable key from **Project Settings → API**. `supabase.json`
    is ignored by git, so your keys stay on your computer.
@@ -59,21 +62,28 @@ the data. Never put the secret (service role) key in the app.
 lib/
   main.dart                       # Starts the app, in Supabase or demo mode
   app.dart                        # MaterialApp, languages, login gate
-  models/wine.dart                # Wine, WineType, DrinkingStatus
+  models/
+    wine.dart                     # Wine, WineType, DrinkingStatus
+    tasting_note.dart             # A dated note with an optional rating
+    dates.dart                    # Dates without time of day
   data/
     auth_service.dart             # Login (AuthService, SupabaseAuthService)
     wine_repository.dart          # Wine storage interface + in-memory version
     supabase_wine_repository.dart # Wine storage in Supabase
   state/
     cellar_controller.dart        # The wine list, search and filters
+    tasting_notes_controller.dart # The notes of one wine
     language_settings.dart        # The chosen app language
   screens/
     login_screen.dart
     cellar_list_screen.dart       # Start screen: all wines
-    wine_detail_screen.dart       # One wine
+    wine_detail_screen.dart       # One wine, with its notes
+    tasting_note_dialog.dart      # Write or edit a note
     add_edit_wine_screen.dart     # Form for adding or editing a wine
     settings_screen.dart          # Language and sign out
-  widgets/display_helpers.dart    # Display names, colors and formatting
+  widgets/
+    display_helpers.dart          # Display names, colors and formatting
+    rating_stars.dart             # 1–5 stars, tappable or read-only
   l10n/app_*.arb                  # Translations, one file per language
 supabase/migrations/              # Database schema
 test/                             # Unit and widget tests
