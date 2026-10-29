@@ -1,0 +1,103 @@
+{
+  "@@locale": "en",
+  "appTitle": "Wine Cellar",
+  "signIn": "Sign in",
+  "signUp": "Create account",
+  "email": "Email",
+  "password": "Password",
+  "switchToSignUp": "No account? Create one",
+  "switchToSignIn": "Already have an account? Sign in",
+  "confirmEmailSent": "Check your email to confirm your account, then sign in.",
+  "invalidEmail": "Enter a valid email address",
+  "passwordTooShort": "Password must be at least 6 characters",
+  "signOut": "Sign out",
+  "settings": "Settings",
+  "language": "Language",
+  "systemLanguage": "Device language",
+  "signedInAs": "Signed in as {email}",
+  "@signedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "demoMode": "Demo mode – changes are not saved.",
+  "searchHint": "Search name, producer, region or grape",
+  "allTypes": "All types",
+  "allStatuses": "Any drinking window",
+  "emptyCellar": "Your cellar is empty. Add your first wine!",
+  "noResults": "No wines match your search.",
+  "addWine": "Add wine",
+  "editWine": "Edit wine",
+  "deleteWine": "Delete wine",
+  "deleteConfirm": "Delete \"{name}\" from your cellar?",
+  "@deleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "save": "Save",
+  "drinkOne": "Drink a bottle",
+  "bottleCount": "{count, plural, =1{1 bottle} other{{count} bottles}}",
+  "@bottleCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "totalValue": "Value: {value}",
+  "@totalValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "wineName": "Name",
+  "producer": "Producer",
+  "vintage": "Vintage",
+  "wineType": "Type",
+  "country": "Country",
+  "region": "Region",
+  "grapes": "Grapes",
+  "grapesHint": "Separate with commas",
+  "quantity": "Bottles",
+  "price": "Price per bottle",
+  "location": "Location in cellar",
+  "rack": "Rack",
+  "shelf": "Shelf",
+  "position": "Position",
+  "drinkingWindow": "Drinking window",
+  "drinkFrom": "Drink from (year)",
+  "drinkUntil": "Drink until (year)",
+  "notes": "Notes",
+  "requiredField": "Required",
+  "invalidNumber": "Enter a valid number",
+  "invalidYear": "Enter a valid year",
+  "untilBeforeFrom": "Must not be earlier than \"drink from\"",
+  "typeRed": "Red",
+  "typeWhite": "White",
+  "typeRose": "Rosé",
+  "typeSparkling": "Sparkling",
+  "typeDessert": "Dessert",
+  "typeFortified": "Fortified",
+  "statusUnknown": "No drinking window",
+  "statusTooEarly": "Too early",
+  "statusReady": "Ready to drink",
+  "statusPastPeak": "Past its best",
+  "errorGeneric": "Something went wrong: {message}",
+  "@errorGeneric": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "retry": "Try again"
+}
