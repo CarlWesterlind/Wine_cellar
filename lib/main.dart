@@ -8,7 +8,7 @@ import 'data/auth_service.dart';
 import 'data/supabase_wine_repository.dart';
 import 'data/wine_repository.dart';
 import 'errors/error_messages.dart';
-import 'state/language_settings.dart';
+import 'state/app_settings.dart';
 
 // Pass with --dart-define. Without them the app runs in demo mode.
 const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
@@ -19,7 +19,7 @@ const supabasePublishableKey = String.fromEnvironment(
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   catchUnhandledErrors();
-  final settings = LanguageSettings(await SharedPreferences.getInstance());
+  final settings = AppSettings(await SharedPreferences.getInstance());
 
   if (supabaseUrl.isEmpty || supabasePublishableKey.isEmpty) {
     runApp(

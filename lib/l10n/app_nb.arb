@@ -16,10 +16,8 @@
   "systemLanguage": "Enhetens språk",
   "signedInAs": "Logget inn som {email}",
   "demoMode": "Demomodus – endringer lagres ikke.",
-  "searchHint": "Søk navn, produsent, region eller drue",
-  "allTypes": "Alle typer",
-  "allStatuses": "Alle drikkevinduer",
-  "emptyCellar": "Kjelleren din er tom. Legg til din første vin!",
+  "searchHint": "Søk vin, produsent, drue…",
+  "emptyCellar": "Legg til din første vin for å holde oversikt over flaskene dine.",
   "noResults": "Ingen viner samsvarer med søket.",
   "addWine": "Legg til vin",
   "editWine": "Rediger vin",
@@ -89,5 +87,13 @@
   "ratingStars": "{count, plural, =1{1 stjerne} other{{count} stjerner}}",
   "noteText": "Notat",
   "noteHint": "Smak, duft, mat, anledning…",
-  "edit": "Rediger"
+  "edit": "Rediger",
+  "appearance": "Utseende",
+  "themeSystem": "Som telefonen",
+  "themeLight": "Lyst",
+  "themeDark": "Mørkt",
+  "emptyCellarTitle": "Kjelleren din er tom",
+  "clearSearch": "Tøm søk",
+  "clearFilters": "Vis alle viner",
+  "all": "Alle"
 }

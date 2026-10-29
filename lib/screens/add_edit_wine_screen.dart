@@ -192,9 +192,16 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.wine == null ? l10n.addWine : l10n.editWine),
-        actions: [
-          TextButton(onPressed: _saving ? null : _save, child: Text(l10n.save)),
-        ],
+      ),
+      // Always visible and easy to reach with a thumb.
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: FilledButton(
+            onPressed: _saving ? null : _save,
+            child: Text(l10n.save),
+          ),
+        ),
       ),
       body: Form(
         key: _formKey,
@@ -235,6 +242,7 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
                       child: DropdownButtonFormField<WineType>(
                         initialValue: _type,
                         isExpanded: true,
+                        style: Theme.of(context).textTheme.bodyLarge,
                         decoration: InputDecoration(labelText: l10n.wineType),
                         items: [
                           for (final type in WineType.values)

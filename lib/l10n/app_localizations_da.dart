@@ -61,16 +61,11 @@ class AppLocalizationsDa extends AppLocalizations {
   String get demoMode => 'Demotilstand – ændringer gemmes ikke.';
 
   @override
-  String get searchHint => 'Søg navn, producent, region eller drue';
+  String get searchHint => 'Søg vin, producent, drue…';
 
   @override
-  String get allTypes => 'Alle typer';
-
-  @override
-  String get allStatuses => 'Alle drikkevinduer';
-
-  @override
-  String get emptyCellar => 'Din kælder er tom. Tilføj din første vin!';
+  String get emptyCellar =>
+      'Tilføj din første vin for at holde styr på dine flasker.';
 
   @override
   String get noResults => 'Ingen vine matcher søgningen.';
@@ -306,4 +301,28 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get edit => 'Rediger';
+
+  @override
+  String get appearance => 'Udseende';
+
+  @override
+  String get themeSystem => 'Som telefonen';
+
+  @override
+  String get themeLight => 'Lyst';
+
+  @override
+  String get themeDark => 'Mørkt';
+
+  @override
+  String get emptyCellarTitle => 'Din kælder er tom';
+
+  @override
+  String get clearSearch => 'Ryd søgning';
+
+  @override
+  String get clearFilters => 'Vis alle vine';
+
+  @override
+  String get all => 'Alle';
 }

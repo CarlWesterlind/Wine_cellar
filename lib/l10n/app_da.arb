@@ -16,10 +16,8 @@
   "systemLanguage": "Enhedens sprog",
   "signedInAs": "Logget ind som {email}",
   "demoMode": "Demotilstand – ændringer gemmes ikke.",
-  "searchHint": "Søg navn, producent, region eller drue",
-  "allTypes": "Alle typer",
-  "allStatuses": "Alle drikkevinduer",
-  "emptyCellar": "Din kælder er tom. Tilføj din første vin!",
+  "searchHint": "Søg vin, producent, drue…",
+  "emptyCellar": "Tilføj din første vin for at holde styr på dine flasker.",
   "noResults": "Ingen vine matcher søgningen.",
   "addWine": "Tilføj vin",
   "editWine": "Rediger vin",
@@ -89,5 +87,13 @@
   "ratingStars": "{count, plural, =1{1 stjerne} other{{count} stjerner}}",
   "noteText": "Note",
   "noteHint": "Smag, duft, mad, anledning…",
-  "edit": "Rediger"
+  "edit": "Rediger",
+  "appearance": "Udseende",
+  "themeSystem": "Som telefonen",
+  "themeLight": "Lyst",
+  "themeDark": "Mørkt",
+  "emptyCellarTitle": "Din kælder er tom",
+  "clearSearch": "Ryd søgning",
+  "clearFilters": "Vis alle vine",
+  "all": "Alle"
 }

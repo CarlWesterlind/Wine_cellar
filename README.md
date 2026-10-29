@@ -15,6 +15,10 @@ Available in Swedish, Danish, Norwegian (Bokmål) and English.
 - **Purchase info**: When and where you bought each wine.
 - **Tasting notes**: A dated log of notes per wine, with an optional 1–5 star rating.
 - **Accounts**: Sign in to keep your cellar in sync across devices.
+- **Light and dark mode**: Follows the phone, or pick one in Settings.
+- **Accessible**: High-contrast colors (WCAG AAA, 7:1 for text), screen
+  reader labels, large tap targets, and no motion when the phone asks for
+  reduced motion.
 
 Planned:
 
@@ -73,7 +77,7 @@ lib/
   state/
     cellar_controller.dart        # The wine list, search and filters
     tasting_notes_controller.dart # The notes of one wine
-    language_settings.dart        # The chosen app language
+    app_settings.dart             # Language and light/dark choice
   screens/
     login_screen.dart
     cellar_list_screen.dart       # Start screen: all wines
@@ -81,13 +85,34 @@ lib/
     tasting_note_dialog.dart      # Write or edit a note
     add_edit_wine_screen.dart     # Form for adding or editing a wine
     settings_screen.dart          # Language and sign out
+  theme/
+    app_theme.dart                # Colors, shapes and page transitions
+    motion.dart                   # Animation timing and easing
   widgets/
     display_helpers.dart          # Display names, colors and formatting
+    motion_widgets.dart           # Press, fade-in and rolling-number effects
     rating_stars.dart             # 1–5 stars, tappable or read-only
   l10n/app_*.arb                  # Translations, one file per language
 supabase/migrations/              # Database schema
 test/                             # Unit and widget tests
 ```
+
+## Design
+
+The design follows Emil Kowalski's design engineering principles:
+
+- **Motion with a purpose**: short (150–280 ms) ease-out animations for
+  things that appear, so the app feels responsive, never slow. Cards shrink
+  slightly when pressed, lists fade in, and numbers roll when they change.
+- **Respect the user**: when the phone's *reduce motion* setting is on,
+  nothing animates (`Motion.of` returns zero).
+- **Readable**: every text/background color pair is checked in
+  `test/theme_test.dart`, and every screen is checked against Flutter's
+  contrast, label and tap-target guidelines in `test/design_test.dart`, in
+  both light and dark mode.
+
+All timing lives in `lib/theme/motion.dart` and all colors in
+`lib/theme/app_theme.dart`, so the look can be adjusted in one place.
 
 ## Keeping the code tidy
 

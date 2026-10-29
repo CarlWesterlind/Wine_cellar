@@ -88,6 +88,16 @@ class CellarController extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool get hasActiveFilters =>
+      _query.trim().isNotEmpty || _typeFilter != null || _statusFilter != null;
+
+  void clearFilters() {
+    _query = '';
+    _typeFilter = null;
+    _statusFilter = null;
+    notifyListeners();
+  }
+
   /// Adds [wine] if it has no id yet, otherwise updates it.
   Future<Wine> save(Wine wine) async {
     final saved = wine.id == null

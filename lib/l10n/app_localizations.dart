@@ -201,25 +201,13 @@ abstract class AppLocalizations {
   /// No description provided for @searchHint.
   ///
   /// In en, this message translates to:
-  /// **'Search name, producer, region or grape'**
+  /// **'Search wine, producer, grape…'**
   String get searchHint;
-
-  /// No description provided for @allTypes.
-  ///
-  /// In en, this message translates to:
-  /// **'All types'**
-  String get allTypes;
-
-  /// No description provided for @allStatuses.
-  ///
-  /// In en, this message translates to:
-  /// **'Any drinking window'**
-  String get allStatuses;
 
   /// No description provided for @emptyCellar.
   ///
   /// In en, this message translates to:
-  /// **'Your cellar is empty. Add your first wine!'**
+  /// **'Add your first wine to start keeping track of your bottles.'**
   String get emptyCellar;
 
   /// No description provided for @noResults.
@@ -641,6 +629,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit'**
   String get edit;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as phone'**
+  String get themeSystem;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @emptyCellarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your cellar is empty'**
+  String get emptyCellarTitle;
+
+  /// No description provided for @clearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get clearSearch;
+
+  /// No description provided for @clearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all wines'**
+  String get clearFilters;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
 }
 
 class _AppLocalizationsDelegate

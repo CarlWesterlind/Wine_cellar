@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
@@ -8,7 +9,9 @@ import '../models/tasting_note.dart';
 import '../models/wine.dart';
 import '../state/cellar_controller.dart';
 import '../state/tasting_notes_controller.dart';
+import '../theme/motion.dart';
 import '../widgets/display_helpers.dart';
+import '../widgets/motion_widgets.dart';
 import '../widgets/rating_stars.dart';
 import 'add_edit_wine_screen.dart';
 import 'tasting_note_dialog.dart';
@@ -142,11 +145,7 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 28,
-                    backgroundColor: wine.type.color,
-                    child: const Icon(Icons.wine_bar, color: Colors.white),
-                  ),
+                  WineTypeBadge(type: wine.type, size: 56),
                   const SizedBox(width: 16),
                   Expanded(
                     child: Column(
@@ -156,7 +155,16 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
                           wine.name,
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
-                        if (wine.producer != null) Text(wine.producer!),
+                        if (wine.producer != null)
+                          Text(
+                            wine.producer!,
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurfaceVariant,
+                                ),
+                          ),
                       ],
                     ),
                   ),
@@ -165,58 +173,82 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
               const SizedBox(height: 16),
               Row(
                 children: [
-                  Text(
+                  RollingText(
                     l10n.bottleCount(wine.quantity),
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const Spacer(),
                   FilledButton.tonalIcon(
                     onPressed: wine.quantity == 0
                         ? null
-                        : () => runOrShowError(
-                            context,
-                            () => _cellar.drinkOne(wine),
-                          ),
+                        : () {
+                            unawaited(HapticFeedback.lightImpact());
+                            unawaited(
+                              runOrShowError(
+                                context,
+                                () => _cellar.drinkOne(wine),
+                              ),
+                            );
+                          },
                     icon: const Icon(Icons.local_bar),
                     label: Text(l10n.drinkOne),
                   ),
                 ],
               ),
-              const Divider(height: 32),
-              _InfoRow(l10n.wineType, wine.type.displayName(l10n)),
-              _InfoRow(l10n.vintage, wine.vintage?.toString()),
-              _InfoRow(l10n.country, wine.country),
-              _InfoRow(l10n.region, wine.region),
-              _InfoRow(
-                l10n.grapes,
-                wine.grapes.isEmpty ? null : wine.grapes.join(', '),
-              ),
-              _InfoRow(
-                l10n.price,
-                wine.price == null ? null : formatMoney(context, wine.price!),
-              ),
-              _InfoRow(
-                l10n.purchase,
-                wine.hasPurchaseInfo ? formatPurchase(context, wine) : null,
-              ),
-              _InfoRow(
-                l10n.location,
-                wine.hasLocation ? formatLocation(l10n, wine) : null,
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(l10n.drinkingWindow),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (wine.drinkFrom != null || wine.drinkUntil != null)
-                      Text('${wine.drinkFrom ?? ''}–${wine.drinkUntil ?? ''}'),
-                    const SizedBox(height: 4),
-                    DrinkingStatusChip(status: status),
-                  ],
+              const SizedBox(height: 16),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _InfoRow(l10n.wineType, wine.type.displayName(l10n)),
+                      _InfoRow(l10n.vintage, wine.vintage?.toString()),
+                      _InfoRow(l10n.country, wine.country),
+                      _InfoRow(l10n.region, wine.region),
+                      _InfoRow(
+                        l10n.grapes,
+                        wine.grapes.isEmpty ? null : wine.grapes.join(', '),
+                      ),
+                      _InfoRow(
+                        l10n.price,
+                        wine.price == null
+                            ? null
+                            : formatMoney(context, wine.price!),
+                      ),
+                      _InfoRow(
+                        l10n.purchase,
+                        wine.hasPurchaseInfo
+                            ? formatPurchase(context, wine)
+                            : null,
+                      ),
+                      _InfoRow(
+                        l10n.location,
+                        wine.hasLocation ? formatLocation(l10n, wine) : null,
+                      ),
+                      _InfoRow.custom(
+                        l10n.drinkingWindow,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (wine.drinkFrom != null ||
+                                wine.drinkUntil != null)
+                              Text(
+                                '${wine.drinkFrom ?? ''}–${wine.drinkUntil ?? ''}',
+                              ),
+                            const SizedBox(height: 4),
+                            DrinkingStatusChip(status: status),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              const Divider(height: 32),
+              const SizedBox(height: 24),
               _NotesSection(
                 notes: _notes,
                 onAdd: _writeNote,
@@ -248,6 +280,15 @@ class _NotesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final error = notes.error;
+    return AnimatedSize(
+      duration: Motion.of(context, Motion.medium),
+      curve: Motion.easeInOut,
+      alignment: Alignment.topCenter,
+      child: _content(context, l10n, error),
+    );
+  }
+
+  Widget _content(BuildContext context, AppLocalizations l10n, Object? error) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -284,11 +325,15 @@ class _NotesSection extends StatelessWidget {
             child: Text(l10n.noNotes),
           )
         else
-          for (final note in notes.notes)
-            _NoteTile(
-              note: note,
-              onEdit: () => onEdit(note),
-              onDelete: () => onDelete(note),
+          for (final (index, note) in notes.notes.indexed)
+            FadeSlideIn(
+              key: ValueKey(note.id),
+              index: index,
+              child: _NoteTile(
+                note: note,
+                onEdit: () => onEdit(note),
+                onDelete: () => onDelete(note),
+              ),
             ),
       ],
     );
@@ -338,18 +383,34 @@ class _NoteTile extends StatelessWidget {
 
 /// A labelled value. Hidden when there is no value.
 class _InfoRow extends StatelessWidget {
-  const _InfoRow(this.label, this.value);
+  const _InfoRow(this.label, this.value) : child = null;
+
+  /// Shows [child] instead of a text value.
+  const _InfoRow.custom(this.label, Widget this.child) : value = null;
 
   final String label;
   final String? value;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
-    if (value == null) return const SizedBox.shrink();
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      title: Text(label),
-      subtitle: Text(value!),
+    if (value == null && child == null) return const SizedBox.shrink();
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: theme.textTheme.labelLarge?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 2),
+          child ?? Text(value!, style: theme.textTheme.bodyLarge),
+        ],
+      ),
     );
   }
 }

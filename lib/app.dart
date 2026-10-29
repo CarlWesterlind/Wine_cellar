@@ -6,7 +6,9 @@ import 'data/wine_repository.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/cellar_list_screen.dart';
 import 'screens/login_screen.dart';
-import 'state/language_settings.dart';
+import 'state/app_settings.dart';
+import 'theme/app_theme.dart';
+import 'theme/motion.dart';
 
 class WineCellarApp extends StatelessWidget {
   const WineCellarApp({
@@ -16,15 +18,13 @@ class WineCellarApp extends StatelessWidget {
     this.auth,
   });
 
-  final LanguageSettings settings;
+  final AppSettings settings;
 
   /// Creates the wine storage for the signed-in user.
   final WineRepository Function() createRepository;
 
   /// Null in demo mode, where there is no login.
   final AuthService? auth;
-
-  static const _seed = Color(0xFF7B1E3A);
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +33,11 @@ class WineCellarApp extends StatelessWidget {
       builder: (context, _) => MaterialApp(
         onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(colorSchemeSeed: _seed),
-        darkTheme: ThemeData(
-          colorSchemeSeed: _seed,
-          brightness: Brightness.dark,
-        ),
+        theme: AppTheme.light(),
+        darkTheme: AppTheme.dark(),
+        themeMode: settings.themeMode,
+        themeAnimationDuration: Motion.medium,
+        themeAnimationCurve: Motion.easeOut,
         locale: settings.locale,
         supportedLocales: AppLocalizations.supportedLocales,
         localizationsDelegates: const [

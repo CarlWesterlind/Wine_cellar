@@ -61,16 +61,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get demoMode => 'Demo mode – changes are not saved.';
 
   @override
-  String get searchHint => 'Search name, producer, region or grape';
+  String get searchHint => 'Search wine, producer, grape…';
 
   @override
-  String get allTypes => 'All types';
-
-  @override
-  String get allStatuses => 'Any drinking window';
-
-  @override
-  String get emptyCellar => 'Your cellar is empty. Add your first wine!';
+  String get emptyCellar =>
+      'Add your first wine to start keeping track of your bottles.';
 
   @override
   String get noResults => 'No wines match your search.';
@@ -306,4 +301,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get edit => 'Edit';
+
+  @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get themeSystem => 'Same as phone';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get emptyCellarTitle => 'Your cellar is empty';
+
+  @override
+  String get clearSearch => 'Clear search';
+
+  @override
+  String get clearFilters => 'Show all wines';
+
+  @override
+  String get all => 'All';
 }

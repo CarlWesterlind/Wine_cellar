@@ -3,17 +3,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wine_cellar/app.dart';
 import 'package:wine_cellar/data/wine_repository.dart';
 import 'package:wine_cellar/models/wine.dart';
-import 'package:wine_cellar/state/language_settings.dart';
+import 'package:wine_cellar/state/app_settings.dart';
 
-Future<LanguageSettings> settingsWith(Map<String, Object> values) async {
+Future<AppSettings> settingsWith(Map<String, Object> values) async {
   SharedPreferences.setMockInitialValues(values);
-  return LanguageSettings(await SharedPreferences.getInstance());
+  return AppSettings(await SharedPreferences.getInstance());
 }
 
 Future<void> pumpApp(
   WidgetTester tester,
-  LanguageSettings settings, {
+  AppSettings settings, {
   WineRepository? repository,
+  bool settle = true,
 }) async {
   await tester.pumpWidget(
     WineCellarApp(
@@ -25,5 +26,5 @@ Future<void> pumpApp(
           ]),
     ),
   );
-  await tester.pumpAndSettle();
+  if (settle) await tester.pumpAndSettle();
 }

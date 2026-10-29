@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 
 import '../l10n/app_localizations.dart';
 import '../models/wine.dart';
+import '../theme/app_theme.dart';
+import '../theme/motion.dart';
 
 extension WineTypeDisplay on WineType {
   String displayName(AppLocalizations l10n) => switch (this) {
@@ -32,12 +34,16 @@ extension DrinkingStatusDisplay on DrinkingStatus {
     DrinkingStatus.pastPeak => l10n.statusPastPeak,
   };
 
-  MaterialColor get color => switch (this) {
-    DrinkingStatus.unknown => Colors.grey,
-    DrinkingStatus.tooEarly => Colors.blue,
-    DrinkingStatus.ready => Colors.green,
-    DrinkingStatus.pastPeak => Colors.orange,
-  };
+  /// Text and background color for this status in the current theme.
+  (Color, Color) colors(BuildContext context) {
+    final c = CellarColors.of(context);
+    return switch (this) {
+      DrinkingStatus.unknown => (c.unknown, c.unknownContainer),
+      DrinkingStatus.tooEarly => (c.tooEarly, c.tooEarlyContainer),
+      DrinkingStatus.ready => (c.ready, c.readyContainer),
+      DrinkingStatus.pastPeak => (c.pastPeak, c.pastPeakContainer),
+    };
+  }
 }
 
 /// Formats an amount in the app's current language, without currency symbol.
@@ -64,18 +70,48 @@ class DrinkingStatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+    final (foreground, background) = status.colors(context);
+    final duration = Motion.of(context, Motion.medium);
+    return AnimatedContainer(
+      duration: duration,
+      curve: Motion.easeOut,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
       decoration: BoxDecoration(
-        color: status.color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(12),
+        color: background,
+        borderRadius: BorderRadius.circular(8),
       ),
-      child: Text(
-        status.displayName(l10n),
-        style: TextStyle(
-          color: status.color.shade800,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
+      child: AnimatedDefaultTextStyle(
+        duration: duration,
+        curve: Motion.easeOut,
+        style: Theme.of(context).textTheme.labelMedium!
+            .copyWith(color: foreground, fontWeight: FontWeight.w600),
+        child: Text(status.displayName(l10n)),
+      ),
+    );
+  }
+}
+
+/// A round badge in the wine's color with a glass icon. Decorative: screen
+/// readers skip it, since the wine type is read out elsewhere.
+class WineTypeBadge extends StatelessWidget {
+  const WineTypeBadge({super.key, required this.type, this.size = 44});
+
+  final WineType type;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final light =
+        ThemeData.estimateBrightnessForColor(type.color) == Brightness.light;
+    return ExcludeSemantics(
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(color: type.color, shape: BoxShape.circle),
+        child: Icon(
+          Icons.wine_bar,
+          size: size * 0.5,
+          color: light ? Colors.black87 : Colors.white,
         ),
       ),
     );

@@ -16,10 +16,8 @@
   "systemLanguage": "Enhetens språk",
   "signedInAs": "Inloggad som {email}",
   "demoMode": "Demoläge – ändringar sparas inte.",
-  "searchHint": "Sök namn, producent, region eller druva",
-  "allTypes": "Alla typer",
-  "allStatuses": "Alla drickfönster",
-  "emptyCellar": "Din källare är tom. Lägg till ditt första vin!",
+  "searchHint": "Sök vin, producent, druva…",
+  "emptyCellar": "Lägg till ditt första vin för att börja hålla koll på dina flaskor.",
   "noResults": "Inga viner matchar sökningen.",
   "addWine": "Lägg till vin",
   "editWine": "Redigera vin",
@@ -89,5 +87,13 @@
   "ratingStars": "{count, plural, =1{1 stjärna} other{{count} stjärnor}}",
   "noteText": "Anteckning",
   "noteHint": "Smak, doft, mat, tillfälle…",
-  "edit": "Redigera"
+  "edit": "Redigera",
+  "appearance": "Utseende",
+  "themeSystem": "Som telefonen",
+  "themeLight": "Ljust",
+  "themeDark": "Mörkt",
+  "emptyCellarTitle": "Din källare är tom",
+  "clearSearch": "Rensa sökning",
+  "clearFilters": "Visa alla viner",
+  "all": "Alla"
 }

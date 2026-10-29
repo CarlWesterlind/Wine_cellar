@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../l10n/app_localizations.dart';
 import '../models/tasting_note.dart';
+import '../theme/app_theme.dart';
+import '../theme/motion.dart';
 
 /// One to five stars. With [onChanged] the stars can be tapped; tapping the
 /// current rating again clears it.
@@ -14,14 +19,25 @@ class RatingStars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final color = Theme.of(context).colorScheme.primary;
+    final color = CellarColors.of(context).star;
     final onChanged = this.onChanged;
 
-    Icon star(int value) => Icon(
-      value <= (rating ?? 0) ? Icons.star : Icons.star_border,
-      color: color,
-      size: onChanged == null ? 16 : 32,
-    );
+    Widget star(int value) {
+      final filled = value <= (rating ?? 0);
+      final icon = Icon(
+        filled ? Icons.star_rounded : Icons.star_outline_rounded,
+        color: color,
+        size: onChanged == null ? 18 : 32,
+      );
+      if (onChanged == null) return icon;
+      // Filled stars pop in slightly when chosen.
+      return AnimatedScale(
+        scale: filled ? 1 : 0.88,
+        duration: Motion.of(context, Motion.fast),
+        curve: Motion.easeOut,
+        child: icon,
+      );
+    }
 
     if (onChanged == null) {
       if (rating == null) return const SizedBox.shrink();
@@ -48,7 +64,10 @@ class RatingStars extends StatelessWidget {
         for (var i = TastingNote.minRating; i <= TastingNote.maxRating; i++)
           IconButton(
             tooltip: l10n.ratingStars(i),
-            onPressed: () => onChanged(i == rating ? null : i),
+            onPressed: () {
+              unawaited(HapticFeedback.selectionClick());
+              onChanged(i == rating ? null : i);
+            },
             icon: star(i),
           ),
       ],

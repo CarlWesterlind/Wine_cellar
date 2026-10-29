@@ -23,10 +23,8 @@
     }
   },
   "demoMode": "Demo mode – changes are not saved.",
-  "searchHint": "Search name, producer, region or grape",
-  "allTypes": "All types",
-  "allStatuses": "Any drinking window",
-  "emptyCellar": "Your cellar is empty. Add your first wine!",
+  "searchHint": "Search wine, producer, grape…",
+  "emptyCellar": "Add your first wine to start keeping track of your bottles.",
   "noResults": "No wines match your search.",
   "addWine": "Add wine",
   "editWine": "Edit wine",
@@ -124,5 +122,13 @@
         "type": "int"
       }
     }
-  }
+  },
+  "appearance": "Appearance",
+  "themeSystem": "Same as phone",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "emptyCellarTitle": "Your cellar is empty",
+  "clearSearch": "Clear search",
+  "clearFilters": "Show all wines",
+  "all": "All"
 }

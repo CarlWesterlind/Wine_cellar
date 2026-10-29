@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../data/auth_service.dart';
 import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
-import '../state/language_settings.dart';
+import '../state/app_settings.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key, required this.settings, this.auth});
 
-  final LanguageSettings settings;
+  final AppSettings settings;
   final AuthService? auth;
 
   /// Each language is shown in its own language.
@@ -29,6 +29,39 @@ class SettingsScreen extends StatelessWidget {
         listenable: settings,
         builder: (context, _) => ListView(
           children: [
+            ListTile(
+              title: Text(
+                l10n.appearance,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: SegmentedButton<ThemeMode>(
+                showSelectedIcon: false,
+                segments: [
+                  ButtonSegment(
+                    value: ThemeMode.system,
+                    icon: const Icon(Icons.brightness_auto_outlined),
+                    label: Text(l10n.themeSystem),
+                  ),
+                  ButtonSegment(
+                    value: ThemeMode.light,
+                    icon: const Icon(Icons.light_mode_outlined),
+                    label: Text(l10n.themeLight),
+                  ),
+                  ButtonSegment(
+                    value: ThemeMode.dark,
+                    icon: const Icon(Icons.dark_mode_outlined),
+                    label: Text(l10n.themeDark),
+                  ),
+                ],
+                selected: {settings.themeMode},
+                onSelectionChanged: (selection) =>
+                    settings.setThemeMode(selection.single),
+              ),
+            ),
+            const Divider(),
             ListTile(
               title: Text(
                 l10n.language,
