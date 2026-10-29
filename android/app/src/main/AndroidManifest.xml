@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Release builds need this to reach Supabase and the label scanner. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="wine_cellar"
+        android:label="Wine Cellar"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
