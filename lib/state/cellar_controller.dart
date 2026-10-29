@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../data/wine_repository.dart';
+import '../errors/error_messages.dart';
 import '../models/wine.dart';
 
 /// Holds the user's wines and the current search and filters.
@@ -59,8 +60,9 @@ class CellarController extends ChangeNotifier {
     notifyListeners();
     try {
       _wines = await _repository.fetchAll();
-    } catch (e) {
-      _error = e;
+    } catch (error, stack) {
+      logError(error, stack);
+      _error = error;
     } finally {
       _loading = false;
       notifyListeners();

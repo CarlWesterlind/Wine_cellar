@@ -214,10 +214,37 @@ class AppLocalizationsDa extends AppLocalizations {
   String get statusPastPeak => 'Over toppen';
 
   @override
-  String errorGeneric(String message) {
-    return 'Noget gik galt: $message';
-  }
+  String get retry => 'Prøv igen';
 
   @override
-  String get retry => 'Prøv igen';
+  String get errorNetwork =>
+      'Kunne ikke oprette forbindelse. Tjek din internetforbindelse, og prøv igen.';
+
+  @override
+  String get errorServer =>
+      'Serveren kunne ikke gennemføre anmodningen. Prøv igen senere.';
+
+  @override
+  String get errorInvalidData => 'Nogle af vinens oplysninger er ugyldige.';
+
+  @override
+  String get errorUnknown => 'Noget uventet gik galt. Prøv igen.';
+
+  @override
+  String get errorInvalidLogin => 'Forkert e-mail eller adgangskode.';
+
+  @override
+  String get errorEmailNotConfirmed =>
+      'Bekræft din e-mailadresse, før du logger ind.';
+
+  @override
+  String get errorUserExists =>
+      'Der findes allerede en konto med denne e-mailadresse.';
+
+  @override
+  String get errorWeakPassword => 'Vælg en stærkere adgangskode.';
+
+  @override
+  String get errorTooManyAttempts =>
+      'For mange forsøg. Vent lidt, og prøv igen.';
 }

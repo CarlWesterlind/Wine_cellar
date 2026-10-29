@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
 import '../data/auth_service.dart';
+import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       if (_signingUp) {
         final result = await widget.auth.signUp(email, _password.text);
-        if (result == SignUpResult.confirmEmail) {
+        if (result == SignUpResult.confirmEmail && mounted) {
           setState(() {
             _signingUp = false;
             _message = l10n.confirmEmailSent;
@@ -48,15 +48,13 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         await widget.auth.signIn(email, _password.text);
       }
-    } catch (e) {
-      setState(() => _message = l10n.errorGeneric(_describe(e)));
+    } catch (error, stack) {
+      logError(error, stack);
+      if (mounted) setState(() => _message = errorMessage(l10n, error));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
   }
-
-  String _describe(Object error) =>
-      error is AuthException ? error.message : '$error';
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/auth_service.dart';
 import '../data/wine_repository.dart';
+import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
 import '../models/wine.dart';
 import '../state/cellar_controller.dart';
@@ -97,7 +98,7 @@ class _CellarListScreenState extends State<CellarListScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(l10n.errorGeneric('$error'), textAlign: TextAlign.center),
+            Text(errorMessage(l10n, error), textAlign: TextAlign.center),
             const SizedBox(height: 8),
             OutlinedButton(onPressed: _cellar.load, child: Text(l10n.retry)),
           ],

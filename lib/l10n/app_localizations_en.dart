@@ -214,10 +214,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusPastPeak => 'Past its best';
 
   @override
-  String errorGeneric(String message) {
-    return 'Something went wrong: $message';
-  }
+  String get retry => 'Try again';
 
   @override
-  String get retry => 'Try again';
+  String get errorNetwork =>
+      'Could not connect. Check your internet connection and try again.';
+
+  @override
+  String get errorServer =>
+      'The server could not complete the request. Try again later.';
+
+  @override
+  String get errorInvalidData => 'Some of the wine information is invalid.';
+
+  @override
+  String get errorUnknown =>
+      'Something unexpected went wrong. Please try again.';
+
+  @override
+  String get errorInvalidLogin => 'Wrong email or password.';
+
+  @override
+  String get errorEmailNotConfirmed =>
+      'Confirm your email address before signing in.';
+
+  @override
+  String get errorUserExists => 'An account with this email already exists.';
+
+  @override
+  String get errorWeakPassword => 'Choose a stronger password.';
+
+  @override
+  String get errorTooManyAttempts =>
+      'Too many attempts. Wait a moment and try again.';
 }

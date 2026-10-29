@@ -3,12 +3,14 @@ import 'package:wine_cellar/data/wine_repository.dart';
 import 'package:wine_cellar/models/wine.dart';
 import 'package:wine_cellar/state/cellar_controller.dart';
 
+import 'failing_wine_repository.dart';
+
 void main() {
   late InMemoryWineRepository repository;
   late CellarController cellar;
 
   setUp(() async {
-    repository = InMemoryWineRepository(const [
+    repository = InMemoryWineRepository([
       Wine(
         name: 'Rioja',
         type: WineType.red,
@@ -55,7 +57,7 @@ void main() {
   });
 
   test('save adds new wines and updates existing ones', () async {
-    final added = await cellar.save(const Wine(name: 'Champagne'));
+    final added = await cellar.save(Wine(name: 'Champagne'));
     expect(added.id, isNotNull);
     expect(names(), contains('Champagne'));
 
@@ -79,5 +81,47 @@ void main() {
     await cellar.delete(rioja.id!);
     expect(names(), ['Barolo', 'chablis']);
     expect(await repository.fetchAll(), hasLength(2));
+  });
+
+  group('when the repository fails', () {
+    late FailingWineRepository failing;
+    late CellarController failingCellar;
+
+    setUp(() async {
+      failing = FailingWineRepository([Wine(name: 'Barolo', quantity: 2)]);
+      failingCellar = CellarController(failing);
+      await failingCellar.load();
+    });
+
+    test('load stores the error instead of throwing', () async {
+      failing.error = StateError('offline');
+      await failingCellar.load();
+      expect(failingCellar.error, isA<StateError>());
+      expect(failingCellar.loading, isFalse);
+
+      // Trying again after the problem is gone clears the error.
+      failing.error = null;
+      await failingCellar.load();
+      expect(failingCellar.error, isNull);
+      expect(failingCellar.visibleWines, hasLength(1));
+    });
+
+    test(
+      'save, delete and drinkOne pass the error on and change nothing',
+      () async {
+        final barolo = failingCellar.visibleWines.single;
+        failing.error = StateError('offline');
+
+        await expectLater(
+          failingCellar.save(Wine(name: 'New')),
+          throwsStateError,
+        );
+        await expectLater(failingCellar.delete(barolo.id!), throwsStateError);
+        await expectLater(failingCellar.drinkOne(barolo), throwsStateError);
+
+        expect(failingCellar.visibleWines.map((w) => w.name), ['Barolo']);
+        expect(failingCellar.byId(barolo.id!)!.quantity, 2);
+      },
+    );
   });
 }

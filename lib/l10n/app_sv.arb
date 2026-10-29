@@ -63,6 +63,14 @@
   "statusTooEarly": "För tidigt",
   "statusReady": "Redo att drickas",
   "statusPastPeak": "Förbi sin topp",
-  "errorGeneric": "Något gick fel: {message}",
-  "retry": "Försök igen"
+  "retry": "Försök igen",
+  "errorNetwork": "Kunde inte ansluta. Kontrollera internetanslutningen och försök igen.",
+  "errorServer": "Servern kunde inte slutföra begäran. Försök igen senare.",
+  "errorInvalidData": "En del av vinets uppgifter är ogiltiga.",
+  "errorUnknown": "Något oväntat gick fel. Försök igen.",
+  "errorInvalidLogin": "Fel e-post eller lösenord.",
+  "errorEmailNotConfirmed": "Bekräfta din e-postadress innan du loggar in.",
+  "errorUserExists": "Det finns redan ett konto med den här e-postadressen.",
+  "errorWeakPassword": "Välj ett starkare lösenord.",
+  "errorTooManyAttempts": "För många försök. Vänta en stund och försök igen."
 }

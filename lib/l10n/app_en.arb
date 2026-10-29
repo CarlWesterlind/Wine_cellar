@@ -91,13 +91,14 @@
   "statusTooEarly": "Too early",
   "statusReady": "Ready to drink",
   "statusPastPeak": "Past its best",
-  "errorGeneric": "Something went wrong: {message}",
-  "@errorGeneric": {
-    "placeholders": {
-      "message": {
-        "type": "String"
-      }
-    }
-  },
-  "retry": "Try again"
+  "retry": "Try again",
+  "errorNetwork": "Could not connect. Check your internet connection and try again.",
+  "errorServer": "The server could not complete the request. Try again later.",
+  "errorInvalidData": "Some of the wine information is invalid.",
+  "errorUnknown": "Something unexpected went wrong. Please try again.",
+  "errorInvalidLogin": "Wrong email or password.",
+  "errorEmailNotConfirmed": "Confirm your email address before signing in.",
+  "errorUserExists": "An account with this email already exists.",
+  "errorWeakPassword": "Choose a stronger password.",
+  "errorTooManyAttempts": "Too many attempts. Wait a moment and try again."
 }

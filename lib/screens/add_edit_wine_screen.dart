@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
 import '../models/wine.dart';
 import '../state/cellar_controller.dart';
@@ -39,7 +40,7 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
   late final Map<_WineField, TextEditingController> _controllers;
   late WineType _type;
   var _saving = false;
-  String? _error;
+  Object? _error;
 
   @override
   void initState() {
@@ -95,35 +96,37 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
       _saving = true;
       _error = null;
     });
-    final wine = Wine(
-      id: widget.wine?.id,
-      name: _text(_WineField.name)!,
-      producer: _text(_WineField.producer),
-      vintage: _int(_WineField.vintage),
-      type: _type,
-      country: _text(_WineField.country),
-      region: _text(_WineField.region),
-      grapes: (_text(_WineField.grapes) ?? '')
-          .split(',')
-          .map((g) => g.trim())
-          .where((g) => g.isNotEmpty)
-          .toList(),
-      quantity: _int(_WineField.quantity) ?? 0,
-      price: _double(_WineField.price),
-      rack: _text(_WineField.rack),
-      shelf: _text(_WineField.shelf),
-      position: _text(_WineField.position),
-      drinkFrom: _int(_WineField.drinkFrom),
-      drinkUntil: _int(_WineField.drinkUntil),
-      notes: _text(_WineField.notes),
-    );
     try {
+      final wine = Wine(
+        id: widget.wine?.id,
+        name: _text(_WineField.name)!,
+        producer: _text(_WineField.producer),
+        vintage: _int(_WineField.vintage),
+        type: _type,
+        country: _text(_WineField.country),
+        region: _text(_WineField.region),
+        grapes: (_text(_WineField.grapes) ?? '')
+            .split(',')
+            .map((g) => g.trim())
+            .where((g) => g.isNotEmpty)
+            .toList(),
+        quantity: _int(_WineField.quantity) ?? 0,
+        price: _double(_WineField.price),
+        rack: _text(_WineField.rack),
+        shelf: _text(_WineField.shelf),
+        position: _text(_WineField.position),
+        drinkFrom: _int(_WineField.drinkFrom),
+        drinkUntil: _int(_WineField.drinkUntil),
+        notes: _text(_WineField.notes),
+      );
       await widget.cellar.save(wine);
       if (mounted) Navigator.of(context).pop();
-    } catch (e) {
+    } catch (error, stack) {
+      logError(error, stack);
+      if (!mounted) return;
       setState(() {
         _saving = false;
-        _error = '$e';
+        _error = error;
       });
     }
   }
@@ -177,128 +180,137 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
       ),
       body: Form(
         key: _formKey,
-        child: ListView(
+        // Not a ListView: it would drop fields scrolled out of view, and
+        // their validators would then be skipped when saving.
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
-          children: [
-            if (_error != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: Text(
-                  l10n.errorGeneric(_error!),
-                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (_error != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Text(
+                    errorMessage(l10n, _error!),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
                 ),
+              field(_WineField.name, l10n.wineName, validator: required),
+              field(_WineField.producer, l10n.producer),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: field(
+                      _WineField.vintage,
+                      l10n.vintage,
+                      keyboard: TextInputType.number,
+                      validator: optionalYear,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: DropdownButtonFormField<WineType>(
+                        initialValue: _type,
+                        isExpanded: true,
+                        decoration: InputDecoration(labelText: l10n.wineType),
+                        items: [
+                          for (final type in WineType.values)
+                            DropdownMenuItem(
+                              value: type,
+                              child: Text(type.displayName(l10n)),
+                            ),
+                        ],
+                        onChanged: (type) => setState(() => _type = type!),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            field(_WineField.name, l10n.wineName, validator: required),
-            field(_WineField.producer, l10n.producer),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: field(
-                    _WineField.vintage,
-                    l10n.vintage,
-                    keyboard: TextInputType.number,
-                    validator: optionalYear,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: DropdownButtonFormField<WineType>(
-                      initialValue: _type,
-                      isExpanded: true,
-                      decoration: InputDecoration(labelText: l10n.wineType),
-                      items: [
-                        for (final type in WineType.values)
-                          DropdownMenuItem(
-                            value: type,
-                            child: Text(type.displayName(l10n)),
-                          ),
-                      ],
-                      onChanged: (type) => setState(() => _type = type!),
+              field(_WineField.country, l10n.country),
+              field(_WineField.region, l10n.region),
+              field(_WineField.grapes, l10n.grapes, hint: l10n.grapesHint),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: field(
+                      _WineField.quantity,
+                      l10n.quantity,
+                      keyboard: TextInputType.number,
+                      validator: (v) {
+                        final n = int.tryParse(v?.trim() ?? '');
+                        return n == null || n < 0 ? l10n.invalidNumber : null;
+                      },
                     ),
                   ),
-                ),
-              ],
-            ),
-            field(_WineField.country, l10n.country),
-            field(_WineField.region, l10n.region),
-            field(_WineField.grapes, l10n.grapes, hint: l10n.grapesHint),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: field(
-                    _WineField.quantity,
-                    l10n.quantity,
-                    keyboard: TextInputType.number,
-                    validator: (v) {
-                      final n = int.tryParse(v?.trim() ?? '');
-                      return n == null || n < 0 ? l10n.invalidNumber : null;
-                    },
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: field(
-                    _WineField.price,
-                    l10n.price,
-                    keyboard: const TextInputType.numberWithOptions(
-                      decimal: true,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: field(
+                      _WineField.price,
+                      l10n.price,
+                      keyboard: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      validator: (v) {
+                        if (v == null || v.trim().isEmpty) return null;
+                        final n = double.tryParse(
+                          v.trim().replaceAll(',', '.'),
+                        );
+                        return n == null || n < 0 ? l10n.invalidNumber : null;
+                      },
                     ),
-                    validator: (v) {
-                      if (v == null || v.trim().isEmpty) return null;
-                      final n = double.tryParse(v.trim().replaceAll(',', '.'));
-                      return n == null || n < 0 ? l10n.invalidNumber : null;
-                    },
                   ),
-                ),
-              ],
-            ),
-            section(l10n.location),
-            Row(
-              children: [
-                Expanded(child: field(_WineField.rack, l10n.rack)),
-                const SizedBox(width: 12),
-                Expanded(child: field(_WineField.shelf, l10n.shelf)),
-                const SizedBox(width: 12),
-                Expanded(child: field(_WineField.position, l10n.position)),
-              ],
-            ),
-            section(l10n.drinkingWindow),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: field(
-                    _WineField.drinkFrom,
-                    l10n.drinkFrom,
-                    keyboard: TextInputType.number,
-                    validator: optionalYear,
+                ],
+              ),
+              section(l10n.location),
+              Row(
+                children: [
+                  Expanded(child: field(_WineField.rack, l10n.rack)),
+                  const SizedBox(width: 12),
+                  Expanded(child: field(_WineField.shelf, l10n.shelf)),
+                  const SizedBox(width: 12),
+                  Expanded(child: field(_WineField.position, l10n.position)),
+                ],
+              ),
+              section(l10n.drinkingWindow),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: field(
+                      _WineField.drinkFrom,
+                      l10n.drinkFrom,
+                      keyboard: TextInputType.number,
+                      validator: optionalYear,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: field(
-                    _WineField.drinkUntil,
-                    l10n.drinkUntil,
-                    keyboard: TextInputType.number,
-                    validator: (v) {
-                      final error = optionalYear(v);
-                      if (error != null) return error;
-                      final from = _int(_WineField.drinkFrom);
-                      final until = int.tryParse(v?.trim() ?? '');
-                      return from != null && until != null && until < from
-                          ? l10n.untilBeforeFrom
-                          : null;
-                    },
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: field(
+                      _WineField.drinkUntil,
+                      l10n.drinkUntil,
+                      keyboard: TextInputType.number,
+                      validator: (v) {
+                        final error = optionalYear(v);
+                        if (error != null) return error;
+                        final from = _int(_WineField.drinkFrom);
+                        final until = int.tryParse(v?.trim() ?? '');
+                        return from != null && until != null && until < from
+                            ? l10n.untilBeforeFrom
+                            : null;
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
-            field(_WineField.notes, l10n.notes, maxLines: 4),
-          ],
+                ],
+              ),
+              field(_WineField.notes, l10n.notes, maxLines: 4),
+            ],
+          ),
         ),
       ),
     );

@@ -214,10 +214,37 @@ class AppLocalizationsSv extends AppLocalizations {
   String get statusPastPeak => 'Förbi sin topp';
 
   @override
-  String errorGeneric(String message) {
-    return 'Något gick fel: $message';
-  }
+  String get retry => 'Försök igen';
 
   @override
-  String get retry => 'Försök igen';
+  String get errorNetwork =>
+      'Kunde inte ansluta. Kontrollera internetanslutningen och försök igen.';
+
+  @override
+  String get errorServer =>
+      'Servern kunde inte slutföra begäran. Försök igen senare.';
+
+  @override
+  String get errorInvalidData => 'En del av vinets uppgifter är ogiltiga.';
+
+  @override
+  String get errorUnknown => 'Något oväntat gick fel. Försök igen.';
+
+  @override
+  String get errorInvalidLogin => 'Fel e-post eller lösenord.';
+
+  @override
+  String get errorEmailNotConfirmed =>
+      'Bekräfta din e-postadress innan du loggar in.';
+
+  @override
+  String get errorUserExists =>
+      'Det finns redan ett konto med den här e-postadressen.';
+
+  @override
+  String get errorWeakPassword => 'Välj ett starkare lösenord.';
+
+  @override
+  String get errorTooManyAttempts =>
+      'För många försök. Vänta en stund och försök igen.';
 }

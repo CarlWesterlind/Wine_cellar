@@ -480,17 +480,65 @@ abstract class AppLocalizations {
   /// **'Past its best'**
   String get statusPastPeak;
 
-  /// No description provided for @errorGeneric.
-  ///
-  /// In en, this message translates to:
-  /// **'Something went wrong: {message}'**
-  String errorGeneric(String message);
-
   /// No description provided for @retry.
   ///
   /// In en, this message translates to:
   /// **'Try again'**
   String get retry;
+
+  /// No description provided for @errorNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not connect. Check your internet connection and try again.'**
+  String get errorNetwork;
+
+  /// No description provided for @errorServer.
+  ///
+  /// In en, this message translates to:
+  /// **'The server could not complete the request. Try again later.'**
+  String get errorServer;
+
+  /// No description provided for @errorInvalidData.
+  ///
+  /// In en, this message translates to:
+  /// **'Some of the wine information is invalid.'**
+  String get errorInvalidData;
+
+  /// No description provided for @errorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Something unexpected went wrong. Please try again.'**
+  String get errorUnknown;
+
+  /// No description provided for @errorInvalidLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong email or password.'**
+  String get errorInvalidLogin;
+
+  /// No description provided for @errorEmailNotConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your email address before signing in.'**
+  String get errorEmailNotConfirmed;
+
+  /// No description provided for @errorUserExists.
+  ///
+  /// In en, this message translates to:
+  /// **'An account with this email already exists.'**
+  String get errorUserExists;
+
+  /// No description provided for @errorWeakPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a stronger password.'**
+  String get errorWeakPassword;
+
+  /// No description provided for @errorTooManyAttempts.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Wait a moment and try again.'**
+  String get errorTooManyAttempts;
 }
 
 class _AppLocalizationsDelegate

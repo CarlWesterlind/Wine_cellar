@@ -3,7 +3,7 @@ import 'package:wine_cellar/models/wine.dart';
 
 void main() {
   group('drinkingStatus', () {
-    const wine = Wine(name: 'Test', drinkFrom: 2025, drinkUntil: 2030);
+    final wine = Wine(name: 'Test', drinkFrom: 2025, drinkUntil: 2030);
 
     test('is too early before the window', () {
       expect(wine.drinkingStatus(2024), DrinkingStatus.tooEarly);
@@ -19,24 +19,21 @@ void main() {
     });
 
     test('is unknown without a window', () {
-      expect(
-        const Wine(name: 'X').drinkingStatus(2025),
-        DrinkingStatus.unknown,
-      );
+      expect(Wine(name: 'X').drinkingStatus(2025), DrinkingStatus.unknown);
     });
 
     test('handles an open-ended window', () {
-      const fromOnly = Wine(name: 'X', drinkFrom: 2030);
+      final fromOnly = Wine(name: 'X', drinkFrom: 2030);
       expect(fromOnly.drinkingStatus(2029), DrinkingStatus.tooEarly);
       expect(fromOnly.drinkingStatus(2050), DrinkingStatus.ready);
-      const untilOnly = Wine(name: 'X', drinkUntil: 2020);
+      final untilOnly = Wine(name: 'X', drinkUntil: 2020);
       expect(untilOnly.drinkingStatus(2000), DrinkingStatus.ready);
       expect(untilOnly.drinkingStatus(2021), DrinkingStatus.pastPeak);
     });
   });
 
   test('toMap and fromMap round-trip every field', () {
-    const wine = Wine(
+    final wine = Wine(
       id: 'abc',
       name: 'Barolo',
       producer: 'Scavino',
@@ -65,7 +62,7 @@ void main() {
   });
 
   test('matchesSearch looks in name, producer, region, country and grapes', () {
-    const wine = Wine(
+    final wine = Wine(
       name: 'Barolo',
       producer: 'Scavino',
       region: 'Piemonte',
@@ -77,5 +74,69 @@ void main() {
     expect(wine.matchesSearch('nebb'), isTrue);
     expect(wine.matchesSearch('rioja'), isFalse);
     expect(wine.matchesSearch('  '), isTrue);
+  });
+
+  group('constructor throws ArgumentError for impossible values', () {
+    test('empty or blank name', () {
+      expect(() => Wine(name: ''), throwsArgumentError);
+      expect(() => Wine(name: '   '), throwsArgumentError);
+    });
+
+    test('negative quantity', () {
+      expect(() => Wine(name: 'X', quantity: -1), throwsArgumentError);
+    });
+
+    test('negative price', () {
+      expect(() => Wine(name: 'X', price: -0.5), throwsArgumentError);
+    });
+
+    test('drinking window that ends before it starts', () {
+      expect(
+        () => Wine(name: 'X', drinkFrom: 2030, drinkUntil: 2025),
+        throwsArgumentError,
+      );
+    });
+
+    test('accepts the edge cases that are allowed', () {
+      expect(
+        () => Wine(
+          name: 'X',
+          quantity: 0,
+          price: 0,
+          drinkFrom: 2030,
+          drinkUntil: 2030,
+        ),
+        returnsNormally,
+      );
+    });
+
+    test('withQuantity also checks the new value', () {
+      expect(() => Wine(name: 'X').withQuantity(-1), throwsArgumentError);
+    });
+  });
+
+  group('fromMap throws FormatException for bad database rows', () {
+    test('missing name', () {
+      expect(() => Wine.fromMap({'id': '1'}), throwsFormatException);
+    });
+
+    test('value of the wrong type', () {
+      expect(
+        () => Wine.fromMap({'id': '1', 'name': 'X', 'quantity': 'many'}),
+        throwsFormatException,
+      );
+    });
+
+    test('impossible value', () {
+      expect(
+        () => Wine.fromMap({'id': '1', 'name': 'X', 'quantity': -3}),
+        throwsFormatException,
+      );
+    });
+
+    test('unknown wine type falls back to red instead of failing', () {
+      final wine = Wine.fromMap({'id': '1', 'name': 'X', 'type': 'orange'});
+      expect(wine.type, WineType.red);
+    });
   });
 }

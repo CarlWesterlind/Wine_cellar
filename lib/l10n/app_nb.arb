@@ -63,6 +63,14 @@
   "statusTooEarly": "For tidlig",
   "statusReady": "Klar til å drikkes",
   "statusPastPeak": "Over toppen",
-  "errorGeneric": "Noe gikk galt: {message}",
-  "retry": "Prøv igjen"
+  "retry": "Prøv igjen",
+  "errorNetwork": "Kunne ikke koble til. Sjekk internettforbindelsen og prøv igjen.",
+  "errorServer": "Serveren kunne ikke fullføre forespørselen. Prøv igjen senere.",
+  "errorInvalidData": "Noen av vinens opplysninger er ugyldige.",
+  "errorUnknown": "Noe uventet gikk galt. Prøv igjen.",
+  "errorInvalidLogin": "Feil e-post eller passord.",
+  "errorEmailNotConfirmed": "Bekreft e-postadressen din før du logger inn.",
+  "errorUserExists": "Det finnes allerede en konto med denne e-postadressen.",
+  "errorWeakPassword": "Velg et sterkere passord.",
+  "errorTooManyAttempts": "For mange forsøk. Vent litt og prøv igjen."
 }

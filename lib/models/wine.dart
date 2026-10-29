@@ -4,7 +4,9 @@ enum WineType { red, white, rose, sparkling, dessert, fortified }
 enum DrinkingStatus { unknown, tooEarly, ready, pastPeak }
 
 class Wine {
-  const Wine({
+  /// Throws [ArgumentError] if a value is impossible, e.g. an empty name or a
+  /// negative number of bottles.
+  Wine({
     this.id,
     required this.name,
     this.producer,
@@ -21,7 +23,24 @@ class Wine {
     this.drinkFrom,
     this.drinkUntil,
     this.notes,
-  });
+  }) {
+    if (name.trim().isEmpty) {
+      throw ArgumentError.value(name, 'name', 'must not be empty');
+    }
+    if (quantity < 0) {
+      throw ArgumentError.value(quantity, 'quantity', 'must not be negative');
+    }
+    if (price != null && price! < 0) {
+      throw ArgumentError.value(price, 'price', 'must not be negative');
+    }
+    if (drinkFrom != null && drinkUntil != null && drinkFrom! > drinkUntil!) {
+      throw ArgumentError.value(
+        drinkUntil,
+        'drinkUntil',
+        'must not be earlier than drinkFrom ($drinkFrom)',
+      );
+    }
+  }
 
   /// Null until the wine has been saved.
   final String? id;
@@ -118,24 +137,34 @@ class Wine {
     'notes': notes,
   };
 
-  factory Wine.fromMap(Map<String, dynamic> map) => Wine(
-    id: map['id'] as String?,
-    name: map['name'] as String,
-    producer: map['producer'] as String?,
-    vintage: map['vintage'] as int?,
-    type: WineType.values.asNameMap()[map['type']] ?? WineType.red,
-    country: map['country'] as String?,
-    region: map['region'] as String?,
-    grapes: (map['grapes'] as List<dynamic>? ?? const []).cast<String>(),
-    quantity: map['quantity'] as int? ?? 0,
-    price: (map['price'] as num?)?.toDouble(),
-    rack: map['rack'] as String?,
-    shelf: map['shelf'] as String?,
-    position: map['position'] as String?,
-    drinkFrom: map['drink_from'] as int?,
-    drinkUntil: map['drink_until'] as int?,
-    notes: map['notes'] as String?,
-  );
+  /// Reads a row from the database. Throws [FormatException] if the row is
+  /// missing fields or has values of the wrong type.
+  factory Wine.fromMap(Map<String, dynamic> map) {
+    try {
+      return Wine(
+        id: map['id'] as String?,
+        name: map['name'] as String,
+        producer: map['producer'] as String?,
+        vintage: map['vintage'] as int?,
+        type: WineType.values.asNameMap()[map['type']] ?? WineType.red,
+        country: map['country'] as String?,
+        region: map['region'] as String?,
+        grapes: (map['grapes'] as List<dynamic>? ?? const []).cast<String>(),
+        quantity: map['quantity'] as int? ?? 0,
+        price: (map['price'] as num?)?.toDouble(),
+        rack: map['rack'] as String?,
+        shelf: map['shelf'] as String?,
+        position: map['position'] as String?,
+        drinkFrom: map['drink_from'] as int?,
+        drinkUntil: map['drink_until'] as int?,
+        notes: map['notes'] as String?,
+      );
+    } on TypeError catch (e) {
+      throw FormatException('Invalid wine data: $e', map);
+    } on ArgumentError catch (e) {
+      throw FormatException('Invalid wine data: ${e.message}', map);
+    }
+  }
 
   /// True if [query] appears in the name, producer, region, country or a grape.
   bool matchesSearch(String query) {

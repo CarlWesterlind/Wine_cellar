@@ -6,18 +6,26 @@ import 'package:wine_cellar/data/wine_repository.dart';
 import 'package:wine_cellar/models/wine.dart';
 import 'package:wine_cellar/state/language_settings.dart';
 
+import 'failing_wine_repository.dart';
+
 Future<LanguageSettings> settingsWith(Map<String, Object> values) async {
   SharedPreferences.setMockInitialValues(values);
   return LanguageSettings(await SharedPreferences.getInstance());
 }
 
-Future<void> pumpApp(WidgetTester tester, LanguageSettings settings) async {
+Future<void> pumpApp(
+  WidgetTester tester,
+  LanguageSettings settings, {
+  WineRepository? repository,
+}) async {
   await tester.pumpWidget(
     WineCellarApp(
       settings: settings,
-      createRepository: () => InMemoryWineRepository(const [
-        Wine(name: 'Barolo', producer: 'Scavino', quantity: 3, price: 650),
-      ]),
+      createRepository: () =>
+          repository ??
+          InMemoryWineRepository([
+            Wine(name: 'Barolo', producer: 'Scavino', quantity: 3, price: 650),
+          ]),
     ),
   );
   await tester.pumpAndSettle();
@@ -104,5 +112,138 @@ void main() {
     await tester.tap(find.text('Drink a bottle'));
     await tester.pumpAndSettle();
     expect(find.text('2 bottles'), findsOneWidget);
+  });
+
+  group('errors are shown as friendly messages, never as raw exceptions', () {
+    late FailingWineRepository repository;
+
+    setUp(() {
+      repository = FailingWineRepository([Wine(name: 'Barolo', quantity: 3)]);
+    });
+
+    testWidgets('loading fails, then works after "Try again"', (tester) async {
+      repository.error = StateError('secret internal detail');
+      await pumpApp(
+        tester,
+        await settingsWith({'locale': 'en'}),
+        repository: repository,
+      );
+
+      expect(
+        find.text('Something unexpected went wrong. Please try again.'),
+        findsOneWidget,
+      );
+      expect(find.textContaining('secret internal detail'), findsNothing);
+      expect(find.textContaining('StateError'), findsNothing);
+
+      repository.error = null;
+      await tester.tap(find.text('Try again'));
+      await tester.pumpAndSettle();
+      expect(find.text('Barolo'), findsOneWidget);
+    });
+
+    testWidgets('a failed delete keeps the wine and shows a message', (
+      tester,
+    ) async {
+      await pumpApp(
+        tester,
+        await settingsWith({'locale': 'sv'}),
+        repository: repository,
+      );
+      await tester.tap(find.text('Barolo'));
+      await tester.pumpAndSettle();
+
+      repository.error = StateError('offline');
+      await tester.tap(find.byTooltip('Ta bort vin'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(FilledButton, 'Ta bort'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Något oväntat gick fel. Försök igen.'), findsOneWidget);
+      // Still on the detail screen, and the wine still exists.
+      expect(find.text('3 flaskor'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('a failed "drink a bottle" keeps the count', (tester) async {
+      await pumpApp(
+        tester,
+        await settingsWith({'locale': 'en'}),
+        repository: repository,
+      );
+      await tester.tap(find.text('Barolo'));
+      await tester.pumpAndSettle();
+
+      repository.error = StateError('offline');
+      await tester.tap(find.text('Drink a bottle'));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.text('Something unexpected went wrong. Please try again.'),
+        findsOneWidget,
+      );
+      expect(find.text('3 bottles'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('a failed save keeps the form open with a message', (
+      tester,
+    ) async {
+      await pumpApp(
+        tester,
+        await settingsWith({'locale': 'en'}),
+        repository: repository,
+      );
+      await tester.tap(find.text('Add wine'));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.widgetWithText(TextFormField, 'Name'),
+        'Chablis',
+      );
+
+      repository.error = StateError('offline');
+      await tester.tap(find.text('Save'));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.text('Something unexpected went wrong. Please try again.'),
+        findsOneWidget,
+      );
+      expect(find.text('Add wine'), findsOneWidget); // Form is still open.
+      expect(tester.takeException(), isNull);
+    });
+  });
+
+  testWidgets('the form rejects invalid input before saving', (tester) async {
+    await pumpApp(tester, await settingsWith({'locale': 'en'}));
+    await tester.tap(find.text('Add wine'));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.widgetWithText(TextFormField, 'Name'), 'X');
+    await tester.enterText(find.widgetWithText(TextFormField, 'Bottles'), '-2');
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Vintage'),
+      'abc',
+    );
+    final drinkFrom = find.widgetWithText(TextFormField, 'Drink from (year)');
+    await tester.scrollUntilVisible(
+      drinkFrom,
+      200,
+      scrollable: find
+          .descendant(of: find.byType(Form), matching: find.byType(Scrollable))
+          .first,
+    );
+    await tester.enterText(drinkFrom, '2030');
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Drink until (year)'),
+      '2020',
+    );
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Enter a valid number'), findsOneWidget);
+    expect(find.text('Enter a valid year'), findsOneWidget);
+    expect(find.text('Must not be earlier than "drink from"'), findsOneWidget);
+    expect(find.text('Add wine'), findsOneWidget); // Not saved.
   });
 }

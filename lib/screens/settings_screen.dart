@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/auth_service.dart';
+import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
 import '../state/language_settings.dart';
 
@@ -58,8 +59,10 @@ class SettingsScreen extends StatelessWidget {
                 leading: const Icon(Icons.logout),
                 title: Text(l10n.signOut),
                 onTap: () async {
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                  await auth.signOut();
+                  final signedOut = await runOrShowError(context, auth.signOut);
+                  if (signedOut && context.mounted) {
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                  }
                 },
               ),
             ],

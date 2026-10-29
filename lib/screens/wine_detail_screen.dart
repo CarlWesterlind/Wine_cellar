@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
 import '../models/wine.dart';
 import '../state/cellar_controller.dart';
@@ -36,8 +37,11 @@ class WineDetailScreen extends StatelessWidget {
       ),
     );
     if (confirmed != true || !context.mounted) return;
-    await cellar.delete(wine.id!);
-    if (context.mounted) Navigator.of(context).pop();
+    final deleted = await runOrShowError(
+      context,
+      () => cellar.delete(wine.id!),
+    );
+    if (deleted && context.mounted) Navigator.of(context).pop();
   }
 
   @override
@@ -108,7 +112,10 @@ class WineDetailScreen extends StatelessWidget {
                   FilledButton.tonalIcon(
                     onPressed: wine.quantity == 0
                         ? null
-                        : () => cellar.drinkOne(wine),
+                        : () => runOrShowError(
+                            context,
+                            () => cellar.drinkOne(wine),
+                          ),
                     icon: const Icon(Icons.local_bar),
                     label: Text(l10n.drinkOne),
                   ),
