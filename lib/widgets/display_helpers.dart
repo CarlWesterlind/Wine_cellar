@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import '../l10n/app_localizations.dart';
 import '../models/wine.dart';
 
-extension WineTypeLabel on WineType {
-  String label(AppLocalizations l10n) => switch (this) {
+extension WineTypeDisplay on WineType {
+  String displayName(AppLocalizations l10n) => switch (this) {
     WineType.red => l10n.typeRed,
     WineType.white => l10n.typeWhite,
     WineType.rose => l10n.typeRose,
@@ -24,8 +24,8 @@ extension WineTypeLabel on WineType {
   };
 }
 
-extension DrinkingStatusLabel on DrinkingStatus {
-  String label(AppLocalizations l10n) => switch (this) {
+extension DrinkingStatusDisplay on DrinkingStatus {
+  String displayName(AppLocalizations l10n) => switch (this) {
     DrinkingStatus.unknown => l10n.statusUnknown,
     DrinkingStatus.tooEarly => l10n.statusTooEarly,
     DrinkingStatus.ready => l10n.statusReady,
@@ -71,7 +71,7 @@ class DrinkingStatusChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
-        status.label(l10n),
+        status.displayName(l10n),
         style: TextStyle(
           color: status.color.shade800,
           fontSize: 12,

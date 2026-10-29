@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../data/auth_service.dart';
 import '../l10n/app_localizations.dart';
-import '../state/settings_controller.dart';
+import '../state/language_settings.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key, required this.settings, this.auth});
 
-  final SettingsController settings;
+  final LanguageSettings settings;
   final AuthService? auth;
 
   /// Each language is shown in its own language.

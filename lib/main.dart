@@ -6,7 +6,7 @@ import 'app.dart';
 import 'data/auth_service.dart';
 import 'data/supabase_wine_repository.dart';
 import 'data/wine_repository.dart';
-import 'state/settings_controller.dart';
+import 'state/language_settings.dart';
 
 // Pass with --dart-define. Without them the app runs in demo mode.
 const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
@@ -16,13 +16,13 @@ const supabasePublishableKey = String.fromEnvironment(
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final settings = SettingsController(await SharedPreferences.getInstance());
+  final settings = LanguageSettings(await SharedPreferences.getInstance());
 
   if (supabaseUrl.isEmpty || supabasePublishableKey.isEmpty) {
     runApp(
       WineCellarApp(
         settings: settings,
-        createRepository: () => InMemoryWineRepository(demoWines),
+        createRepository: () => InMemoryWineRepository(sampleWines),
       ),
     );
     return;

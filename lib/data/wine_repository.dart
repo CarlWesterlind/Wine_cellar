@@ -48,7 +48,7 @@ class InMemoryWineRepository implements WineRepository {
   Future<void> delete(String id) async => _wines.remove(id);
 }
 
-const demoWines = [
+const sampleWines = [
   Wine(
     name: 'Barolo Cannubi',
     producer: 'Paolo Scavino',

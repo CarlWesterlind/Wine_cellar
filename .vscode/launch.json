@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Wine Cellar (demo)",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "Wine Cellar (Supabase)",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--dart-define-from-file=supabase.json"]
+    }
+  ]
+}

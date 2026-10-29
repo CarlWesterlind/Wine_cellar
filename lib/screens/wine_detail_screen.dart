@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/wine.dart';
 import '../state/cellar_controller.dart';
-import '../widgets/labels.dart';
-import 'wine_form_screen.dart';
+import '../widgets/display_helpers.dart';
+import 'add_edit_wine_screen.dart';
 
 class WineDetailScreen extends StatelessWidget {
   const WineDetailScreen({
@@ -60,7 +60,8 @@ class WineDetailScreen extends StatelessWidget {
                 icon: const Icon(Icons.edit),
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute<void>(
-                    builder: (_) => WineFormScreen(cellar: cellar, wine: wine),
+                    builder: (_) =>
+                        AddEditWineScreen(cellar: cellar, wine: wine),
                   ),
                 ),
               ),
@@ -114,19 +115,19 @@ class WineDetailScreen extends StatelessWidget {
                 ],
               ),
               const Divider(height: 32),
-              _Field(l10n.wineType, wine.type.label(l10n)),
-              _Field(l10n.vintage, wine.vintage?.toString()),
-              _Field(l10n.country, wine.country),
-              _Field(l10n.region, wine.region),
-              _Field(
+              _InfoRow(l10n.wineType, wine.type.displayName(l10n)),
+              _InfoRow(l10n.vintage, wine.vintage?.toString()),
+              _InfoRow(l10n.country, wine.country),
+              _InfoRow(l10n.region, wine.region),
+              _InfoRow(
                 l10n.grapes,
                 wine.grapes.isEmpty ? null : wine.grapes.join(', '),
               ),
-              _Field(
+              _InfoRow(
                 l10n.price,
                 wine.price == null ? null : formatMoney(context, wine.price!),
               ),
-              _Field(
+              _InfoRow(
                 l10n.location,
                 wine.hasLocation ? formatLocation(l10n, wine) : null,
               ),
@@ -143,7 +144,7 @@ class WineDetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              _Field(l10n.notes, wine.notes),
+              _InfoRow(l10n.notes, wine.notes),
             ],
           ),
         );
@@ -153,8 +154,8 @@ class WineDetailScreen extends StatelessWidget {
 }
 
 /// A labelled value. Hidden when there is no value.
-class _Field extends StatelessWidget {
-  const _Field(this.label, this.value);
+class _InfoRow extends StatelessWidget {
+  const _InfoRow(this.label, this.value);
 
   final String label;
   final String? value;

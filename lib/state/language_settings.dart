@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// The app language. Null [locale] means follow the device language.
-class SettingsController extends ChangeNotifier {
-  SettingsController(this._prefs) {
+class LanguageSettings extends ChangeNotifier {
+  LanguageSettings(this._prefs) {
     final code = _prefs.getString(_localeKey);
     _locale = code == null ? null : Locale(code);
   }

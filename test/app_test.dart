@@ -4,14 +4,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wine_cellar/app.dart';
 import 'package:wine_cellar/data/wine_repository.dart';
 import 'package:wine_cellar/models/wine.dart';
-import 'package:wine_cellar/state/settings_controller.dart';
+import 'package:wine_cellar/state/language_settings.dart';
 
-Future<SettingsController> settingsWith(Map<String, Object> values) async {
+Future<LanguageSettings> settingsWith(Map<String, Object> values) async {
   SharedPreferences.setMockInitialValues(values);
-  return SettingsController(await SharedPreferences.getInstance());
+  return LanguageSettings(await SharedPreferences.getInstance());
 }
 
-Future<void> pumpApp(WidgetTester tester, SettingsController settings) async {
+Future<void> pumpApp(WidgetTester tester, LanguageSettings settings) async {
   await tester.pumpWidget(
     WineCellarApp(
       settings: settings,

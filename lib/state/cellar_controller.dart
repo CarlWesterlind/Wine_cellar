@@ -32,7 +32,7 @@ class CellarController extends ChangeNotifier {
   List<Wine> get visibleWines {
     final year = currentYear;
     return _wines
-        .where((w) => w.matches(_query))
+        .where((w) => w.matchesSearch(_query))
         .where((w) => _typeFilter == null || w.type == _typeFilter)
         .where(
           (w) =>

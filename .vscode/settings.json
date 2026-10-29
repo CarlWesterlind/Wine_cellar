@@ -1,0 +1,14 @@
+{
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit",
+      "source.fixAll": "explicit"
+    },
+    "editor.rulers": [80]
+  },
+  "files.exclude": {
+    "**/.dart_tool": true,
+    "build": true
+  }
+}

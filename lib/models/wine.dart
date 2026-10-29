@@ -138,7 +138,7 @@ class Wine {
   );
 
   /// True if [query] appears in the name, producer, region, country or a grape.
-  bool matches(String query) {
+  bool matchesSearch(String query) {
     final q = query.trim().toLowerCase();
     if (q.isEmpty) return true;
     return [

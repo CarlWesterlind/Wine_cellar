@@ -3,22 +3,40 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/wine.dart';
 import '../state/cellar_controller.dart';
-import '../widgets/labels.dart';
+import '../widgets/display_helpers.dart';
+
+/// The text fields in the form, one per [Wine] property.
+enum _WineField {
+  name,
+  producer,
+  vintage,
+  country,
+  region,
+  grapes,
+  quantity,
+  price,
+  rack,
+  shelf,
+  position,
+  drinkFrom,
+  drinkUntil,
+  notes,
+}
 
 /// Adds a new wine, or edits [wine] when it is given.
-class WineFormScreen extends StatefulWidget {
-  const WineFormScreen({super.key, required this.cellar, this.wine});
+class AddEditWineScreen extends StatefulWidget {
+  const AddEditWineScreen({super.key, required this.cellar, this.wine});
 
   final CellarController cellar;
   final Wine? wine;
 
   @override
-  State<WineFormScreen> createState() => _WineFormScreenState();
+  State<AddEditWineScreen> createState() => _AddEditWineScreenState();
 }
 
-class _WineFormScreenState extends State<WineFormScreen> {
+class _AddEditWineScreenState extends State<AddEditWineScreen> {
   final _formKey = GlobalKey<FormState>();
-  late final Map<String, TextEditingController> _fields;
+  late final Map<_WineField, TextEditingController> _controllers;
   late WineType _type;
   var _saving = false;
   String? _error;
@@ -29,21 +47,21 @@ class _WineFormScreenState extends State<WineFormScreen> {
     final w = widget.wine;
     _type = w?.type ?? WineType.red;
     String text(Object? value) => value?.toString() ?? '';
-    _fields = {
-      'name': TextEditingController(text: w?.name),
-      'producer': TextEditingController(text: text(w?.producer)),
-      'vintage': TextEditingController(text: text(w?.vintage)),
-      'country': TextEditingController(text: text(w?.country)),
-      'region': TextEditingController(text: text(w?.region)),
-      'grapes': TextEditingController(text: w?.grapes.join(', ')),
-      'quantity': TextEditingController(text: text(w?.quantity ?? 1)),
-      'price': TextEditingController(text: _priceText(w?.price)),
-      'rack': TextEditingController(text: text(w?.rack)),
-      'shelf': TextEditingController(text: text(w?.shelf)),
-      'position': TextEditingController(text: text(w?.position)),
-      'drinkFrom': TextEditingController(text: text(w?.drinkFrom)),
-      'drinkUntil': TextEditingController(text: text(w?.drinkUntil)),
-      'notes': TextEditingController(text: text(w?.notes)),
+    _controllers = {
+      _WineField.name: TextEditingController(text: w?.name),
+      _WineField.producer: TextEditingController(text: text(w?.producer)),
+      _WineField.vintage: TextEditingController(text: text(w?.vintage)),
+      _WineField.country: TextEditingController(text: text(w?.country)),
+      _WineField.region: TextEditingController(text: text(w?.region)),
+      _WineField.grapes: TextEditingController(text: w?.grapes.join(', ')),
+      _WineField.quantity: TextEditingController(text: text(w?.quantity ?? 1)),
+      _WineField.price: TextEditingController(text: _priceText(w?.price)),
+      _WineField.rack: TextEditingController(text: text(w?.rack)),
+      _WineField.shelf: TextEditingController(text: text(w?.shelf)),
+      _WineField.position: TextEditingController(text: text(w?.position)),
+      _WineField.drinkFrom: TextEditingController(text: text(w?.drinkFrom)),
+      _WineField.drinkUntil: TextEditingController(text: text(w?.drinkUntil)),
+      _WineField.notes: TextEditingController(text: text(w?.notes)),
     };
   }
 
@@ -54,21 +72,21 @@ class _WineFormScreenState extends State<WineFormScreen> {
 
   @override
   void dispose() {
-    for (final controller in _fields.values) {
+    for (final controller in _controllers.values) {
       controller.dispose();
     }
     super.dispose();
   }
 
   /// The trimmed text of a field, or null if it is empty.
-  String? _text(String key) {
-    final value = _fields[key]!.text.trim();
+  String? _text(_WineField key) {
+    final value = _controllers[key]!.text.trim();
     return value.isEmpty ? null : value;
   }
 
-  int? _int(String key) => int.tryParse(_text(key) ?? '');
+  int? _int(_WineField key) => int.tryParse(_text(key) ?? '');
 
-  double? _double(String key) =>
+  double? _double(_WineField key) =>
       double.tryParse((_text(key) ?? '').replaceAll(',', '.'));
 
   Future<void> _save() async {
@@ -79,25 +97,25 @@ class _WineFormScreenState extends State<WineFormScreen> {
     });
     final wine = Wine(
       id: widget.wine?.id,
-      name: _text('name')!,
-      producer: _text('producer'),
-      vintage: _int('vintage'),
+      name: _text(_WineField.name)!,
+      producer: _text(_WineField.producer),
+      vintage: _int(_WineField.vintage),
       type: _type,
-      country: _text('country'),
-      region: _text('region'),
-      grapes: (_text('grapes') ?? '')
+      country: _text(_WineField.country),
+      region: _text(_WineField.region),
+      grapes: (_text(_WineField.grapes) ?? '')
           .split(',')
           .map((g) => g.trim())
           .where((g) => g.isNotEmpty)
           .toList(),
-      quantity: _int('quantity') ?? 0,
-      price: _double('price'),
-      rack: _text('rack'),
-      shelf: _text('shelf'),
-      position: _text('position'),
-      drinkFrom: _int('drinkFrom'),
-      drinkUntil: _int('drinkUntil'),
-      notes: _text('notes'),
+      quantity: _int(_WineField.quantity) ?? 0,
+      price: _double(_WineField.price),
+      rack: _text(_WineField.rack),
+      shelf: _text(_WineField.shelf),
+      position: _text(_WineField.position),
+      drinkFrom: _int(_WineField.drinkFrom),
+      drinkUntil: _int(_WineField.drinkUntil),
+      notes: _text(_WineField.notes),
     );
     try {
       await widget.cellar.save(wine);
@@ -125,7 +143,7 @@ class _WineFormScreenState extends State<WineFormScreen> {
     }
 
     Widget field(
-      String key,
+      _WineField key,
       String label, {
       String? hint,
       TextInputType? keyboard,
@@ -134,7 +152,7 @@ class _WineFormScreenState extends State<WineFormScreen> {
     }) => Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: TextFormField(
-        controller: _fields[key],
+        controller: _controllers[key],
         decoration: InputDecoration(labelText: label, hintText: hint),
         keyboardType: keyboard,
         validator: validator,
@@ -170,14 +188,14 @@ class _WineFormScreenState extends State<WineFormScreen> {
                   style: TextStyle(color: Theme.of(context).colorScheme.error),
                 ),
               ),
-            field('name', l10n.wineName, validator: required),
-            field('producer', l10n.producer),
+            field(_WineField.name, l10n.wineName, validator: required),
+            field(_WineField.producer, l10n.producer),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: field(
-                    'vintage',
+                    _WineField.vintage,
                     l10n.vintage,
                     keyboard: TextInputType.number,
                     validator: optionalYear,
@@ -195,7 +213,7 @@ class _WineFormScreenState extends State<WineFormScreen> {
                         for (final type in WineType.values)
                           DropdownMenuItem(
                             value: type,
-                            child: Text(type.label(l10n)),
+                            child: Text(type.displayName(l10n)),
                           ),
                       ],
                       onChanged: (type) => setState(() => _type = type!),
@@ -204,15 +222,15 @@ class _WineFormScreenState extends State<WineFormScreen> {
                 ),
               ],
             ),
-            field('country', l10n.country),
-            field('region', l10n.region),
-            field('grapes', l10n.grapes, hint: l10n.grapesHint),
+            field(_WineField.country, l10n.country),
+            field(_WineField.region, l10n.region),
+            field(_WineField.grapes, l10n.grapes, hint: l10n.grapesHint),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: field(
-                    'quantity',
+                    _WineField.quantity,
                     l10n.quantity,
                     keyboard: TextInputType.number,
                     validator: (v) {
@@ -224,7 +242,7 @@ class _WineFormScreenState extends State<WineFormScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: field(
-                    'price',
+                    _WineField.price,
                     l10n.price,
                     keyboard: const TextInputType.numberWithOptions(
                       decimal: true,
@@ -241,11 +259,11 @@ class _WineFormScreenState extends State<WineFormScreen> {
             section(l10n.location),
             Row(
               children: [
-                Expanded(child: field('rack', l10n.rack)),
+                Expanded(child: field(_WineField.rack, l10n.rack)),
                 const SizedBox(width: 12),
-                Expanded(child: field('shelf', l10n.shelf)),
+                Expanded(child: field(_WineField.shelf, l10n.shelf)),
                 const SizedBox(width: 12),
-                Expanded(child: field('position', l10n.position)),
+                Expanded(child: field(_WineField.position, l10n.position)),
               ],
             ),
             section(l10n.drinkingWindow),
@@ -254,7 +272,7 @@ class _WineFormScreenState extends State<WineFormScreen> {
               children: [
                 Expanded(
                   child: field(
-                    'drinkFrom',
+                    _WineField.drinkFrom,
                     l10n.drinkFrom,
                     keyboard: TextInputType.number,
                     validator: optionalYear,
@@ -263,13 +281,13 @@ class _WineFormScreenState extends State<WineFormScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: field(
-                    'drinkUntil',
+                    _WineField.drinkUntil,
                     l10n.drinkUntil,
                     keyboard: TextInputType.number,
                     validator: (v) {
                       final error = optionalYear(v);
                       if (error != null) return error;
-                      final from = _int('drinkFrom');
+                      final from = _int(_WineField.drinkFrom);
                       final until = int.tryParse(v?.trim() ?? '');
                       return from != null && until != null && until < from
                           ? l10n.untilBeforeFrom
@@ -279,7 +297,7 @@ class _WineFormScreenState extends State<WineFormScreen> {
                 ),
               ],
             ),
-            field('notes', l10n.notes, maxLines: 4),
+            field(_WineField.notes, l10n.notes, maxLines: 4),
           ],
         ),
       ),

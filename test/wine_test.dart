@@ -64,18 +64,18 @@ void main() {
     expect(wine.price, 100.0);
   });
 
-  test('matches searches name, producer, region, country and grapes', () {
+  test('matchesSearch looks in name, producer, region, country and grapes', () {
     const wine = Wine(
       name: 'Barolo',
       producer: 'Scavino',
       region: 'Piemonte',
       grapes: ['Nebbiolo'],
     );
-    expect(wine.matches('barolo'), isTrue);
-    expect(wine.matches('SCAV'), isTrue);
-    expect(wine.matches('piemonte'), isTrue);
-    expect(wine.matches('nebb'), isTrue);
-    expect(wine.matches('rioja'), isFalse);
-    expect(wine.matches('  '), isTrue);
+    expect(wine.matchesSearch('barolo'), isTrue);
+    expect(wine.matchesSearch('SCAV'), isTrue);
+    expect(wine.matchesSearch('piemonte'), isTrue);
+    expect(wine.matchesSearch('nebb'), isTrue);
+    expect(wine.matchesSearch('rioja'), isFalse);
+    expect(wine.matchesSearch('  '), isTrue);
   });
 }

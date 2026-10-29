@@ -5,14 +5,14 @@ import '../data/wine_repository.dart';
 import '../l10n/app_localizations.dart';
 import '../models/wine.dart';
 import '../state/cellar_controller.dart';
-import '../state/settings_controller.dart';
-import '../widgets/labels.dart';
+import '../state/language_settings.dart';
+import '../widgets/display_helpers.dart';
+import 'add_edit_wine_screen.dart';
 import 'settings_screen.dart';
 import 'wine_detail_screen.dart';
-import 'wine_form_screen.dart';
 
-class CellarScreen extends StatefulWidget {
-  const CellarScreen({
+class CellarListScreen extends StatefulWidget {
+  const CellarListScreen({
     super.key,
     required this.repository,
     required this.settings,
@@ -21,15 +21,15 @@ class CellarScreen extends StatefulWidget {
   });
 
   final WineRepository repository;
-  final SettingsController settings;
+  final LanguageSettings settings;
   final AuthService? auth;
   final bool demoMode;
 
   @override
-  State<CellarScreen> createState() => _CellarScreenState();
+  State<CellarListScreen> createState() => _CellarListScreenState();
 }
 
-class _CellarScreenState extends State<CellarScreen> {
+class _CellarListScreenState extends State<CellarListScreen> {
   late final _cellar = CellarController(widget.repository)..load();
 
   @override
@@ -62,7 +62,7 @@ class _CellarScreenState extends State<CellarScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute<void>(
-            builder: (_) => WineFormScreen(cellar: _cellar),
+            builder: (_) => AddEditWineScreen(cellar: _cellar),
           ),
         ),
         icon: const Icon(Icons.add),
@@ -79,7 +79,7 @@ class _CellarScreenState extends State<CellarScreen> {
                 padding: const EdgeInsets.all(8),
                 child: Text(l10n.demoMode, textAlign: TextAlign.center),
               ),
-            _Filters(cellar: _cellar),
+            _SearchAndFilterBar(cellar: _cellar),
             Expanded(child: _body(context, l10n)),
           ],
         ),
@@ -128,7 +128,7 @@ class _CellarScreenState extends State<CellarScreen> {
               child: Text(l10n.noResults, textAlign: TextAlign.center),
             ),
           for (final wine in wines)
-            _WineTile(
+            _WineListTile(
               wine: wine,
               year: _cellar.currentYear,
               onTap: () => Navigator.of(context).push(
@@ -144,8 +144,8 @@ class _CellarScreenState extends State<CellarScreen> {
   }
 }
 
-class _Filters extends StatelessWidget {
-  const _Filters({required this.cellar});
+class _SearchAndFilterBar extends StatelessWidget {
+  const _SearchAndFilterBar({required this.cellar});
 
   final CellarController cellar;
 
@@ -175,7 +175,7 @@ class _Filters extends StatelessWidget {
                     for (final type in WineType.values)
                       DropdownMenuItem(
                         value: type,
-                        child: Text(type.label(l10n)),
+                        child: Text(type.displayName(l10n)),
                       ),
                   ],
                   onChanged: cellar.setTypeFilter,
@@ -195,7 +195,7 @@ class _Filters extends StatelessWidget {
                     for (final status in DrinkingStatus.values)
                       DropdownMenuItem(
                         value: status,
-                        child: Text(status.label(l10n)),
+                        child: Text(status.displayName(l10n)),
                       ),
                   ],
                   onChanged: cellar.setStatusFilter,
@@ -209,8 +209,8 @@ class _Filters extends StatelessWidget {
   }
 }
 
-class _WineTile extends StatelessWidget {
-  const _WineTile({
+class _WineListTile extends StatelessWidget {
+  const _WineListTile({
     required this.wine,
     required this.year,
     required this.onTap,
