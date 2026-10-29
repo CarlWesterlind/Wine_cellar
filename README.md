@@ -1,2 +1,10 @@
-# Wine_cellar
-A wine cellar app that keeps track of where every bottle is stored, scans labels to add bottles, and suggests drinking windows and food pairings.
+Wine Cellar
+
+A personal wine cellar app for keeping track of your collection.
+
+Features
+
+Bottle locations: Know exactly where each bottle is, by rack, shelf or position.
+Label scanning: Scan a bottle to add it to your cellar automatically.
+Drinking window: See when each wine is at its best, so nothing gets opened too early or too late.
+Food pairing: Get suggestions for dishes that go well with each wine.
