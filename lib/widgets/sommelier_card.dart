@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
 import '../models/sommelier_info.dart';
+import 'common.dart';
 
 /// The AI's sommelier notes, clearly marked as AI suggestions. With
 /// [onRemove] the card has a button to discard them.
@@ -17,24 +18,27 @@ class SommelierCard extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
 
-    Widget part(String label, Widget child) => Padding(
-      padding: const EdgeInsets.only(top: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: theme.textTheme.labelLarge?.copyWith(
-              color: scheme.onSurfaceVariant,
-            ),
+    final parts = <Widget>[
+      if (info.tastingProfile != null)
+        LabeledValue(l10n.tastingProfile, info.tastingProfile!),
+      if (info.foodPairings.isNotEmpty)
+        LabeledValue.custom(
+          l10n.foodPairing,
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              for (final food in info.foodPairings)
+                Chip(label: Text(food), visualDensity: VisualDensity.compact),
+            ],
           ),
-          const SizedBox(height: 4),
-          child,
-        ],
-      ),
-    );
-
-    Widget text(String value) => Text(value, style: theme.textTheme.bodyLarge);
+        ),
+      if (info.servingTemperature != null)
+        LabeledValue(l10n.servingTemperature, info.servingTemperature!),
+      if (info.decanting != null) LabeledValue(l10n.decanting, info.decanting!),
+      if (info.producerInfo != null)
+        LabeledValue(l10n.aboutProducer, info.producerInfo!),
+    ];
 
     return Card(
       child: Padding(
@@ -60,29 +64,8 @@ class SommelierCard extends StatelessWidget {
                   ),
               ],
             ),
-            if (info.tastingProfile case final taste?)
-              part(l10n.tastingProfile, text(taste)),
-            if (info.foodPairings.isNotEmpty)
-              part(
-                l10n.foodPairing,
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    for (final food in info.foodPairings)
-                      Chip(
-                        label: Text(food),
-                        visualDensity: VisualDensity.compact,
-                      ),
-                  ],
-                ),
-              ),
-            if (info.servingTemperature case final temperature?)
-              part(l10n.servingTemperature, text(temperature)),
-            if (info.decanting case final decanting?)
-              part(l10n.decanting, text(decanting)),
-            if (info.producerInfo case final producer?)
-              part(l10n.aboutProducer, text(producer)),
+            for (final part in parts)
+              Padding(padding: const EdgeInsets.only(top: 12), child: part),
             const SizedBox(height: 12),
             Text(
               l10n.aiDisclaimer,

@@ -75,7 +75,7 @@ void main() {
     WidgetTester tester, {
     LabelScanner? scanner,
     List<Uint8List?> pickedPhotos = const [],
-    bool demoScanner = false,
+    bool isDemo = false,
     String locale = 'en',
   }) async {
     // Starts with one wine so the list (and its add button) is shown.
@@ -87,7 +87,7 @@ void main() {
       photos: photos,
       scanner: scanner ?? FakeScanner(),
       pickPhoto: fakePicker(pickedPhotos),
-      demoScanner: demoScanner,
+      isDemo: isDemo,
     );
     await tester.tap(find.byType(FloatingActionButton));
     await tester.pumpAndSettle();
@@ -98,16 +98,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Add the back label?'), findsOneWidget);
     await tester.tap(find.text('Skip'));
-    await tester.pumpAndSettle();
-  }
-
-  String fieldText(WidgetTester tester, String label) => tester
-      .widget<TextFormField>(find.widgetWithText(TextFormField, label))
-      .controller!
-      .text;
-
-  Future<void> save(WidgetTester tester) async {
-    await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
   }
 
@@ -137,7 +127,7 @@ void main() {
     expect(find.byType(SommelierCard), findsOneWidget);
     expect(find.byType(PhotoBytes), findsOneWidget);
 
-    await save(tester);
+    await tapSave(tester);
 
     final saved = (await repository.fetchAll()).firstWhere(
       (w) => w.name == 'Barolo Cannubi',
@@ -199,18 +189,12 @@ void main() {
   ) async {
     await openNewWineForm(tester, pickedPhotos: [fakeJpeg]);
     await takePhotoAndSkipBack(tester);
-    await tester.scrollUntilVisible(
-      find.byTooltip('Remove AI suggestions'),
-      200,
-      scrollable: find
-          .descendant(of: find.byType(Form), matching: find.byType(Scrollable))
-          .first,
-    );
+    await scrollFormTo(tester, find.byTooltip('Remove AI suggestions'));
     await tester.tap(find.byTooltip('Remove AI suggestions'));
     await tester.pump();
     expect(find.byType(SommelierCard), findsNothing);
 
-    await save(tester);
+    await tapSave(tester);
     final saved = (await repository.fetchAll()).last;
     expect(saved.sommelier, isNull);
   });
@@ -294,7 +278,7 @@ void main() {
         find.widgetWithText(TextFormField, 'Name'),
         'Handskrivet',
       );
-      await save(tester);
+      await tapSave(tester);
       final saved = (await repository.fetchAll()).last;
       expect(saved.name, 'Handskrivet');
       expect(saved.photoPath, isNotNull);
@@ -324,7 +308,7 @@ void main() {
   });
 
   testWidgets('demo mode says the result is only an example', (tester) async {
-    await openNewWineForm(tester, pickedPhotos: [fakeJpeg], demoScanner: true);
+    await openNewWineForm(tester, pickedPhotos: [fakeJpeg], isDemo: true);
     await takePhotoAndSkipBack(tester);
     expect(
       find.text('Demo mode: this is an example result, not a real AI reading.'),
@@ -387,7 +371,7 @@ void main() {
     await takePhotoAndSkipBack(tester);
 
     failing.error = StateError('offline');
-    await save(tester);
+    await tapSave(tester);
 
     expect(find.text('Add wine'), findsOneWidget); // Still on the form.
     expect(photos.count, 0);
@@ -425,11 +409,7 @@ void main() {
     ) async {
       await openEditForm(tester);
       expect(find.byType(WinePhoto), findsOneWidget);
-      await tester.scrollUntilVisible(
-        find.text('Ros och tjära.'),
-        200,
-        scrollable: find.byType(Scrollable).last,
-      );
+      await scrollTo(tester, find.text('Ros och tjära.'));
       expect(
         find.text('Suggestions from AI. They can contain mistakes.'),
         findsOneWidget,
@@ -443,7 +423,7 @@ void main() {
       await tester.tap(find.text('Remove photo'));
       await tester.pump();
       expect(find.text('Photograph the label'), findsOneWidget);
-      await save(tester);
+      await tapSave(tester);
 
       expect((await repository.fetchAll()).single.photoPath, isNull);
       expect(photos.count, 0);
@@ -457,7 +437,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Skip'));
       await tester.pumpAndSettle();
-      await save(tester);
+      await tapSave(tester);
 
       final newPath = (await repository.fetchAll()).single.photoPath!;
       expect(newPath, isNot(oldPath));
@@ -469,7 +449,7 @@ void main() {
       await openEditForm(tester);
       await tester.tap(find.byTooltip('Edit wine'));
       await tester.pumpAndSettle();
-      await save(tester);
+      await tapSave(tester);
 
       final wine = (await repository.fetchAll()).single;
       expect(wine.photoPath, oldPath);
@@ -506,14 +486,10 @@ void main() {
   testWidgets('the form with a photo meets the accessibility guidelines', (
     tester,
   ) async {
-    final semantics = tester.ensureSemantics();
     await openNewWineForm(tester, pickedPhotos: [fakeJpeg]);
     await takePhotoAndSkipBack(tester);
     await tester.pumpAndSettle(const Duration(seconds: 5)); // Snackbar gone.
 
-    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
-    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
-    await expectLater(tester, meetsGuideline(textContrastGuideline));
-    semantics.dispose();
+    await expectMeetsGuidelines(tester);
   });
 }

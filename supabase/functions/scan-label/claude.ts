@@ -46,7 +46,8 @@ to you.`;
 /** Asks Claude to read the label photos. */
 export function createAnalyzer(client: Anthropic): Analyzer {
   return async ({ front, back, mediaType, language }) => {
-    const images = [front, ...(back ? [back] : [])].map((data) => ({
+    const photos = back ? [front, back] : [front];
+    const images = photos.map((data) => ({
       type: "image" as const,
       source: { type: "base64" as const, media_type: mediaType, data },
     }));

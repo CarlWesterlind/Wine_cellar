@@ -88,16 +88,19 @@ lib/
     sommelier_info.dart           # AI tasting notes, food pairing etc.
     label_scan.dart               # What the AI read from a label
     dates.dart                    # Dates without time of day
+    number_input.dart             # Reading numbers typed in the form
   data/
     cellar_services.dart          # Bundles the services below per user
     label_scanner.dart            # Label scanning (server, or demo example)
+    images.dart                   # Recognises JPEG, PNG and WebP
     photo_storage.dart            # Bottle photos (Supabase Storage / memory)
     photo_picker.dart             # Camera and photo library
     auth_service.dart             # Login (AuthService, SupabaseAuthService)
     wine_repository.dart          # Wine storage interface + in-memory version
     supabase_wine_repository.dart # Wine storage in Supabase
   state/
-    cellar_controller.dart        # The wine list, search and filters
+    loading_notifier.dart         # Shared loading/error handling
+    cellar_controller.dart        # The wines, their photos, search, filters
     tasting_notes_controller.dart # The notes of one wine
     app_settings.dart             # Language and light/dark choice
   screens/
@@ -111,6 +114,8 @@ lib/
     app_theme.dart                # Colors, shapes and page transitions
     motion.dart                   # Animation timing and easing
   widgets/
+    common.dart                   # Notice banner, confirm dialog, date field
+    label_photo_section.dart      # Photo and "photograph the label" in form
     display_helpers.dart          # Display names, colors and formatting
     motion_widgets.dart           # Press, fade-in and rolling-number effects
     rating_stars.dart             # 1–5 stars, tappable or read-only

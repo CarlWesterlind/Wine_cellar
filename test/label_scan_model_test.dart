@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show FunctionsClient;
+import 'package:wine_cellar/data/images.dart';
 import 'package:wine_cellar/data/label_scanner.dart';
 import 'package:wine_cellar/models/label_scan.dart';
 import 'package:wine_cellar/models/sommelier_info.dart';
@@ -229,13 +230,7 @@ void main() {
         for (final (front, back) in [(gif, null), (jpeg, png)]) {
           await expectLater(
             scanner.scan(front: front, back: back, language: 'sv'),
-            throwsA(
-              isA<LabelScanException>().having(
-                (e) => e.reason,
-                'reason',
-                ScanFailure.unsupportedImage,
-              ),
-            ),
+            throwsA(isA<UnsupportedImageException>()),
           );
         }
         expect(called, isFalse);

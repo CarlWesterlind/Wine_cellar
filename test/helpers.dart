@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wine_cellar/app.dart';
@@ -32,7 +34,7 @@ Future<void> pumpApp(
   PhotoStorage? photos,
   LabelScanner? scanner,
   PhotoPicker? pickPhoto,
-  bool demoScanner = false,
+  bool isDemo = false,
   bool settle = true,
 }) async {
   await tester.pumpWidget(
@@ -52,9 +54,44 @@ Future<void> pumpApp(
         photos: photos ?? InMemoryPhotoStorage(),
         scanner: scanner ?? const DemoLabelScanner(delay: Duration.zero),
         pickPhoto: pickPhoto ?? fakePicker([]),
-        demoScanner: demoScanner,
+        isDemo: isDemo,
       ),
     ),
   );
   if (settle) await tester.pumpAndSettle();
+}
+
+/// Checks Flutter's contrast, label and tap-target guidelines on the screen
+/// as it is now.
+Future<void> expectMeetsGuidelines(WidgetTester tester) async {
+  final semantics = tester.ensureSemantics();
+  await expectLater(tester, meetsGuideline(textContrastGuideline));
+  await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+  await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+  semantics.dispose();
+}
+
+/// Scrolls the innermost scrolling area until [finder] is on screen.
+Future<void> scrollTo(WidgetTester tester, Finder finder) => tester
+    .scrollUntilVisible(finder, 200, scrollable: find.byType(Scrollable).last);
+
+/// Scrolls the form until [finder] is on screen.
+Future<void> scrollFormTo(WidgetTester tester, Finder finder) =>
+    tester.scrollUntilVisible(
+      finder,
+      200,
+      scrollable: find
+          .descendant(of: find.byType(Form), matching: find.byType(Scrollable))
+          .first,
+    );
+
+/// The text in the form field labelled [label].
+String fieldText(WidgetTester tester, String label) => tester
+    .widget<TextFormField>(find.widgetWithText(TextFormField, label))
+    .controller!
+    .text;
+
+Future<void> tapSave(WidgetTester tester) async {
+  await tester.tap(find.text('Save'));
+  await tester.pumpAndSettle();
 }

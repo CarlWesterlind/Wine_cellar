@@ -40,14 +40,6 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  /// Scrolls the wine details down until [finder] is on screen.
-  Future<void> scrollTo(WidgetTester tester, Finder finder) =>
-      tester.scrollUntilVisible(
-        finder,
-        200,
-        scrollable: find.byType(Scrollable).last,
-      );
-
   group('wine details', () {
     testWidgets('show purchase info and notes in the chosen language', (
       tester,
@@ -194,18 +186,6 @@ void main() {
   });
 
   group('wine form', () {
-    Future<void> scrollFormTo(WidgetTester tester, Finder finder) =>
-        tester.scrollUntilVisible(
-          finder,
-          200,
-          scrollable: find
-              .descendant(
-                of: find.byType(Form),
-                matching: find.byType(Scrollable),
-              )
-              .first,
-        );
-
     testWidgets('a purchase date can be picked and is saved', (tester) async {
       await pumpApp(tester, await settingsWith({'locale': 'en'}));
       await tester.tap(find.text('Add wine'));

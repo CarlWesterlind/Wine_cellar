@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'label_scanner.dart';
+import 'images.dart';
 
 /// Stores bottle photos. A photo is identified by the path [save] returns.
 abstract interface class PhotoStorage {
@@ -45,8 +45,10 @@ class SupabasePhotoStorage implements PhotoStorage {
   final SupabaseClient _client;
   final _random = Random.secure();
 
-  /// Photos already downloaded, so lists don't download them again.
+  /// Recently used photos, so scrolling a list doesn't download them
+  /// again. The least recently used are dropped beyond [_cacheSize].
   final _cache = <String, Uint8List>{};
+  static const _cacheSize = 60;
 
   StorageFileApi get _bucket => _client.storage.from('wine-photos');
 
@@ -55,9 +57,7 @@ class SupabasePhotoStorage implements PhotoStorage {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) throw StateError('Not signed in');
     final mediaType = imageMediaType(bytes);
-    if (mediaType == null) {
-      throw const LabelScanException(ScanFailure.unsupportedImage);
-    }
+    if (mediaType == null) throw const UnsupportedImageException();
     final extension = mediaType.split('/').last.replaceFirst('jpeg', 'jpg');
     final id = List.generate(16, (_) => _random.nextInt(16).toRadixString(16));
     final path = '$userId/${id.join()}.$extension';
@@ -66,13 +66,22 @@ class SupabasePhotoStorage implements PhotoStorage {
       bytes,
       fileOptions: FileOptions(contentType: mediaType),
     );
-    _cache[path] = bytes;
+    _remember(path, bytes);
     return path;
   }
 
   @override
-  Future<Uint8List> load(String path) async =>
-      _cache[path] ??= await _bucket.download(path);
+  Future<Uint8List> load(String path) async {
+    final bytes = _cache.remove(path) ?? await _bucket.download(path);
+    _remember(path, bytes);
+    return bytes;
+  }
+
+  /// Adds [bytes] as the most recently used photo.
+  void _remember(String path, Uint8List bytes) {
+    _cache[path] = bytes;
+    if (_cache.length > _cacheSize) _cache.remove(_cache.keys.first);
+  }
 
   @override
   Future<void> delete(String path) async {

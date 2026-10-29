@@ -1,46 +1,34 @@
 import 'package:flutter/foundation.dart';
 
 import '../data/wine_repository.dart';
-import '../errors/error_messages.dart';
 import '../models/tasting_note.dart';
+import 'loading_notifier.dart';
 
 /// Holds the tasting notes of one wine.
-class TastingNotesController extends ChangeNotifier {
+class TastingNotesController extends LoadingNotifier {
   TastingNotesController(this._repository, this.wineId);
 
   final WineRepository _repository;
   final String wineId;
 
   /// In the order they were saved.
-  List<TastingNote> _notes = const [];
-  bool _loading = false;
-  Object? _error;
-  bool _disposed = false;
+  List<TastingNote> _saved = const [];
 
-  bool get loading => _loading;
-  Object? get error => _error;
+  /// [_saved] sorted for display.
+  List<TastingNote> _sorted = const [];
 
   /// Newest date first. Notes from the same day: last saved first.
-  List<TastingNote> get notes {
-    final sorted = _notes.reversed.toList();
-    mergeSort(sorted, compare: TastingNote.newestFirst); // Stable sort.
-    return sorted;
+  List<TastingNote> get notes => _sorted;
+
+  void _setNotes(List<TastingNote> notes) {
+    _saved = notes;
+    final sorted = notes.reversed.toList();
+    mergeSort(sorted, compare: TastingNote.newestFirst); // Keeps ties in order.
+    _sorted = List.unmodifiable(sorted);
   }
 
-  Future<void> load() async {
-    _loading = true;
-    _error = null;
-    notifyListeners();
-    try {
-      _notes = await _repository.fetchNotes(wineId);
-    } catch (error, stack) {
-      logError(error, stack);
-      _error = error;
-    } finally {
-      _loading = false;
-      notifyListeners();
-    }
-  }
+  Future<void> load() =>
+      runLoad(() async => _setNotes(await _repository.fetchNotes(wineId)));
 
   /// Adds [note] if it has no id yet, otherwise updates it.
   Future<void> save(TastingNote note) async {
@@ -48,30 +36,18 @@ class TastingNotesController extends ChangeNotifier {
       throw ArgumentError.value(note.wineId, 'note.wineId', 'wrong wine');
     }
     if (note.id == null) {
-      final saved = await _repository.addNote(note);
-      _notes = [..._notes, saved];
+      final added = await _repository.addNote(note);
+      _setNotes([..._saved, added]);
     } else {
-      final saved = await _repository.updateNote(note);
-      _notes = [for (final n in _notes) n.id == saved.id ? saved : n];
+      final updated = await _repository.updateNote(note);
+      _setNotes([for (final n in _saved) n.id == updated.id ? updated : n]);
     }
     notifyListeners();
   }
 
   Future<void> delete(String id) async {
     await _repository.deleteNote(id);
-    _notes = _notes.where((n) => n.id != id).toList();
+    _setNotes(_saved.where((n) => n.id != id).toList());
     notifyListeners();
-  }
-
-  // A load can finish after the screen is closed; don't notify then.
-  @override
-  void notifyListeners() {
-    if (!_disposed) super.notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    _disposed = true;
-    super.dispose();
   }
 }

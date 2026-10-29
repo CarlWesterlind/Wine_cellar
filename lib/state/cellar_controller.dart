@@ -1,31 +1,33 @@
-import 'package:flutter/foundation.dart';
+import 'dart:typed_data';
 
+import '../data/photo_storage.dart';
 import '../data/wine_repository.dart';
 import '../errors/error_messages.dart';
 import '../models/wine.dart';
+import 'loading_notifier.dart';
 
-/// Holds the user's wines and the current search and filters.
-class CellarController extends ChangeNotifier {
-  CellarController(this._repository, {DateTime Function()? clock})
+/// Holds the user's wines, their photos, and the current search and
+/// filters.
+class CellarController extends LoadingNotifier {
+  CellarController(this._repository, this._photos, {DateTime Function()? clock})
     : _clock = clock ?? DateTime.now;
 
   final WineRepository _repository;
+  final PhotoStorage _photos;
   final DateTime Function() _clock;
 
   List<Wine> _wines = const [];
-  bool _loading = false;
-  Object? _error;
 
   String _query = '';
   WineType? _typeFilter;
   DrinkingStatus? _statusFilter;
-  bool _disposed = false;
+
+  /// [visibleWines], kept until the wines or filters change.
+  List<Wine>? _visible;
 
   /// Where the wines are stored; also used for their tasting notes.
   WineRepository get repository => _repository;
 
-  bool get loading => _loading;
-  Object? get error => _error;
   String get query => _query;
   WineType? get typeFilter => _typeFilter;
   DrinkingStatus? get statusFilter => _statusFilter;
@@ -34,17 +36,22 @@ class CellarController extends ChangeNotifier {
   bool get isEmpty => _wines.isEmpty;
 
   /// Wines matching the search and filters, sorted by name.
-  List<Wine> get visibleWines {
+  List<Wine> get visibleWines => _visible ??= _filterAndSort();
+
+  List<Wine> _filterAndSort() {
     final year = currentYear;
-    return _wines
-        .where((w) => w.matchesSearch(_query))
-        .where((w) => _typeFilter == null || w.type == _typeFilter)
-        .where(
-          (w) =>
-              _statusFilter == null || w.drinkingStatus(year) == _statusFilter,
-        )
-        .toList()
-      ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    final matching = _wines.where((wine) {
+      if (!wine.matchesSearch(_query)) return false;
+      if (_typeFilter != null && wine.type != _typeFilter) return false;
+      if (_statusFilter != null && wine.drinkingStatus(year) != _statusFilter) {
+        return false;
+      }
+      return true;
+    }).toList();
+    matching.sort(
+      (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+    );
+    return matching;
   }
 
   int get totalBottles => _wines.fold(0, (sum, w) => sum + w.quantity);
@@ -58,64 +65,79 @@ class CellarController extends ChangeNotifier {
     return null;
   }
 
-  Future<void> load() async {
-    _loading = true;
-    _error = null;
+  /// Something changed that affects [visibleWines].
+  void _changed() {
+    _visible = null;
     notifyListeners();
-    try {
-      _wines = await _repository.fetchAll();
-    } catch (error, stack) {
-      logError(error, stack);
-      _error = error;
-    } finally {
-      _loading = false;
-      notifyListeners();
-    }
   }
+
+  Future<void> load() => runLoad(() async {
+    _wines = await _repository.fetchAll();
+    _visible = null;
+  });
 
   void setQuery(String query) {
     _query = query;
-    notifyListeners();
+    _changed();
   }
 
   void setTypeFilter(WineType? type) {
     _typeFilter = type;
-    notifyListeners();
+    _changed();
   }
 
   void setStatusFilter(DrinkingStatus? status) {
     _statusFilter = status;
-    notifyListeners();
+    _changed();
   }
-
-  bool get hasActiveFilters =>
-      _query.trim().isNotEmpty || _typeFilter != null || _statusFilter != null;
 
   void clearFilters() {
     _query = '';
     _typeFilter = null;
     _statusFilter = null;
-    notifyListeners();
+    _changed();
   }
 
-  /// Adds [wine] if it has no id yet, otherwise updates it.
-  Future<Wine> save(Wine wine) async {
-    final saved = wine.id == null
-        ? await _repository.add(wine)
-        : await _repository.update(wine);
+  /// Adds [wine] if it has no id yet, otherwise updates it. A [newPhoto]
+  /// is stored and replaces the wine's photo. A photo the wine no longer
+  /// uses is deleted.
+  Future<Wine> save(Wine wine, {Uint8List? newPhoto}) async {
+    final oldPhoto = wine.id == null ? null : byId(wine.id!)?.photoPath;
+    String? uploaded;
+    if (newPhoto != null) {
+      uploaded = await _photos.save(newPhoto);
+      wine = wine.withPhotoPath(uploaded);
+    }
+
+    final Wine saved;
+    try {
+      saved = wine.id == null
+          ? await _repository.add(wine)
+          : await _repository.update(wine);
+    } catch (_) {
+      // Don't leave a photo behind that no wine uses.
+      if (uploaded != null) await _deletePhotoQuietly(uploaded);
+      rethrow;
+    }
+
+    if (oldPhoto != null && oldPhoto != saved.photoPath) {
+      await _deletePhotoQuietly(oldPhoto);
+    }
     _wines = [
       for (final w in _wines)
         if (w.id != saved.id) w,
       saved,
     ];
-    notifyListeners();
+    _changed();
     return saved;
   }
 
-  Future<void> delete(String id) async {
-    await _repository.delete(id);
-    _wines = _wines.where((w) => w.id != id).toList();
-    notifyListeners();
+  /// Deletes [wine] with its tasting notes and photo.
+  Future<void> delete(Wine wine) async {
+    await _repository.delete(wine.id!);
+    if (wine.photoPath != null) await _deletePhotoQuietly(wine.photoPath!);
+    _wines = _wines.where((w) => w.id != wine.id).toList();
+    _changed();
   }
 
   /// Removes one bottle from the stock.
@@ -124,15 +146,13 @@ class CellarController extends ChangeNotifier {
     await save(wine.withQuantity(wine.quantity - 1));
   }
 
-  // A load can finish after sign-out closed the screen; don't notify then.
-  @override
-  void notifyListeners() {
-    if (!_disposed) super.notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    _disposed = true;
-    super.dispose();
+  /// A photo that fails to delete only wastes space, so the error is logged
+  /// rather than shown.
+  Future<void> _deletePhotoQuietly(String path) async {
+    try {
+      await _photos.delete(path);
+    } catch (error, stack) {
+      logError(error, stack);
+    }
   }
 }

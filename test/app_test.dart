@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wine_cellar/app.dart';
+import 'package:wine_cellar/data/cellar_services.dart';
 import 'package:wine_cellar/models/wine.dart';
 
 import 'failing_wine_repository.dart';
@@ -222,4 +223,29 @@ void main() {
     expect(find.text('Must not be earlier than "drink from"'), findsOneWidget);
     expect(find.text('Add wine'), findsOneWidget); // Not saved.
   });
+
+  testWidgets(
+    'changing theme or language keeps the same services (and photos)',
+    (tester) async {
+      final settings = await settingsWith({'locale': 'en'});
+      var created = 0;
+      await tester.pumpWidget(
+        WineCellarApp(
+          settings: settings,
+          createServices: () {
+            created++;
+            return CellarServices.demo();
+          },
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await settings.setThemeMode(ThemeMode.dark);
+      await settings.setLocale(const Locale('sv'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Vinkällaren'), findsOneWidget);
+      expect(created, 1);
+    },
+  );
 }

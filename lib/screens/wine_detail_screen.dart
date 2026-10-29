@@ -11,6 +11,7 @@ import '../models/wine.dart';
 import '../state/cellar_controller.dart';
 import '../state/tasting_notes_controller.dart';
 import '../theme/motion.dart';
+import '../widgets/common.dart';
 import '../widgets/display_helpers.dart';
 import '../widgets/motion_widgets.dart';
 import '../widgets/rating_stars.dart';
@@ -19,6 +20,7 @@ import '../widgets/wine_photo.dart';
 import 'add_edit_wine_screen.dart';
 import 'tasting_note_dialog.dart';
 
+/// Everything about one wine, and its tasting notes.
 class WineDetailScreen extends StatefulWidget {
   const WineDetailScreen({
     super.key,
@@ -55,52 +57,33 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
     super.dispose();
   }
 
-  Future<bool> _confirm(String title, String message, String action) async {
-    final l10n = AppLocalizations.of(context);
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n.cancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: Text(action),
-          ),
-        ],
+  void _edit(Wine wine) => Navigator.of(context).push(
+    MaterialPageRoute<void>(
+      builder: (_) => AddEditWineScreen(
+        cellar: _cellar,
+        services: widget.services,
+        wine: wine,
       ),
-    );
-    return confirmed ?? false;
-  }
+    ),
+  );
 
-  Future<void> _deleteWine(Wine wine) async {
+  Future<void> _delete(Wine wine) async {
     final l10n = AppLocalizations.of(context);
-    final confirmed = await _confirm(
-      l10n.deleteWine,
-      l10n.deleteConfirm(wine.name),
-      l10n.delete,
+    final confirmed = await showConfirmDialog(
+      context,
+      title: l10n.deleteWine,
+      message: l10n.deleteConfirm(wine.name),
+      confirm: l10n.delete,
+      cancel: l10n.cancel,
     );
     if (!confirmed || !mounted) return;
-    final deleted = await runOrShowError(
-      context,
-      () => _cellar.delete(wine.id!),
-    );
-    if (!deleted) return;
-    if (wine.photoPath case final path?) unawaited(_deletePhotoQuietly(path));
-    if (mounted) Navigator.of(context).pop();
+    final deleted = await tryOrShowError(context, () => _cellar.delete(wine));
+    if (deleted && mounted) Navigator.of(context).pop();
   }
 
-  /// The wine is already gone; a photo left behind is only logged.
-  Future<void> _deletePhotoQuietly(String path) async {
-    try {
-      await widget.services.photos.delete(path);
-    } catch (error, stack) {
-      logError(error, stack);
-    }
+  void _drinkOne(Wine wine) {
+    unawaited(HapticFeedback.lightImpact());
+    unawaited(tryOrShowError(context, () => _cellar.drinkOne(wine)));
   }
 
   void _openPhoto(String path) {
@@ -135,31 +118,32 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
       note: note,
     );
     if (result == null || !mounted) return;
-    await runOrShowError(context, () => _notes.save(result));
+    await tryOrShowError(context, () => _notes.save(result));
   }
 
   Future<void> _deleteNote(TastingNote note) async {
     final l10n = AppLocalizations.of(context);
-    final confirmed = await _confirm(
-      l10n.deleteNote,
-      l10n.deleteNoteConfirm,
-      l10n.delete,
+    final confirmed = await showConfirmDialog(
+      context,
+      title: l10n.deleteNote,
+      message: l10n.deleteNoteConfirm,
+      confirm: l10n.delete,
+      cancel: l10n.cancel,
     );
     if (!confirmed || !mounted) return;
-    await runOrShowError(context, () => _notes.delete(note.id!));
+    await tryOrShowError(context, () => _notes.delete(note.id!));
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return ListenableBuilder(
-      listenable: Listenable.merge([_cellar, _notes]),
+      listenable: _cellar,
       builder: (context, _) {
         final wine = _cellar.byId(widget.wineId);
-        // The wine is gone while the screen pops after a delete.
+        // The wine is gone while the screen closes after a delete.
         if (wine == null) return const Scaffold();
 
-        final status = wine.drinkingStatus(_cellar.currentYear);
         return Scaffold(
           appBar: AppBar(
             title: Text(wine.name),
@@ -167,168 +151,199 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
               IconButton(
                 tooltip: l10n.editWine,
                 icon: const Icon(Icons.edit),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (_) => AddEditWineScreen(
-                      cellar: _cellar,
-                      services: widget.services,
-                      wine: wine,
-                    ),
-                  ),
-                ),
+                onPressed: () => _edit(wine),
               ),
               IconButton(
                 tooltip: l10n.deleteWine,
                 icon: const Icon(Icons.delete_outline),
-                onPressed: () => _deleteWine(wine),
+                onPressed: () => _delete(wine),
               ),
             ],
           ),
           body: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              if (wine.photoPath case final path?) ...[
-                Semantics(
-                  button: true,
-                  label: l10n.winePhoto,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: SizedBox(
-                      height: photoHeight,
-                      child: Material(
-                        child: InkWell(
-                          onTap: () => _openPhoto(path),
-                          child: WinePhoto(
-                            photos: widget.services.photos,
-                            path: path,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+              if (wine.photoPath != null) ...[
+                _PhotoHeader(
+                  services: widget.services,
+                  path: wine.photoPath!,
+                  onTap: () => _openPhoto(wine.photoPath!),
                 ),
                 const SizedBox(height: 16),
               ],
-              Row(
-                children: [
-                  WineTypeBadge(type: wine.type, size: 56),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          wine.name,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        if (wine.producer != null)
-                          Text(
-                            wine.producer!,
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurfaceVariant,
-                                ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              _TitleRow(wine: wine),
               const SizedBox(height: 16),
-              Row(
-                children: [
-                  RollingText(
-                    l10n.bottleCount(wine.quantity),
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const Spacer(),
-                  FilledButton.tonalIcon(
-                    onPressed: wine.quantity == 0
-                        ? null
-                        : () {
-                            unawaited(HapticFeedback.lightImpact());
-                            unawaited(
-                              runOrShowError(
-                                context,
-                                () => _cellar.drinkOne(wine),
-                              ),
-                            );
-                          },
-                    icon: const Icon(Icons.local_bar),
-                    label: Text(l10n.drinkOne),
-                  ),
-                ],
-              ),
+              _StockRow(wine: wine, onDrinkOne: () => _drinkOne(wine)),
               const SizedBox(height: 16),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 4,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _InfoRow(l10n.wineType, wine.type.displayName(l10n)),
-                      _InfoRow(l10n.vintage, wine.vintage?.toString()),
-                      _InfoRow(l10n.country, wine.country),
-                      _InfoRow(l10n.region, wine.region),
-                      _InfoRow(
-                        l10n.grapes,
-                        wine.grapes.isEmpty ? null : wine.grapes.join(', '),
-                      ),
-                      _InfoRow(
-                        l10n.price,
-                        wine.price == null
-                            ? null
-                            : formatMoney(context, wine.price!),
-                      ),
-                      _InfoRow(
-                        l10n.purchase,
-                        wine.hasPurchaseInfo
-                            ? formatPurchase(context, wine)
-                            : null,
-                      ),
-                      _InfoRow(
-                        l10n.location,
-                        wine.hasLocation ? formatLocation(l10n, wine) : null,
-                      ),
-                      _InfoRow.custom(
-                        l10n.drinkingWindow,
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (wine.drinkFrom != null ||
-                                wine.drinkUntil != null)
-                              Text(
-                                '${wine.drinkFrom ?? ''}–${wine.drinkUntil ?? ''}',
-                              ),
-                            const SizedBox(height: 4),
-                            DrinkingStatusChip(status: status),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              _DetailsCard(wine: wine, year: _cellar.currentYear),
               const SizedBox(height: 24),
-              if (wine.sommelier case final sommelier?) ...[
-                SommelierCard(info: sommelier),
+              if (wine.sommelier != null) ...[
+                SommelierCard(info: wine.sommelier!),
                 const SizedBox(height: 24),
               ],
-              _NotesSection(
-                notes: _notes,
-                onAdd: _writeNote,
-                onEdit: _writeNote,
-                onDelete: _deleteNote,
+              // Only the notes rebuild when a note changes.
+              ListenableBuilder(
+                listenable: _notes,
+                builder: (context, _) => _NotesSection(
+                  notes: _notes,
+                  onAdd: _writeNote,
+                  onEdit: _writeNote,
+                  onDelete: _deleteNote,
+                ),
               ),
             ],
           ),
         );
       },
+    );
+  }
+}
+
+class _PhotoHeader extends StatelessWidget {
+  const _PhotoHeader({
+    required this.services,
+    required this.path,
+    required this.onTap,
+  });
+
+  final CellarServices services;
+  final String path;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: AppLocalizations.of(context).winePhoto,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: SizedBox(
+          height: photoHeight,
+          child: Material(
+            child: InkWell(
+              onTap: onTap,
+              child: WinePhoto(photos: services.photos, path: path),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TitleRow extends StatelessWidget {
+  const _TitleRow({required this.wine});
+
+  final Wine wine;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Row(
+      children: [
+        WineTypeBadge(type: wine.type, size: 56),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(wine.name, style: theme.textTheme.titleLarge),
+              if (wine.producer != null)
+                Text(
+                  wine.producer!,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// The number of bottles and the "Drink a bottle" button.
+class _StockRow extends StatelessWidget {
+  const _StockRow({required this.wine, required this.onDrinkOne});
+
+  final Wine wine;
+  final VoidCallback onDrinkOne;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Row(
+      children: [
+        RollingText(
+          l10n.bottleCount(wine.quantity),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const Spacer(),
+        FilledButton.tonalIcon(
+          onPressed: wine.quantity == 0 ? null : onDrinkOne,
+          icon: const Icon(Icons.local_bar),
+          label: Text(l10n.drinkOne),
+        ),
+      ],
+    );
+  }
+}
+
+/// Type, vintage, origin, price, purchase, location and drinking window.
+/// Rows without a value are left out.
+class _DetailsCard extends StatelessWidget {
+  const _DetailsCard({required this.wine, required this.year});
+
+  final Wine wine;
+  final int year;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final hasWindow = wine.drinkFrom != null || wine.drinkUntil != null;
+
+    final rows = <Widget>[
+      LabeledValue(l10n.wineType, wine.type.displayName(l10n)),
+      if (wine.vintage != null) LabeledValue(l10n.vintage, '${wine.vintage}'),
+      if (wine.country != null) LabeledValue(l10n.country, wine.country!),
+      if (wine.region != null) LabeledValue(l10n.region, wine.region!),
+      if (wine.grapes.isNotEmpty)
+        LabeledValue(l10n.grapes, wine.grapes.join(', ')),
+      if (wine.price != null)
+        LabeledValue(l10n.price, formatMoney(context, wine.price!)),
+      if (wine.hasPurchaseInfo)
+        LabeledValue(l10n.purchase, formatPurchase(context, wine)),
+      if (wine.hasLocation)
+        LabeledValue(l10n.location, formatLocation(l10n, wine)),
+      LabeledValue.custom(
+        l10n.drinkingWindow,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (hasWindow)
+              Text('${wine.drinkFrom ?? ''}–${wine.drinkUntil ?? ''}'),
+            const SizedBox(height: 4),
+            DrinkingStatusChip(status: wine.drinkingStatus(year)),
+          ],
+        ),
+      ),
+    ];
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (final row in rows)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: row,
+              ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -346,19 +361,48 @@ class _NotesSection extends StatelessWidget {
   final ValueChanged<TastingNote> onEdit;
   final ValueChanged<TastingNote> onDelete;
 
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+  Widget _content(AppLocalizations l10n) {
     final error = notes.error;
-    return AnimatedSize(
-      duration: Motion.of(context, Motion.medium),
-      curve: Motion.easeInOut,
-      alignment: Alignment.topCenter,
-      child: _content(context, l10n, error),
+    final list = notes.notes;
+    if (notes.loading && list.isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.all(16),
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (error != null) {
+      return Column(
+        children: [
+          Text(errorMessage(l10n, error), textAlign: TextAlign.center),
+          TextButton(onPressed: notes.load, child: Text(l10n.retry)),
+        ],
+      );
+    }
+    if (list.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Text(l10n.noNotes),
+      );
+    }
+    return Column(
+      children: [
+        for (var i = 0; i < list.length; i++)
+          FadeSlideIn(
+            key: ValueKey(list[i].id),
+            index: i,
+            child: _NoteTile(
+              note: list[i],
+              onEdit: () => onEdit(list[i]),
+              onDelete: () => onDelete(list[i]),
+            ),
+          ),
+      ],
     );
   }
 
-  Widget _content(BuildContext context, AppLocalizations l10n, Object? error) {
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -377,34 +421,13 @@ class _NotesSection extends StatelessWidget {
             ),
           ],
         ),
-        if (notes.loading && notes.notes.isEmpty)
-          const Padding(
-            padding: EdgeInsets.all(16),
-            child: Center(child: CircularProgressIndicator()),
-          )
-        else if (error != null)
-          Column(
-            children: [
-              Text(errorMessage(l10n, error), textAlign: TextAlign.center),
-              TextButton(onPressed: notes.load, child: Text(l10n.retry)),
-            ],
-          )
-        else if (notes.notes.isEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Text(l10n.noNotes),
-          )
-        else
-          for (final (index, note) in notes.notes.indexed)
-            FadeSlideIn(
-              key: ValueKey(note.id),
-              index: index,
-              child: _NoteTile(
-                note: note,
-                onEdit: () => onEdit(note),
-                onDelete: () => onDelete(note),
-              ),
-            ),
+        // Grows and shrinks smoothly as notes are added or removed.
+        AnimatedSize(
+          duration: Motion.of(context, Motion.medium),
+          curve: Motion.easeInOut,
+          alignment: Alignment.topCenter,
+          child: _content(l10n),
+        ),
       ],
     );
   }
@@ -438,47 +461,17 @@ class _NoteTile extends StatelessWidget {
       ),
       subtitle: Text(note.text),
       trailing: PopupMenuButton<_NoteAction>(
-        onSelected: (action) => switch (action) {
-          _NoteAction.edit => onEdit(),
-          _NoteAction.delete => onDelete(),
+        onSelected: (action) {
+          switch (action) {
+            case _NoteAction.edit:
+              onEdit();
+            case _NoteAction.delete:
+              onDelete();
+          }
         },
         itemBuilder: (_) => [
           PopupMenuItem(value: _NoteAction.edit, child: Text(l10n.edit)),
           PopupMenuItem(value: _NoteAction.delete, child: Text(l10n.delete)),
-        ],
-      ),
-    );
-  }
-}
-
-/// A labelled value. Hidden when there is no value.
-class _InfoRow extends StatelessWidget {
-  const _InfoRow(this.label, this.value) : child = null;
-
-  /// Shows [child] instead of a text value.
-  const _InfoRow.custom(this.label, Widget this.child) : value = null;
-
-  final String label;
-  final String? value;
-  final Widget? child;
-
-  @override
-  Widget build(BuildContext context) {
-    if (value == null && child == null) return const SizedBox.shrink();
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: theme.textTheme.labelLarge?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 2),
-          child ?? Text(value!, style: theme.textTheme.bodyLarge),
         ],
       ),
     );

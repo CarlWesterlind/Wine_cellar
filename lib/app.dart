@@ -55,26 +55,52 @@ class WineCellarApp extends StatelessWidget {
   Widget _home() {
     final auth = this.auth;
     if (auth == null) {
-      return CellarListScreen(
-        services: createServices(),
-        settings: settings,
-        demoMode: true,
-      );
+      return _Session(createServices: createServices, settings: settings);
     }
     return StreamBuilder<bool>(
       stream: auth.signedInChanges,
       initialData: auth.isSignedIn,
       builder: (context, snapshot) => snapshot.data!
-          ? CellarListScreen(
-              // Fresh services and screen state for every sign-in.
+          ? _Session(
+              // A new session, with fresh services, for every sign-in.
               key: ValueKey(auth.email),
-              services: createServices(),
+              createServices: createServices,
               settings: settings,
               auth: auth,
             )
           : LoginScreen(auth: auth),
     );
   }
+}
+
+/// The cellar of one signed-in user (or of demo mode). Creates the services
+/// once, so that changing the theme or language, which rebuilds the app,
+/// keeps them and their cached photos.
+class _Session extends StatefulWidget {
+  const _Session({
+    super.key,
+    required this.createServices,
+    required this.settings,
+    this.auth,
+  });
+
+  final CellarServices Function() createServices;
+  final AppSettings settings;
+  final AuthService? auth;
+
+  @override
+  State<_Session> createState() => _SessionState();
+}
+
+class _SessionState extends State<_Session> {
+  late final _services = widget.createServices();
+
+  @override
+  Widget build(BuildContext context) => CellarListScreen(
+    services: _services,
+    settings: widget.settings,
+    auth: widget.auth,
+  );
 }
 
 /// Picks the app language from the device language. Norwegian devices may

@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/label_scan.dart';
 import '../models/sommelier_info.dart';
 import '../models/wine.dart';
+import 'images.dart';
 
 /// Why a label could not be scanned.
 enum ScanFailure {
@@ -13,7 +14,6 @@ enum ScanFailure {
   unreadable,
   dailyLimit,
   imageTooLarge,
-  unsupportedImage,
   unavailable,
 }
 
@@ -40,25 +40,6 @@ abstract interface class LabelScanner {
   });
 }
 
-/// The image type of [bytes] from its first bytes, or null if it isn't
-/// JPEG, PNG or WebP.
-String? imageMediaType(Uint8List bytes) {
-  bool startsWith(List<int> prefix, [int offset = 0]) {
-    if (bytes.length < offset + prefix.length) return false;
-    for (var i = 0; i < prefix.length; i++) {
-      if (bytes[offset + i] != prefix[i]) return false;
-    }
-    return true;
-  }
-
-  if (startsWith([0xFF, 0xD8, 0xFF])) return 'image/jpeg';
-  if (startsWith([0x89, 0x50, 0x4E, 0x47])) return 'image/png';
-  if (startsWith(ascii.encode('RIFF')) && startsWith(ascii.encode('WEBP'), 8)) {
-    return 'image/webp';
-  }
-  return null;
-}
-
 /// Calls the `scan-label` Supabase Edge Function, which asks Claude.
 class SupabaseLabelScanner implements LabelScanner {
   SupabaseLabelScanner(this._functions);
@@ -75,7 +56,7 @@ class SupabaseLabelScanner implements LabelScanner {
     // Both photos are sent with one media type, so they must match.
     if (mediaType == null ||
         (back != null && imageMediaType(back) != mediaType)) {
-      throw const LabelScanException(ScanFailure.unsupportedImage);
+      throw const UnsupportedImageException();
     }
 
     final FunctionResponse response;

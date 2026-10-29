@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/dates.dart';
 import '../models/tasting_note.dart';
-import '../widgets/display_helpers.dart';
+import '../widgets/common.dart';
 import '../widgets/rating_stars.dart';
 
 /// Lets the user write a new note for [wineId], or edit [note]. Returns the
@@ -45,18 +45,6 @@ class _TastingNoteDialogState extends State<_TastingNoteDialog> {
     super.dispose();
   }
 
-  Future<void> _pickDate() async {
-    final today = dateOnly(widget.clock());
-    final first = DateTime(1900);
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: clampDate(_date, first, today),
-      firstDate: first,
-      lastDate: today,
-    );
-    if (picked != null) setState(() => _date = picked);
-  }
-
   void _save() {
     if (!_formKey.currentState!.validate()) return;
     Navigator.of(context).pop(
@@ -82,15 +70,11 @@ class _TastingNoteDialogState extends State<_TastingNoteDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InkWell(
-              onTap: _pickDate,
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  labelText: l10n.noteDate,
-                  suffixIcon: const Icon(Icons.calendar_today),
-                ),
-                child: Text(formatDate(context, _date)),
-              ),
+            PastDateField(
+              label: l10n.noteDate,
+              value: _date,
+              onChanged: (date) => setState(() => _date = date),
+              today: widget.clock,
             ),
             const SizedBox(height: 16),
             Text(l10n.rating, style: Theme.of(context).textTheme.labelLarge),

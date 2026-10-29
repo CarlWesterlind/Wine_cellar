@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 
 import '../data/photo_storage.dart';
 import '../errors/error_messages.dart';
-import '../theme/motion.dart';
+import 'motion_widgets.dart';
+
+/// Height of the bottle photo in the form and on the wine page.
+const photoHeight = 260.0;
 
 /// A stored bottle photo. Shows a soft placeholder while it loads and fades
 /// the photo in. Decorative unless [semanticLabel] is given.
@@ -15,12 +18,17 @@ class WinePhoto extends StatefulWidget {
     required this.path,
     this.fit = BoxFit.cover,
     this.semanticLabel,
+    this.thumbnailSize,
   });
 
   final PhotoStorage photos;
   final String path;
   final BoxFit fit;
   final String? semanticLabel;
+
+  /// For small photos: the size it is shown at, in logical pixels, so it is
+  /// decoded at that size instead of the full photo.
+  final double? thumbnailSize;
 
   @override
   State<WinePhoto> createState() => _WinePhotoState();
@@ -50,23 +58,26 @@ class _WinePhotoState extends State<WinePhoto> {
   Widget build(BuildContext context) {
     return FutureBuilder<Uint8List>(
       future: _bytes,
-      builder: (context, snapshot) => AnimatedSwitcher(
-        duration: Motion.of(context, Motion.medium),
-        switchInCurve: Motion.easeOut,
-        child: switch (snapshot) {
-          AsyncSnapshot(hasData: true, :final data!) => PhotoBytes(
-            data,
+      builder: (context, snapshot) {
+        final Widget child;
+        if (snapshot.hasData) {
+          child = PhotoBytes(
+            snapshot.data!,
             key: const ValueKey('photo'),
             fit: widget.fit,
             semanticLabel: widget.semanticLabel,
-          ),
-          AsyncSnapshot(hasError: true) => _Placeholder(
-            key: const ValueKey('error'),
+            thumbnailSize: widget.thumbnailSize,
+          );
+        } else if (snapshot.hasError) {
+          child = const _Placeholder(
+            key: ValueKey('error'),
             icon: Icons.broken_image_outlined,
-          ),
-          _ => const _Placeholder(key: ValueKey('loading')),
-        },
-      ),
+          );
+        } else {
+          child = const _Placeholder(key: ValueKey('loading'));
+        }
+        return FadeSwitcher(child: child);
+      },
     );
   }
 }
@@ -78,19 +89,27 @@ class PhotoBytes extends StatelessWidget {
     super.key,
     this.fit = BoxFit.cover,
     this.semanticLabel,
+    this.thumbnailSize,
   });
 
   final Uint8List bytes;
   final BoxFit fit;
   final String? semanticLabel;
 
+  /// See [WinePhoto.thumbnailSize].
+  final double? thumbnailSize;
+
   @override
   Widget build(BuildContext context) {
+    final size = thumbnailSize;
     return Image.memory(
       bytes,
       fit: fit,
       width: double.infinity,
       height: double.infinity,
+      cacheWidth: size == null
+          ? null
+          : (size * MediaQuery.devicePixelRatioOf(context)).round(),
       gaplessPlayback: true,
       semanticLabel: semanticLabel,
       excludeFromSemantics: semanticLabel == null,

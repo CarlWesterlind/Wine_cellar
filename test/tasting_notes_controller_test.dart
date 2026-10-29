@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wine_cellar/data/photo_storage.dart';
 import 'package:wine_cellar/data/wine_repository.dart';
 import 'package:wine_cellar/models/tasting_note.dart';
 import 'package:wine_cellar/models/wine.dart';
@@ -120,7 +121,7 @@ void main() {
 
     test('cellar', () async {
       final slow = _SlowRepository();
-      final controller = CellarController(slow);
+      final controller = CellarController(slow, InMemoryPhotoStorage());
       final loading = controller.load();
       controller.dispose();
       slow.finish();

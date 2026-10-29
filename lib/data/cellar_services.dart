@@ -11,16 +11,16 @@ class CellarServices {
     required this.photos,
     required this.scanner,
     this.pickPhoto = pickPhotoWithDevice,
-    this.demoScanner = false,
+    this.isDemo = false,
   });
 
-  /// Sample wines in memory, and an example result instead of real label
-  /// scanning.
+  /// Demo mode: sample wines in memory, nothing saved, and an example
+  /// result instead of real label scanning.
   factory CellarServices.demo() => CellarServices(
     wines: InMemoryWineRepository.demo(),
     photos: InMemoryPhotoStorage(),
     scanner: const DemoLabelScanner(),
-    demoScanner: true,
+    isDemo: true,
   );
 
   final WineRepository wines;
@@ -30,6 +30,7 @@ class CellarServices {
   /// Takes or chooses a photo; replaced in tests.
   final PhotoPicker pickPhoto;
 
-  /// True when [scanner] returns example results, so the app can say so.
-  final bool demoScanner;
+  /// In demo mode the app says that nothing is saved and that scans are
+  /// examples.
+  final bool isDemo;
 }

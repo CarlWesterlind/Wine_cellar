@@ -8,7 +8,7 @@ import '../l10n/app_localizations.dart';
 import '../models/wine.dart';
 import '../state/app_settings.dart';
 import '../state/cellar_controller.dart';
-import '../theme/motion.dart';
+import '../widgets/common.dart';
 import '../widgets/display_helpers.dart';
 import '../widgets/motion_widgets.dart';
 import '../widgets/wine_photo.dart';
@@ -22,20 +22,21 @@ class CellarListScreen extends StatefulWidget {
     required this.services,
     required this.settings,
     this.auth,
-    this.demoMode = false,
   });
 
   final CellarServices services;
   final AppSettings settings;
   final AuthService? auth;
-  final bool demoMode;
 
   @override
   State<CellarListScreen> createState() => _CellarListScreenState();
 }
 
 class _CellarListScreenState extends State<CellarListScreen> {
-  late final _cellar = CellarController(widget.services.wines)..load();
+  late final _cellar = CellarController(
+    widget.services.wines,
+    widget.services.photos,
+  )..load();
   final _search = TextEditingController();
 
   @override
@@ -100,17 +101,17 @@ class _CellarListScreenState extends State<CellarListScreen> {
               ),
         body: Column(
           children: [
-            if (widget.demoMode) _DemoBanner(text: l10n.demoMode),
+            if (widget.services.isDemo)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                child: NoticeBanner(
+                  icon: Icons.info_outline,
+                  text: l10n.demoMode,
+                ),
+              ),
             if (!_cellar.isEmpty)
               _SearchAndFilterBar(cellar: _cellar, search: _search),
-            Expanded(
-              child: AnimatedSwitcher(
-                duration: Motion.of(context, Motion.medium),
-                switchInCurve: Motion.easeOut,
-                switchOutCurve: Motion.easeOut,
-                child: _body(context, l10n),
-              ),
-            ),
+            Expanded(child: FadeSwitcher(child: _body(context, l10n))),
           ],
         ),
       ),
@@ -198,44 +199,6 @@ class _CellarListScreenState extends State<CellarListScreen> {
   }
 }
 
-class _DemoBanner extends StatelessWidget {
-  const _DemoBanner({required this.text});
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        decoration: BoxDecoration(
-          color: scheme.tertiaryContainer,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          children: [
-            Icon(
-              Icons.info_outline,
-              size: 20,
-              color: scheme.onTertiaryContainer,
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                text,
-                style: TextStyle(color: scheme.onTertiaryContainer),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 /// A centered icon, optional title, message and button, for empty and error
 /// states.
 class _MessageView extends StatelessWidget {
@@ -309,6 +272,11 @@ class _SearchAndFilterBar extends StatelessWidget {
     final textStyle = Theme.of(context).textTheme.bodyLarge;
     Widget oneLine(String text) =>
         Text(text, maxLines: 1, overflow: TextOverflow.ellipsis);
+    // The search field is rounded at the ends, unlike other fields.
+    final pill = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(28),
+      borderSide: BorderSide.none,
+    );
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
       child: Column(
@@ -333,16 +301,9 @@ class _SearchAndFilterBar extends StatelessWidget {
                           cellar.setQuery('');
                         },
                       ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(28),
-                  borderSide: BorderSide.none,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(28),
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(28),
+                border: pill,
+                enabledBorder: pill,
+                focusedBorder: pill.copyWith(
                   borderSide: BorderSide(
                     color: Theme.of(context).colorScheme.primary,
                     width: 2,
@@ -458,7 +419,11 @@ class _WineCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     child: SizedBox.square(
                       dimension: 56,
-                      child: WinePhoto(photos: photos, path: path),
+                      child: WinePhoto(
+                        photos: photos,
+                        path: path,
+                        thumbnailSize: 56,
+                      ),
                     ),
                   )
                 else

@@ -37,21 +37,16 @@ void main() {
   for (final theme in ['light', 'dark']) {
     group('accessibility guidelines in the $theme theme', () {
       testWidgets('the cellar list', (tester) async {
-        final semantics = tester.ensureSemantics();
         await pumpApp(
           tester,
           await settingsWith({'locale': 'en', 'theme': theme}),
           repository: await cellarWithNotes(),
         );
 
-        await expectLater(tester, meetsGuideline(textContrastGuideline));
-        await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
-        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
-        semantics.dispose();
+        await expectMeetsGuidelines(tester);
       });
 
       testWidgets('the wine details', (tester) async {
-        final semantics = tester.ensureSemantics();
         await pumpApp(
           tester,
           await settingsWith({'locale': 'en', 'theme': theme}),
@@ -60,14 +55,10 @@ void main() {
         await tester.tap(find.text('Barolo 2019'));
         await tester.pumpAndSettle();
 
-        await expectLater(tester, meetsGuideline(textContrastGuideline));
-        await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
-        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
-        semantics.dispose();
+        await expectMeetsGuidelines(tester);
       });
 
       testWidgets('the wine form', (tester) async {
-        final semantics = tester.ensureSemantics();
         await pumpApp(
           tester,
           await settingsWith({'locale': 'en', 'theme': theme}),
@@ -76,14 +67,10 @@ void main() {
         await tester.tap(find.text('Add wine'));
         await tester.pumpAndSettle();
 
-        await expectLater(tester, meetsGuideline(textContrastGuideline));
-        await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
-        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
-        semantics.dispose();
+        await expectMeetsGuidelines(tester);
       });
 
       testWidgets('the note dialog', (tester) async {
-        final semantics = tester.ensureSemantics();
         await pumpApp(
           tester,
           await settingsWith({'locale': 'en', 'theme': theme}),
@@ -91,18 +78,11 @@ void main() {
         );
         await tester.tap(find.text('Barolo 2019'));
         await tester.pumpAndSettle();
-        await tester.scrollUntilVisible(
-          find.text('New note'),
-          200,
-          scrollable: find.byType(Scrollable).last,
-        );
+        await scrollTo(tester, find.text('New note'));
         await tester.tap(find.text('New note'));
         await tester.pumpAndSettle();
 
-        await expectLater(tester, meetsGuideline(textContrastGuideline));
-        await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
-        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
-        semantics.dispose();
+        await expectMeetsGuidelines(tester);
       });
     });
   }

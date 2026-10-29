@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
         FunctionsFetchException,
         PostgrestException;
 
+import '../data/images.dart';
 import '../data/label_scanner.dart';
 import '../l10n/app_localizations.dart';
 
@@ -25,10 +26,10 @@ String errorMessage(AppLocalizations l10n, Object error) {
       ScanFailure.unreadable => l10n.errorUnreadable,
       ScanFailure.dailyLimit => l10n.errorDailyLimit(error.limit ?? 50),
       ScanFailure.imageTooLarge => l10n.errorImageTooLarge,
-      ScanFailure.unsupportedImage => l10n.errorUnsupportedImage,
       ScanFailure.unavailable => l10n.errorAiUnavailable,
     };
   }
+  if (error is UnsupportedImageException) return l10n.errorUnsupportedImage;
   if (error is AuthException) {
     return switch (error.code) {
       'invalid_credentials' => l10n.errorInvalidLogin,
@@ -53,23 +54,41 @@ void logError(Object error, [StackTrace? stack]) {
   if (stack != null) debugPrint('$stack');
 }
 
-/// Runs [action]. If it fails, logs the error, shows a friendly message at
-/// the bottom of the screen and returns false.
-Future<bool> runOrShowError(
+/// Shows [message] at the bottom of the screen, replacing any message
+/// already showing.
+void showMessage(BuildContext context, String message) {
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(SnackBar(content: Text(message)));
+}
+
+/// Runs [action] and returns its result. If it fails, logs the error, shows
+/// a friendly message and returns null.
+Future<T?> runOrShowError<T>(
   BuildContext context,
-  Future<void> Function() action,
+  Future<T> Function() action,
 ) async {
   try {
-    await action();
-    return true;
+    return await action();
   } catch (error, stack) {
     logError(error, stack);
     if (context.mounted) {
-      final l10n = AppLocalizations.of(context);
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(errorMessage(l10n, error))));
+      showMessage(context, errorMessage(AppLocalizations.of(context), error));
     }
-    return false;
+    return null;
   }
+}
+
+/// Like [runOrShowError] for actions without a result: returns whether
+/// [action] succeeded.
+Future<bool> tryOrShowError(
+  BuildContext context,
+  Future<void> Function() action,
+) async {
+  var succeeded = false;
+  await runOrShowError(context, () async {
+    await action();
+    succeeded = true;
+  });
+  return succeeded;
 }

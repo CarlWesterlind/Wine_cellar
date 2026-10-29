@@ -80,9 +80,8 @@ function parseBody(body: unknown): Parsed {
   if (typeof body !== "object" || body === null) return bad();
   const { front, back, mediaType, language } = body as Record<string, unknown>;
 
-  for (
-    const image of back === undefined || back === null ? [front] : [front, back]
-  ) {
+  const images = back == null ? [front] : [front, back];
+  for (const image of images) {
     const size = base64Bytes(image);
     if (size === null) return bad();
     if (size > MAX_IMAGE_BYTES) return bad("image_too_large");

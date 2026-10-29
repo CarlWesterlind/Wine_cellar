@@ -40,15 +40,16 @@ class _PressableState extends State<Pressable> {
 }
 
 /// Fades its child in while it slides a few pixels up, once, when it first
-/// appears. [index] staggers items in a list slightly.
+/// appears. [index] staggers items in a list slightly; items further down
+/// than the first few appear without animation, so scrolling a long list
+/// doesn't replay it on every card.
 class FadeSlideIn extends StatefulWidget {
   const FadeSlideIn({super.key, required this.child, this.index = 0});
 
   final Widget child;
   final int index;
 
-  /// Only the first few items are staggered, so long lists don't feel slow.
-  static const _maxStaggered = 6;
+  static const _maxAnimated = 6;
   static const _stagger = Duration(milliseconds: 30);
 
   @override
@@ -63,12 +64,15 @@ class _FadeSlideInState extends State<FadeSlideIn>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (_controller != null || Motion.reduced(context)) return;
+    if (_controller != null ||
+        Motion.reduced(context) ||
+        widget.index >= FadeSlideIn._maxAnimated) {
+      return;
+    }
 
     // The delay is part of the animation itself (an Interval) rather than a
     // timer, so it can never fire after the widget is gone.
-    final delay =
-        FadeSlideIn._stagger * widget.index.clamp(0, FadeSlideIn._maxStaggered);
+    final delay = FadeSlideIn._stagger * widget.index;
     final total = delay + Motion.medium;
     final controller = AnimationController(vsync: this, duration: total);
     _controller = controller;
@@ -125,6 +129,7 @@ class RollingText extends StatelessWidget {
       switchOutCurve: Motion.easeOut,
       layoutBuilder: (current, previous) => Stack(
         alignment: AlignmentDirectional.centerStart,
+        // `?current` leaves it out while there is none.
         children: [...previous, ?current],
       ),
       transitionBuilder: (child, animation) {
@@ -141,6 +146,24 @@ class RollingText extends StatelessWidget {
         );
       },
       child: Text(text, key: ValueKey(text), style: effective),
+    );
+  }
+}
+
+/// Cross-fades when [child] is replaced by a child with a different key,
+/// with the app's standard timing.
+class FadeSwitcher extends StatelessWidget {
+  const FadeSwitcher({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSwitcher(
+      duration: Motion.of(context, Motion.medium),
+      switchInCurve: Motion.easeOut,
+      switchOutCurve: Motion.easeOut,
+      child: child,
     );
   }
 }

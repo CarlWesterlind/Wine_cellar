@@ -6,6 +6,13 @@ enum WineType { red, white, rose, sparkling, dessert, fortified }
 /// Where a wine is relative to its drinking window in a given year.
 enum DrinkingStatus { unknown, tooEarly, ready, pastPeak }
 
+/// A wine in the cellar.
+///
+/// Adding a field? Besides this class (constructor, [_copy], [toMap],
+/// [Wine.fromMap]) it usually also needs: a database migration in
+/// supabase/migrations, a field in the form (add_edit_wine_screen.dart), a
+/// row on the wine page (wine_detail_screen.dart) and a label in the four
+/// lib/l10n/app_*.arb files.
 class Wine {
   /// Throws [ArgumentError] if a value is impossible, e.g. an empty name or a
   /// negative number of bottles.
@@ -101,7 +108,9 @@ class Wine {
 
   Wine withId(String id) => _copy(id: id);
 
-  Wine _copy({String? id, int? quantity}) => Wine(
+  Wine withPhotoPath(String path) => _copy(photoPath: path);
+
+  Wine _copy({String? id, int? quantity, String? photoPath}) => Wine(
     id: id ?? this.id,
     name: name,
     producer: producer,
@@ -119,7 +128,7 @@ class Wine {
     drinkUntil: drinkUntil,
     purchaseDate: purchaseDate,
     purchasedFrom: purchasedFrom,
-    photoPath: photoPath,
+    photoPath: photoPath ?? this.photoPath,
     sommelier: sommelier,
   );
 

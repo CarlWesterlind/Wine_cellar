@@ -92,7 +92,7 @@ class SettingsScreen extends StatelessWidget {
                 leading: const Icon(Icons.logout),
                 title: Text(l10n.signOut),
                 onTap: () async {
-                  final signedOut = await runOrShowError(context, auth.signOut);
+                  final signedOut = await tryOrShowError(context, auth.signOut);
                   if (signedOut && context.mounted) {
                     Navigator.of(context).popUntil((route) => route.isFirst);
                   }
