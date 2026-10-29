@@ -20,10 +20,14 @@ Available in Swedish, Danish, Norwegian (Bokmål) and English.
   reader labels, large tap targets, and no motion when the phone asks for
   reduced motion.
 
-Planned:
-
-- **Label scanning**: Scan a bottle to add it to your cellar automatically.
-- **Food pairing**: Get suggestions for dishes that go well with each wine.
+- **Label scanning**: Photograph the front (and optionally the back) label,
+  and Claude fills in name, producer, vintage, type, region, grapes and a
+  drinking window. Only empty fields are filled, and every AI value is
+  marked until you change it.
+- **Sommelier notes**: The same scan suggests tasting notes, food pairings,
+  serving temperature, decanting and a few lines about the producer, shown
+  as AI suggestions on the wine page.
+- **Bottle photos**: Stored privately per user.
 
 ## Running the app
 
@@ -49,7 +53,19 @@ wines, and nothing is saved.
 3. Copy `supabase.example.json` to `supabase.json` and fill in the project
    URL and publishable key from **Project Settings → API**. `supabase.json`
    is ignored by git, so your keys stay on your computer.
-4. Run the app with the keys:
+4. Set up label scanning (optional - everything else works without it):
+
+   ```bash
+   supabase functions deploy scan-label
+   supabase secrets set ANTHROPIC_API_KEY=sk-ant-...
+   ```
+
+   The Claude API key stays on the server; the app never sees it. Each user
+   can scan 50 labels per day (`DAILY_LIMIT` in
+   `supabase/functions/scan-label/index.ts`). A scan costs roughly half a
+   krona with Claude Opus 5.5 (estimate: up to two photos of at most
+   1600 px plus the answer).
+5. Run the app with the keys:
 
    ```bash
    flutter run --dart-define-from-file=supabase.json
@@ -69,8 +85,14 @@ lib/
   models/
     wine.dart                     # Wine, WineType, DrinkingStatus
     tasting_note.dart             # A dated note with an optional rating
+    sommelier_info.dart           # AI tasting notes, food pairing etc.
+    label_scan.dart               # What the AI read from a label
     dates.dart                    # Dates without time of day
   data/
+    cellar_services.dart          # Bundles the services below per user
+    label_scanner.dart            # Label scanning (server, or demo example)
+    photo_storage.dart            # Bottle photos (Supabase Storage / memory)
+    photo_picker.dart             # Camera and photo library
     auth_service.dart             # Login (AuthService, SupabaseAuthService)
     wine_repository.dart          # Wine storage interface + in-memory version
     supabase_wine_repository.dart # Wine storage in Supabase
@@ -92,8 +114,16 @@ lib/
     display_helpers.dart          # Display names, colors and formatting
     motion_widgets.dart           # Press, fade-in and rolling-number effects
     rating_stars.dart             # 1–5 stars, tappable or read-only
+    sommelier_card.dart           # The AI sommelier notes
+    wine_photo.dart               # Loads and fades in a bottle photo
   l10n/app_*.arb                  # Translations, one file per language
-supabase/migrations/              # Database schema
+supabase/
+  migrations/                     # Database schema, run in order
+  functions/scan-label/           # Edge Function: reads labels with Claude
+    handler.ts                    # Login, validation, daily limit, errors
+    claude.ts                     # The Claude request and prompt
+    schema.ts                     # Answer format and clean-up
+    *_test.ts                     # Tests: `deno test` in this folder
 test/                             # Unit and widget tests
 ```
 

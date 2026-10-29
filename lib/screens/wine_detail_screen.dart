@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../data/cellar_services.dart';
 import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
 import '../models/tasting_note.dart';
@@ -13,6 +14,8 @@ import '../theme/motion.dart';
 import '../widgets/display_helpers.dart';
 import '../widgets/motion_widgets.dart';
 import '../widgets/rating_stars.dart';
+import '../widgets/sommelier_card.dart';
+import '../widgets/wine_photo.dart';
 import 'add_edit_wine_screen.dart';
 import 'tasting_note_dialog.dart';
 
@@ -20,10 +23,12 @@ class WineDetailScreen extends StatefulWidget {
   const WineDetailScreen({
     super.key,
     required this.cellar,
+    required this.services,
     required this.wineId,
   });
 
   final CellarController cellar;
+  final CellarServices services;
   final String wineId;
 
   @override
@@ -84,7 +89,43 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
       context,
       () => _cellar.delete(wine.id!),
     );
-    if (deleted && mounted) Navigator.of(context).pop();
+    if (!deleted) return;
+    if (wine.photoPath case final path?) unawaited(_deletePhotoQuietly(path));
+    if (mounted) Navigator.of(context).pop();
+  }
+
+  /// The wine is already gone; a photo left behind is only logged.
+  Future<void> _deletePhotoQuietly(String path) async {
+    try {
+      await widget.services.photos.delete(path);
+    } catch (error, stack) {
+      logError(error, stack);
+    }
+  }
+
+  void _openPhoto(String path) {
+    final l10n = AppLocalizations.of(context);
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        fullscreenDialog: true,
+        builder: (_) => Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            foregroundColor: Colors.white,
+          ),
+          body: InteractiveViewer(
+            maxScale: 4,
+            child: WinePhoto(
+              photos: widget.services.photos,
+              path: path,
+              fit: BoxFit.contain,
+              semanticLabel: l10n.winePhoto,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> _writeNote([TastingNote? note]) async {
@@ -128,8 +169,11 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
                 icon: const Icon(Icons.edit),
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute<void>(
-                    builder: (_) =>
-                        AddEditWineScreen(cellar: _cellar, wine: wine),
+                    builder: (_) => AddEditWineScreen(
+                      cellar: _cellar,
+                      services: widget.services,
+                      wine: wine,
+                    ),
                   ),
                 ),
               ),
@@ -143,6 +187,28 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
           body: ListView(
             padding: const EdgeInsets.all(16),
             children: [
+              if (wine.photoPath case final path?) ...[
+                Semantics(
+                  button: true,
+                  label: l10n.winePhoto,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: SizedBox(
+                      height: photoHeight,
+                      child: Material(
+                        child: InkWell(
+                          onTap: () => _openPhoto(path),
+                          child: WinePhoto(
+                            photos: widget.services.photos,
+                            path: path,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
               Row(
                 children: [
                   WineTypeBadge(type: wine.type, size: 56),
@@ -249,6 +315,10 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
                 ),
               ),
               const SizedBox(height: 24),
+              if (wine.sommelier case final sommelier?) ...[
+                SommelierCard(info: sommelier),
+                const SizedBox(height: 24),
+              ],
               _NotesSection(
                 notes: _notes,
                 onAdd: _writeNote,

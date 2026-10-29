@@ -5,8 +5,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app.dart';
 import 'data/auth_service.dart';
+import 'data/cellar_services.dart';
+import 'data/label_scanner.dart';
+import 'data/photo_storage.dart';
 import 'data/supabase_wine_repository.dart';
-import 'data/wine_repository.dart';
 import 'errors/error_messages.dart';
 import 'state/app_settings.dart';
 
@@ -23,10 +25,7 @@ Future<void> main() async {
 
   if (supabaseUrl.isEmpty || supabasePublishableKey.isEmpty) {
     runApp(
-      WineCellarApp(
-        settings: settings,
-        createRepository: InMemoryWineRepository.demo,
-      ),
+      WineCellarApp(settings: settings, createServices: CellarServices.demo),
     );
     return;
   }
@@ -40,7 +39,11 @@ Future<void> main() async {
     WineCellarApp(
       settings: settings,
       auth: SupabaseAuthService(client.auth),
-      createRepository: () => SupabaseWineRepository(client),
+      createServices: () => CellarServices(
+        wines: SupabaseWineRepository(client),
+        photos: SupabasePhotoStorage(client),
+        scanner: SupabaseLabelScanner(client.functions),
+      ),
     ),
   );
 }

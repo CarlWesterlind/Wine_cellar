@@ -325,4 +325,115 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get all => 'All';
+
+  @override
+  String get scanLabelTitle => 'Photograph the label';
+
+  @override
+  String get scanLabelBody =>
+      'AI reads the label and fills in the rest for you.';
+
+  @override
+  String get takePhoto => 'Take photo';
+
+  @override
+  String get choosePhoto => 'Choose photo';
+
+  @override
+  String get addBackTitle => 'Add the back label?';
+
+  @override
+  String get addBackBody =>
+      'The back label often lists grapes and more details, which helps the AI.';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get addBack => 'Add back label';
+
+  @override
+  String get readingLabel => 'Reading the label…';
+
+  @override
+  String aiFilledFields(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'AI filled in $count fields. Check them before saving.',
+      one: 'AI filled in 1 field. Check it before saving.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get filledByAi => 'Suggested by AI';
+
+  @override
+  String get lowConfidence =>
+      'The AI isn\'t sure about this label. Check the details carefully.';
+
+  @override
+  String get demoScan =>
+      'Demo mode: this is an example result, not a real AI reading.';
+
+  @override
+  String get changePhoto => 'Change photo';
+
+  @override
+  String get removePhoto => 'Remove photo';
+
+  @override
+  String get scanAgain => 'Read label again';
+
+  @override
+  String get sommelier => 'Sommelier';
+
+  @override
+  String get aiDisclaimer => 'Suggestions from AI. They can contain mistakes.';
+
+  @override
+  String get tastingProfile => 'Taste';
+
+  @override
+  String get foodPairing => 'Food pairing';
+
+  @override
+  String get servingTemperature => 'Serving temperature';
+
+  @override
+  String get decanting => 'Decanting';
+
+  @override
+  String get aboutProducer => 'About the producer';
+
+  @override
+  String get removeSommelier => 'Remove AI suggestions';
+
+  @override
+  String get winePhoto => 'Photo of the bottle';
+
+  @override
+  String get errorNotWineLabel =>
+      'That doesn\'t look like a wine label. Try another photo.';
+
+  @override
+  String get errorUnreadable =>
+      'The label couldn\'t be read. Try a sharper photo with good light.';
+
+  @override
+  String errorDailyLimit(int limit) {
+    return 'You\'ve reached the limit of $limit scans per day. Try again tomorrow, or fill in the details yourself.';
+  }
+
+  @override
+  String get errorImageTooLarge => 'The photo is too large. Try another one.';
+
+  @override
+  String get errorUnsupportedImage =>
+      'This image format isn\'t supported. Use JPEG or PNG.';
+
+  @override
+  String get errorAiUnavailable =>
+      'The label reader isn\'t available right now. Try again in a moment.';
 }

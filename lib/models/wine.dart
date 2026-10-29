@@ -1,4 +1,5 @@
 import 'dates.dart';
+import 'sommelier_info.dart';
 
 enum WineType { red, white, rose, sparkling, dessert, fortified }
 
@@ -26,6 +27,8 @@ class Wine {
     this.drinkUntil,
     DateTime? purchaseDate,
     this.purchasedFrom,
+    this.photoPath,
+    this.sommelier,
   }) : purchaseDate = purchaseDate == null ? null : dateOnly(purchaseDate) {
     if (name.trim().isEmpty) {
       throw ArgumentError.value(name, 'name', 'must not be empty');
@@ -74,6 +77,12 @@ class Wine {
   /// Shop or importer the bottles were bought from.
   final String? purchasedFrom;
 
+  /// Where the bottle photo is kept (see PhotoStorage), if there is one.
+  final String? photoPath;
+
+  /// Tasting notes, food pairings and so on, suggested by AI.
+  final SommelierInfo? sommelier;
+
   bool get hasLocation => rack != null || shelf != null || position != null;
 
   bool get hasPurchaseInfo => purchaseDate != null || purchasedFrom != null;
@@ -110,6 +119,8 @@ class Wine {
     drinkUntil: drinkUntil,
     purchaseDate: purchaseDate,
     purchasedFrom: purchasedFrom,
+    photoPath: photoPath,
+    sommelier: sommelier,
   );
 
   /// Columns of the `wines` table (see supabase/migrations). `id` and
@@ -131,6 +142,8 @@ class Wine {
     'drink_until': drinkUntil,
     'purchase_date': purchaseDate == null ? null : toIsoDate(purchaseDate!),
     'purchased_from': purchasedFrom,
+    'photo_path': photoPath,
+    'sommelier': sommelier?.toMap(),
   };
 
   /// Reads a row from the database. Throws [FormatException] if the row is
@@ -138,6 +151,7 @@ class Wine {
   factory Wine.fromMap(Map<String, dynamic> map) {
     try {
       final purchaseDate = map['purchase_date'] as String?;
+      final sommelier = map['sommelier'] as Map<String, dynamic>?;
       return Wine(
         id: map['id'] as String?,
         name: map['name'] as String,
@@ -156,6 +170,8 @@ class Wine {
         drinkUntil: map['drink_until'] as int?,
         purchaseDate: purchaseDate == null ? null : parseIsoDate(purchaseDate),
         purchasedFrom: map['purchased_from'] as String?,
+        photoPath: map['photo_path'] as String?,
+        sommelier: sommelier == null ? null : SommelierInfo.fromMap(sommelier),
       );
     } on TypeError catch (e) {
       throw FormatException('Invalid wine data: $e', map);

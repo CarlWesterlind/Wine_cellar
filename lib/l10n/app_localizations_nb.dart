@@ -325,4 +325,114 @@ class AppLocalizationsNb extends AppLocalizations {
 
   @override
   String get all => 'Alle';
+
+  @override
+  String get scanLabelTitle => 'Fotografer etiketten';
+
+  @override
+  String get scanLabelBody => 'AI leser etiketten og fyller ut resten for deg.';
+
+  @override
+  String get takePhoto => 'Ta bilde';
+
+  @override
+  String get choosePhoto => 'Velg bilde';
+
+  @override
+  String get addBackTitle => 'Legge til baksiden?';
+
+  @override
+  String get addBackBody =>
+      'Baksiden har ofte druer og flere detaljer, noe som hjelper AI-en.';
+
+  @override
+  String get skip => 'Hopp over';
+
+  @override
+  String get addBack => 'Legg til baksiden';
+
+  @override
+  String get readingLabel => 'Leser etiketten…';
+
+  @override
+  String aiFilledFields(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'AI fylte ut $count felt. Sjekk dem før du lagrer.',
+      one: 'AI fylte ut 1 felt. Sjekk det før du lagrer.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get filledByAi => 'Forslag fra AI';
+
+  @override
+  String get lowConfidence =>
+      'AI-en er usikker på denne etiketten. Sjekk opplysningene nøye.';
+
+  @override
+  String get demoScan =>
+      'Demomodus: dette er et eksempelresultat, ikke en ekte AI-lesning.';
+
+  @override
+  String get changePhoto => 'Bytt bilde';
+
+  @override
+  String get removePhoto => 'Fjern bilde';
+
+  @override
+  String get scanAgain => 'Les etiketten igjen';
+
+  @override
+  String get sommelier => 'Sommelier';
+
+  @override
+  String get aiDisclaimer => 'Forslag fra AI. De kan inneholde feil.';
+
+  @override
+  String get tastingProfile => 'Smaksprofil';
+
+  @override
+  String get foodPairing => 'Passer til';
+
+  @override
+  String get servingTemperature => 'Serveringstemperatur';
+
+  @override
+  String get decanting => 'Dekantering';
+
+  @override
+  String get aboutProducer => 'Om produsenten';
+
+  @override
+  String get removeSommelier => 'Fjern AI-forslagene';
+
+  @override
+  String get winePhoto => 'Bilde av flasken';
+
+  @override
+  String get errorNotWineLabel =>
+      'Det ser ikke ut som en vinetikett. Prøv et annet bilde.';
+
+  @override
+  String get errorUnreadable =>
+      'Etiketten kunne ikke leses. Prøv et skarpere bilde i godt lys.';
+
+  @override
+  String errorDailyLimit(int limit) {
+    return 'Du har nådd grensen på $limit skanninger per dag. Prøv igjen i morgen, eller fyll ut opplysningene selv.';
+  }
+
+  @override
+  String get errorImageTooLarge => 'Bildet er for stort. Prøv et annet.';
+
+  @override
+  String get errorUnsupportedImage =>
+      'Bildeformatet støttes ikke. Bruk JPEG eller PNG.';
+
+  @override
+  String get errorAiUnavailable =>
+      'Etikettleseren er ikke tilgjengelig akkurat nå. Prøv igjen om litt.';
 }

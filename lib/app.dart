@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'data/auth_service.dart';
-import 'data/wine_repository.dart';
+import 'data/cellar_services.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/cellar_list_screen.dart';
 import 'screens/login_screen.dart';
@@ -14,14 +14,14 @@ class WineCellarApp extends StatelessWidget {
   const WineCellarApp({
     super.key,
     required this.settings,
-    required this.createRepository,
+    required this.createServices,
     this.auth,
   });
 
   final AppSettings settings;
 
-  /// Creates the wine storage for the signed-in user.
-  final WineRepository Function() createRepository;
+  /// Creates storage and services for the signed-in user.
+  final CellarServices Function() createServices;
 
   /// Null in demo mode, where there is no login.
   final AuthService? auth;
@@ -56,7 +56,7 @@ class WineCellarApp extends StatelessWidget {
     final auth = this.auth;
     if (auth == null) {
       return CellarListScreen(
-        repository: createRepository(),
+        services: createServices(),
         settings: settings,
         demoMode: true,
       );
@@ -66,9 +66,9 @@ class WineCellarApp extends StatelessWidget {
       initialData: auth.isSignedIn,
       builder: (context, snapshot) => snapshot.data!
           ? CellarListScreen(
-              // A fresh repository and screen state for every sign-in.
+              // Fresh services and screen state for every sign-in.
               key: ValueKey(auth.email),
-              repository: createRepository(),
+              services: createServices(),
               settings: settings,
               auth: auth,
             )

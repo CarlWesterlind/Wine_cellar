@@ -677,6 +677,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All'**
   String get all;
+
+  /// No description provided for @scanLabelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Photograph the label'**
+  String get scanLabelTitle;
+
+  /// No description provided for @scanLabelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'AI reads the label and fills in the rest for you.'**
+  String get scanLabelBody;
+
+  /// No description provided for @takePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photo'**
+  String get takePhoto;
+
+  /// No description provided for @choosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose photo'**
+  String get choosePhoto;
+
+  /// No description provided for @addBackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the back label?'**
+  String get addBackTitle;
+
+  /// No description provided for @addBackBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The back label often lists grapes and more details, which helps the AI.'**
+  String get addBackBody;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// No description provided for @addBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Add back label'**
+  String get addBack;
+
+  /// No description provided for @readingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading the label…'**
+  String get readingLabel;
+
+  /// No description provided for @aiFilledFields.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{AI filled in 1 field. Check it before saving.} other{AI filled in {count} fields. Check them before saving.}}'**
+  String aiFilledFields(int count);
+
+  /// No description provided for @filledByAi.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested by AI'**
+  String get filledByAi;
+
+  /// No description provided for @lowConfidence.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI isn\'t sure about this label. Check the details carefully.'**
+  String get lowConfidence;
+
+  /// No description provided for @demoScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo mode: this is an example result, not a real AI reading.'**
+  String get demoScan;
+
+  /// No description provided for @changePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Change photo'**
+  String get changePhoto;
+
+  /// No description provided for @removePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get removePhoto;
+
+  /// No description provided for @scanAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Read label again'**
+  String get scanAgain;
+
+  /// No description provided for @sommelier.
+  ///
+  /// In en, this message translates to:
+  /// **'Sommelier'**
+  String get sommelier;
+
+  /// No description provided for @aiDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestions from AI. They can contain mistakes.'**
+  String get aiDisclaimer;
+
+  /// No description provided for @tastingProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Taste'**
+  String get tastingProfile;
+
+  /// No description provided for @foodPairing.
+  ///
+  /// In en, this message translates to:
+  /// **'Food pairing'**
+  String get foodPairing;
+
+  /// No description provided for @servingTemperature.
+  ///
+  /// In en, this message translates to:
+  /// **'Serving temperature'**
+  String get servingTemperature;
+
+  /// No description provided for @decanting.
+  ///
+  /// In en, this message translates to:
+  /// **'Decanting'**
+  String get decanting;
+
+  /// No description provided for @aboutProducer.
+  ///
+  /// In en, this message translates to:
+  /// **'About the producer'**
+  String get aboutProducer;
+
+  /// No description provided for @removeSommelier.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove AI suggestions'**
+  String get removeSommelier;
+
+  /// No description provided for @winePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo of the bottle'**
+  String get winePhoto;
+
+  /// No description provided for @errorNotWineLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'That doesn\'t look like a wine label. Try another photo.'**
+  String get errorNotWineLabel;
+
+  /// No description provided for @errorUnreadable.
+  ///
+  /// In en, this message translates to:
+  /// **'The label couldn\'t be read. Try a sharper photo with good light.'**
+  String get errorUnreadable;
+
+  /// No description provided for @errorDailyLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve reached the limit of {limit} scans per day. Try again tomorrow, or fill in the details yourself.'**
+  String errorDailyLimit(int limit);
+
+  /// No description provided for @errorImageTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The photo is too large. Try another one.'**
+  String get errorImageTooLarge;
+
+  /// No description provided for @errorUnsupportedImage.
+  ///
+  /// In en, this message translates to:
+  /// **'This image format isn\'t supported. Use JPEG or PNG.'**
+  String get errorUnsupportedImage;
+
+  /// No description provided for @errorAiUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The label reader isn\'t available right now. Try again in a moment.'**
+  String get errorAiUnavailable;
 }
 
 class _AppLocalizationsDelegate

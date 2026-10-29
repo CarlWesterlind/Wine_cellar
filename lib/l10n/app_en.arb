@@ -130,5 +130,50 @@
   "emptyCellarTitle": "Your cellar is empty",
   "clearSearch": "Clear search",
   "clearFilters": "Show all wines",
-  "all": "All"
+  "all": "All",
+  "scanLabelTitle": "Photograph the label",
+  "scanLabelBody": "AI reads the label and fills in the rest for you.",
+  "takePhoto": "Take photo",
+  "choosePhoto": "Choose photo",
+  "addBackTitle": "Add the back label?",
+  "addBackBody": "The back label often lists grapes and more details, which helps the AI.",
+  "skip": "Skip",
+  "addBack": "Add back label",
+  "readingLabel": "Reading the label…",
+  "aiFilledFields": "{count, plural, =1{AI filled in 1 field. Check it before saving.} other{AI filled in {count} fields. Check them before saving.}}",
+  "@aiFilledFields": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filledByAi": "Suggested by AI",
+  "lowConfidence": "The AI isn't sure about this label. Check the details carefully.",
+  "demoScan": "Demo mode: this is an example result, not a real AI reading.",
+  "changePhoto": "Change photo",
+  "removePhoto": "Remove photo",
+  "scanAgain": "Read label again",
+  "sommelier": "Sommelier",
+  "aiDisclaimer": "Suggestions from AI. They can contain mistakes.",
+  "tastingProfile": "Taste",
+  "foodPairing": "Food pairing",
+  "servingTemperature": "Serving temperature",
+  "decanting": "Decanting",
+  "aboutProducer": "About the producer",
+  "removeSommelier": "Remove AI suggestions",
+  "winePhoto": "Photo of the bottle",
+  "errorNotWineLabel": "That doesn't look like a wine label. Try another photo.",
+  "errorUnreadable": "The label couldn't be read. Try a sharper photo with good light.",
+  "errorDailyLimit": "You've reached the limit of {limit} scans per day. Try again tomorrow, or fill in the details yourself.",
+  "@errorDailyLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "errorImageTooLarge": "The photo is too large. Try another one.",
+  "errorUnsupportedImage": "This image format isn't supported. Use JPEG or PNG.",
+  "errorAiUnavailable": "The label reader isn't available right now. Try again in a moment."
 }

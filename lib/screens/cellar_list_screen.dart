@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../data/auth_service.dart';
-import '../data/wine_repository.dart';
+import '../data/cellar_services.dart';
+import '../data/photo_storage.dart';
 import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
 import '../models/wine.dart';
@@ -10,6 +11,7 @@ import '../state/cellar_controller.dart';
 import '../theme/motion.dart';
 import '../widgets/display_helpers.dart';
 import '../widgets/motion_widgets.dart';
+import '../widgets/wine_photo.dart';
 import 'add_edit_wine_screen.dart';
 import 'settings_screen.dart';
 import 'wine_detail_screen.dart';
@@ -17,13 +19,13 @@ import 'wine_detail_screen.dart';
 class CellarListScreen extends StatefulWidget {
   const CellarListScreen({
     super.key,
-    required this.repository,
+    required this.services,
     required this.settings,
     this.auth,
     this.demoMode = false,
   });
 
-  final WineRepository repository;
+  final CellarServices services;
   final AppSettings settings;
   final AuthService? auth;
   final bool demoMode;
@@ -33,7 +35,7 @@ class CellarListScreen extends StatefulWidget {
 }
 
 class _CellarListScreenState extends State<CellarListScreen> {
-  late final _cellar = CellarController(widget.repository)..load();
+  late final _cellar = CellarController(widget.services.wines)..load();
   final _search = TextEditingController();
 
   @override
@@ -44,12 +46,19 @@ class _CellarListScreenState extends State<CellarListScreen> {
   }
 
   void _addWine() => Navigator.of(context).push(
-    MaterialPageRoute<void>(builder: (_) => AddEditWineScreen(cellar: _cellar)),
+    MaterialPageRoute<void>(
+      builder: (_) =>
+          AddEditWineScreen(cellar: _cellar, services: widget.services),
+    ),
   );
 
   void _openWine(Wine wine) => Navigator.of(context).push(
     MaterialPageRoute<void>(
-      builder: (_) => WineDetailScreen(cellar: _cellar, wineId: wine.id!),
+      builder: (_) => WineDetailScreen(
+        cellar: _cellar,
+        services: widget.services,
+        wineId: wine.id!,
+      ),
     ),
   );
 
@@ -178,6 +187,7 @@ class _CellarListScreenState extends State<CellarListScreen> {
                 child: _WineCard(
                   wine: wine,
                   year: _cellar.currentYear,
+                  photos: widget.services.photos,
                   onTap: () => _openWine(wine),
                 ),
               ),
@@ -400,11 +410,13 @@ class _WineCard extends StatelessWidget {
   const _WineCard({
     required this.wine,
     required this.year,
+    required this.photos,
     required this.onTap,
   });
 
   final Wine wine;
   final int year;
+  final PhotoStorage photos;
   final VoidCallback onTap;
 
   @override
@@ -441,7 +453,16 @@ class _WineCard extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                WineTypeBadge(type: wine.type),
+                if (wine.photoPath case final path?)
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: SizedBox.square(
+                      dimension: 56,
+                      child: WinePhoto(photos: photos, path: path),
+                    ),
+                  )
+                else
+                  WineTypeBadge(type: wine.type),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Column(

@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart'
-    show AuthException, AuthRetryableFetchException, PostgrestException;
+    show
+        AuthException,
+        AuthRetryableFetchException,
+        FunctionsFetchException,
+        PostgrestException;
 
+import '../data/label_scanner.dart';
 import '../l10n/app_localizations.dart';
 
 /// Turns any error into a short message for the user, in their language.
 /// The technical details and stack trace are never shown; [logError]
 /// writes them to the debug console for developers instead.
 String errorMessage(AppLocalizations l10n, Object error) {
-  if (error is AuthRetryableFetchException || error is http.ClientException) {
+  if (error is AuthRetryableFetchException ||
+      error is http.ClientException ||
+      error is FunctionsFetchException) {
     return l10n.errorNetwork;
+  }
+  if (error is LabelScanException) {
+    return switch (error.reason) {
+      ScanFailure.notWineLabel => l10n.errorNotWineLabel,
+      ScanFailure.unreadable => l10n.errorUnreadable,
+      ScanFailure.dailyLimit => l10n.errorDailyLimit(error.limit ?? 50),
+      ScanFailure.imageTooLarge => l10n.errorImageTooLarge,
+      ScanFailure.unsupportedImage => l10n.errorUnsupportedImage,
+      ScanFailure.unavailable => l10n.errorAiUnavailable,
+    };
   }
   if (error is AuthException) {
     return switch (error.code) {
