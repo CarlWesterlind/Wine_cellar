@@ -74,4 +74,44 @@ void main() {
       });
     });
   }
+
+  group('wine colors', () {
+    test('light bars: champagne text on bordeaux', () {
+      expect(
+        contrast(AppTheme.champagne, AppTheme.lightScheme.primary),
+        greaterThanOrEqualTo(text),
+      );
+    });
+
+    test('light app bar and navigation bar are bordeaux', () {
+      final theme = AppTheme.light();
+      final bordeaux = AppTheme.lightScheme.primary;
+      expect(theme.appBarTheme.backgroundColor, bordeaux);
+      expect(theme.appBarTheme.foregroundColor, AppTheme.champagne);
+      expect(
+        theme.appBarTheme.systemOverlayStyle?.statusBarIconBrightness,
+        Brightness.light,
+      );
+      expect(theme.navigationBarTheme.backgroundColor, bordeaux);
+      final unselected = theme.navigationBarTheme.labelTextStyle!.resolve({});
+      expect(unselected?.color, AppTheme.champagne);
+    });
+
+    test('selected tab is readable in the champagne pill', () {
+      final theme = AppTheme.light();
+      final icon = theme.navigationBarTheme.iconTheme!.resolve({
+        WidgetState.selected,
+      });
+      expect(
+        contrast(icon!.color!, theme.navigationBarTheme.indicatorColor!),
+        greaterThanOrEqualTo(text),
+      );
+    });
+
+    test('dark theme is the cellar', () {
+      expect(AppTheme.darkScheme.surface, const Color(0xFF1A0E11));
+      expect(AppTheme.darkScheme.primary, const Color(0xFFD9B46A));
+      expect(AppTheme.darkScheme.primaryContainer, const Color(0xFF5E1226));
+    });
+  });
 }
