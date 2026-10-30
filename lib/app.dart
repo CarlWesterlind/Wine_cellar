@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'data/auth_service.dart';
 import 'data/cellar_services.dart';
 import 'l10n/app_localizations.dart';
-import 'screens/cellar_list_screen.dart';
+import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'state/app_settings.dart';
 import 'theme/app_theme.dart';
@@ -96,7 +96,7 @@ class _SessionState extends State<_Session> {
   late final _services = widget.createServices();
 
   @override
-  Widget build(BuildContext context) => CellarListScreen(
+  Widget build(BuildContext context) => HomeScreen(
     services: _services,
     settings: widget.settings,
     auth: widget.auth,

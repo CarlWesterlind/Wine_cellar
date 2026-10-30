@@ -1,11 +1,13 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../models/consumed_bottle.dart';
+import '../models/rack.dart';
 import '../models/tasting_note.dart';
 import '../models/wine.dart';
 import 'wine_repository.dart';
 
-/// Stores wines and tasting notes in the Supabase `wines` and
-/// `tasting_notes` tables. Row level security limits every query to the
+/// Stores wines, tasting notes, history and racks in the Supabase `wines`,
+/// `tasting_notes`, `consumed_bottles` and `racks` tables. Row level security limits every query to the
 /// signed-in user's rows.
 class SupabaseWineRepository implements WineRepository {
   SupabaseWineRepository(this._client);
@@ -14,6 +16,8 @@ class SupabaseWineRepository implements WineRepository {
 
   SupabaseQueryBuilder get _table => _client.from('wines');
   SupabaseQueryBuilder get _notes => _client.from('tasting_notes');
+  SupabaseQueryBuilder get _history => _client.from('consumed_bottles');
+  SupabaseQueryBuilder get _racks => _client.from('racks');
 
   @override
   Future<List<Wine>> fetchAll() async {
@@ -69,4 +73,45 @@ class SupabaseWineRepository implements WineRepository {
 
   @override
   Future<void> deleteNote(String id) => _notes.delete().eq('id', id);
+
+  /// History is deleted along with its wine by the database.
+  @override
+  Future<List<ConsumedBottle>> fetchHistory() async {
+    final rows = await _history.select().order('created_at');
+    return rows.map(ConsumedBottle.fromMap).toList();
+  }
+
+  @override
+  Future<ConsumedBottle> addConsumed(ConsumedBottle bottle) async {
+    final row = await _history.insert(bottle.toMap()).select().single();
+    return ConsumedBottle.fromMap(row);
+  }
+
+  @override
+  Future<void> deleteConsumed(String id) => _history.delete().eq('id', id);
+
+  @override
+  Future<List<Rack>> fetchRacks() async {
+    final rows = await _racks.select().order('name');
+    return rows.map(Rack.fromMap).toList();
+  }
+
+  @override
+  Future<Rack> addRack(Rack rack) async {
+    final row = await _racks.insert(rack.toMap()).select().single();
+    return Rack.fromMap(row);
+  }
+
+  @override
+  Future<Rack> updateRack(Rack rack) async {
+    final row = await _racks
+        .update(rack.toMap())
+        .eq('id', rack.id!)
+        .select()
+        .single();
+    return Rack.fromMap(row);
+  }
+
+  @override
+  Future<void> deleteRack(String id) => _racks.delete().eq('id', id);
 }

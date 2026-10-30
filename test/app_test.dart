@@ -86,8 +86,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('3 bottles'), findsOneWidget);
 
-    await tester.tap(find.text('Drink a bottle'));
-    await tester.pumpAndSettle();
+    await drinkABottle(tester);
     expect(find.text('2 bottles'), findsOneWidget);
   });
 
@@ -152,8 +151,7 @@ void main() {
       await tester.pumpAndSettle();
 
       repository.error = StateError('offline');
-      await tester.tap(find.text('Drink a bottle'));
-      await tester.pumpAndSettle();
+      await drinkABottle(tester);
 
       expect(
         find.text('Something unexpected went wrong. Please try again.'),

@@ -175,5 +175,141 @@
   },
   "errorImageTooLarge": "The photo is too large. Try another one.",
   "errorUnsupportedImage": "This image format isn't supported. Use JPEG or PNG.",
-  "errorAiUnavailable": "The label reader isn't available right now. Try again in a moment."
+  "errorAiUnavailable": "The label reader isn't available right now. Try again in a moment.",
+  "navCellar": "Cellar",
+  "navMap": "Map",
+  "navStats": "Statistics",
+  "navHistory": "History",
+  "drinkDate": "Date",
+  "occasion": "Occasion or company",
+  "occasionHint": "E.g. Christmas Eve, dinner with Anna",
+  "noteOptional": "Note (optional)",
+  "drink": "Drink",
+  "drankBottle": "Drank a bottle.",
+  "bottleDrunk": "One bottle of {name} drunk",
+  "@bottleDrunk": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "undo": "Undo",
+  "putBack": "Put back in cellar",
+  "putBackConfirm": "Put the bottle back in the cellar and remove it from the history?",
+  "emptyHistoryTitle": "No bottles drunk yet",
+  "emptyHistory": "When you drink a bottle, it shows up here with the date and occasion.",
+  "drunkTimes": "{count, plural, =1{Drunk 1 bottle} other{Drunk {count} bottles}}",
+  "@drunkTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wineCount": "{count, plural, =1{1 wine} other{{count} wines}}",
+  "@wineCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bottles": "Bottles",
+  "wines": "Wines",
+  "cellarValue": "Cellar value",
+  "averagePrice": "Average per bottle",
+  "byType": "Bottles by type",
+  "byCountry": "Bottles by country",
+  "byGrape": "Bottles by grape",
+  "otherItems": "Other",
+  "drinkThisYear": "Last year to drink",
+  "statsEmptyTitle": "No statistics yet",
+  "statsEmpty": "Statistics appear when you have bottles in the cellar.",
+  "addRack": "New rack",
+  "editRack": "Edit rack",
+  "deleteRack": "Delete rack",
+  "deleteRackConfirm": "Delete rack {name}? The wines stay in your cellar.",
+  "@deleteRackConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rackName": "Name",
+  "rackNameHint": "E.g. A or Kitchen",
+  "rackShelves": "Shelves",
+  "rackSlots": "Places per shelf",
+  "rackSizeError": "Enter a number from 1 to {max}",
+  "@rackSizeError": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "rackNameTaken": "There is already a rack with this name",
+  "noRacksTitle": "No racks yet",
+  "noRacks": "Add a rack with its shelves and places to see where every bottle is.",
+  "rackUsage": "{used} of {capacity} places used",
+  "@rackUsage": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "capacity": {
+        "type": "int"
+      }
+    }
+  },
+  "emptySlot": "Shelf {shelf}, place {slot}, empty",
+  "@emptySlot": {
+    "placeholders": {
+      "shelf": {
+        "type": "int"
+      },
+      "slot": {
+        "type": "int"
+      }
+    }
+  },
+  "filledSlot": "Shelf {shelf}, place {slot}: {wine}",
+  "@filledSlot": {
+    "placeholders": {
+      "shelf": {
+        "type": "int"
+      },
+      "slot": {
+        "type": "int"
+      },
+      "wine": {
+        "type": "String"
+      }
+    }
+  },
+  "placeWine": "Place a wine on shelf {shelf}, place {slot}",
+  "@placeWine": {
+    "placeholders": {
+      "shelf": {
+        "type": "int"
+      },
+      "slot": {
+        "type": "int"
+      }
+    }
+  },
+  "noWinesToPlace": "Add a wine to the cellar first.",
+  "notInGrid": "In this rack, without a place",
+  "moreOptions": "More options",
+  "exportCsv": "Export to spreadsheet",
+  "exportFileName": "wine-cellar",
+  "shelfShort": "Shelf {shelf}",
+  "@shelfShort": {
+    "placeholders": {
+      "shelf": {
+        "type": "int"
+      }
+    }
+  }
 }

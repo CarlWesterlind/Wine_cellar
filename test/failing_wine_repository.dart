@@ -1,4 +1,6 @@
 import 'package:wine_cellar/data/wine_repository.dart';
+import 'package:wine_cellar/models/consumed_bottle.dart';
+import 'package:wine_cellar/models/rack.dart';
 import 'package:wine_cellar/models/tasting_note.dart';
 import 'package:wine_cellar/models/wine.dart';
 
@@ -60,5 +62,47 @@ class FailingWineRepository extends InMemoryWineRepository {
   Future<void> deleteNote(String id) {
     _maybeFail();
     return super.deleteNote(id);
+  }
+
+  @override
+  Future<List<ConsumedBottle>> fetchHistory() {
+    _maybeFail();
+    return super.fetchHistory();
+  }
+
+  @override
+  Future<ConsumedBottle> addConsumed(ConsumedBottle bottle) {
+    _maybeFail();
+    return super.addConsumed(bottle);
+  }
+
+  @override
+  Future<void> deleteConsumed(String id) {
+    _maybeFail();
+    return super.deleteConsumed(id);
+  }
+
+  @override
+  Future<List<Rack>> fetchRacks() {
+    _maybeFail();
+    return super.fetchRacks();
+  }
+
+  @override
+  Future<Rack> addRack(Rack rack) {
+    _maybeFail();
+    return super.addRack(rack);
+  }
+
+  @override
+  Future<Rack> updateRack(Rack rack) {
+    _maybeFail();
+    return super.updateRack(rack);
+  }
+
+  @override
+  Future<void> deleteRack(String id) {
+    _maybeFail();
+    return super.deleteRack(id);
   }
 }

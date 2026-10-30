@@ -79,8 +79,9 @@ void main() {
     final empty = cellar.byId(barolo.id!)!;
     expect(empty.quantity, 0);
 
-    await cellar.drinkOne(empty);
+    await expectLater(cellar.drinkOne(empty), throwsStateError);
     expect(cellar.byId(barolo.id!)!.quantity, 0);
+    expect(cellar.history, hasLength(1));
   });
 
   test('delete removes the wine', () async {

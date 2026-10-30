@@ -436,4 +436,193 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorAiUnavailable =>
       'The label reader isn\'t available right now. Try again in a moment.';
+
+  @override
+  String get navCellar => 'Cellar';
+
+  @override
+  String get navMap => 'Map';
+
+  @override
+  String get navStats => 'Statistics';
+
+  @override
+  String get navHistory => 'History';
+
+  @override
+  String get drinkDate => 'Date';
+
+  @override
+  String get occasion => 'Occasion or company';
+
+  @override
+  String get occasionHint => 'E.g. Christmas Eve, dinner with Anna';
+
+  @override
+  String get noteOptional => 'Note (optional)';
+
+  @override
+  String get drink => 'Drink';
+
+  @override
+  String get drankBottle => 'Drank a bottle.';
+
+  @override
+  String bottleDrunk(String name) {
+    return 'One bottle of $name drunk';
+  }
+
+  @override
+  String get undo => 'Undo';
+
+  @override
+  String get putBack => 'Put back in cellar';
+
+  @override
+  String get putBackConfirm =>
+      'Put the bottle back in the cellar and remove it from the history?';
+
+  @override
+  String get emptyHistoryTitle => 'No bottles drunk yet';
+
+  @override
+  String get emptyHistory =>
+      'When you drink a bottle, it shows up here with the date and occasion.';
+
+  @override
+  String drunkTimes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Drunk $count bottles',
+      one: 'Drunk 1 bottle',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String wineCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count wines',
+      one: '1 wine',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bottles => 'Bottles';
+
+  @override
+  String get wines => 'Wines';
+
+  @override
+  String get cellarValue => 'Cellar value';
+
+  @override
+  String get averagePrice => 'Average per bottle';
+
+  @override
+  String get byType => 'Bottles by type';
+
+  @override
+  String get byCountry => 'Bottles by country';
+
+  @override
+  String get byGrape => 'Bottles by grape';
+
+  @override
+  String get otherItems => 'Other';
+
+  @override
+  String get drinkThisYear => 'Last year to drink';
+
+  @override
+  String get statsEmptyTitle => 'No statistics yet';
+
+  @override
+  String get statsEmpty =>
+      'Statistics appear when you have bottles in the cellar.';
+
+  @override
+  String get addRack => 'New rack';
+
+  @override
+  String get editRack => 'Edit rack';
+
+  @override
+  String get deleteRack => 'Delete rack';
+
+  @override
+  String deleteRackConfirm(String name) {
+    return 'Delete rack $name? The wines stay in your cellar.';
+  }
+
+  @override
+  String get rackName => 'Name';
+
+  @override
+  String get rackNameHint => 'E.g. A or Kitchen';
+
+  @override
+  String get rackShelves => 'Shelves';
+
+  @override
+  String get rackSlots => 'Places per shelf';
+
+  @override
+  String rackSizeError(int max) {
+    return 'Enter a number from 1 to $max';
+  }
+
+  @override
+  String get rackNameTaken => 'There is already a rack with this name';
+
+  @override
+  String get noRacksTitle => 'No racks yet';
+
+  @override
+  String get noRacks =>
+      'Add a rack with its shelves and places to see where every bottle is.';
+
+  @override
+  String rackUsage(int used, int capacity) {
+    return '$used of $capacity places used';
+  }
+
+  @override
+  String emptySlot(int shelf, int slot) {
+    return 'Shelf $shelf, place $slot, empty';
+  }
+
+  @override
+  String filledSlot(int shelf, int slot, String wine) {
+    return 'Shelf $shelf, place $slot: $wine';
+  }
+
+  @override
+  String placeWine(int shelf, int slot) {
+    return 'Place a wine on shelf $shelf, place $slot';
+  }
+
+  @override
+  String get noWinesToPlace => 'Add a wine to the cellar first.';
+
+  @override
+  String get notInGrid => 'In this rack, without a place';
+
+  @override
+  String get moreOptions => 'More options';
+
+  @override
+  String get exportCsv => 'Export to spreadsheet';
+
+  @override
+  String get exportFileName => 'wine-cellar';
+
+  @override
+  String shelfShort(int shelf) {
+    return 'Shelf $shelf';
+  }
 }

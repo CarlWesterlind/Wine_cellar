@@ -9,9 +9,18 @@ Available in Swedish, Danish, Norwegian (Bokmål) and English.
 ## Features
 
 - **Bottle locations**: Know exactly where each bottle is, by rack, shelf or position.
+- **Cellar map**: Draw each rack as a grid of shelves and places. Every
+  wine shows as a dot in its color; tap an empty place to put a wine there.
+- **Drinking history**: "Drink a bottle" asks for the date and occasion, with
+  an optional rating and note, and keeps a history you can undo from.
+- **Statistics**: Bottles, wines, value and average price; bottles per
+  drinking-window status, type, country and grape; and the wines whose last
+  year to drink is this year.
+- **Export**: Share the whole cellar as a CSV file that opens in Excel,
+  Numbers or Google Sheets.
 - **Drinking window**: See when each wine is at its best, so nothing gets opened too early or too late.
 - **Search and filters**: Find wines by name, producer, region or grape, and filter by type or drinking window.
-- **Stock and value**: Track bottles per wine, "drink a bottle" in one tap, and see the total value of the cellar.
+- **Stock and value**: Track bottles per wine and see the total value of the cellar.
 - **Purchase info**: When and where you bought each wine.
 - **Tasting notes**: A dated log of notes per wine, with an optional 1–5 star rating.
 - **Accounts**: Sign in to keep your cellar in sync across devices.
@@ -47,8 +56,7 @@ wines, and nothing is saved.
 1. Create a free project at [supabase.com](https://supabase.com).
 2. In the project's **SQL Editor**, run each file in
    [`supabase/migrations/`](supabase/migrations/) in order (`0001_…`, then
-   `0002_…`). They create the `wines` and `tasting_notes` tables with row
-   level security, so each user only sees their own data. When a new
+   `0002_…` and so on). They create the tables with row level security, so each user only sees their own data. When a new
    migration is added later, run just that one.
 3. Copy `supabase.example.json` to `supabase.json` and fill in the project
    URL and publishable key from **Project Settings → API**. `supabase.json`
@@ -85,6 +93,10 @@ lib/
   models/
     wine.dart                     # Wine, WineType, DrinkingStatus
     tasting_note.dart             # A dated note with an optional rating
+    consumed_bottle.dart          # A bottle drunk: date and occasion
+    rack.dart                     # A rack on the cellar map
+    cellar_stats.dart             # Numbers for the statistics view
+    csv.dart                      # Writes spreadsheet (CSV) text
     sommelier_info.dart           # AI tasting notes, food pairing etc.
     label_scan.dart               # What the AI read from a label
     dates.dart                    # Dates without time of day
@@ -95,17 +107,25 @@ lib/
     images.dart                   # Recognises JPEG, PNG and WebP
     photo_storage.dart            # Bottle photos (Supabase Storage / memory)
     photo_picker.dart             # Camera and photo library
+    file_sharer.dart              # The phone's share sheet
     auth_service.dart             # Login (AuthService, SupabaseAuthService)
-    wine_repository.dart          # Wine storage interface + in-memory version
-    supabase_wine_repository.dart # Wine storage in Supabase
+    wine_repository.dart          # Storage interface + in-memory version
+    supabase_wine_repository.dart # Storage in Supabase
   state/
     loading_notifier.dart         # Shared loading/error handling
-    cellar_controller.dart        # The wines, their photos, search, filters
+    cellar_controller.dart        # Wines, photos, history, racks, filters
     tasting_notes_controller.dart # The notes of one wine
     app_settings.dart             # Language and light/dark choice
   screens/
     login_screen.dart
+    home_screen.dart              # Bottom bar: cellar, map, stats, history
     cellar_list_screen.dart       # Start screen: all wines
+    cellar_map_screen.dart        # Racks drawn as grids
+    rack_dialog.dart              # Create or edit a rack
+    stats_screen.dart             # Statistics
+    history_screen.dart           # Bottles drunk
+    drink_sheet.dart              # "Drink a bottle": date, occasion, note
+    export_cellar.dart            # CSV export
     wine_detail_screen.dart       # One wine, with its notes
     tasting_note_dialog.dart      # Write or edit a note
     add_edit_wine_screen.dart     # Form for adding or editing a wine
@@ -114,7 +134,7 @@ lib/
     app_theme.dart                # Colors, shapes and page transitions
     motion.dart                   # Animation timing and easing
   widgets/
-    common.dart                   # Notice banner, confirm dialog, date field
+    common.dart                   # Banner, messages, confirm dialog, date field
     label_photo_section.dart      # Photo and "photograph the label" in form
     display_helpers.dart          # Display names, colors and formatting
     motion_widgets.dart           # Press, fade-in and rolling-number effects

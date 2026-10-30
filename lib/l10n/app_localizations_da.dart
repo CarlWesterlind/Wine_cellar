@@ -435,4 +435,192 @@ class AppLocalizationsDa extends AppLocalizations {
   @override
   String get errorAiUnavailable =>
       'Etiketlæseren er ikke tilgængelig lige nu. Prøv igen om lidt.';
+
+  @override
+  String get navCellar => 'Kælder';
+
+  @override
+  String get navMap => 'Kort';
+
+  @override
+  String get navStats => 'Statistik';
+
+  @override
+  String get navHistory => 'Historik';
+
+  @override
+  String get drinkDate => 'Dato';
+
+  @override
+  String get occasion => 'Lejlighed eller selskab';
+
+  @override
+  String get occasionHint => 'F.eks. juleaften, middag med Anna';
+
+  @override
+  String get noteOptional => 'Note (valgfri)';
+
+  @override
+  String get drink => 'Drik';
+
+  @override
+  String get drankBottle => 'Drak en flaske.';
+
+  @override
+  String bottleDrunk(String name) {
+    return 'En flaske $name drukket';
+  }
+
+  @override
+  String get undo => 'Fortryd';
+
+  @override
+  String get putBack => 'Læg tilbage i kælderen';
+
+  @override
+  String get putBackConfirm =>
+      'Lægge flasken tilbage i kælderen og fjerne den fra historikken?';
+
+  @override
+  String get emptyHistoryTitle => 'Ingen flasker drukket endnu';
+
+  @override
+  String get emptyHistory =>
+      'Når du drikker en flaske, vises den her med dato og lejlighed.';
+
+  @override
+  String drunkTimes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count flasker drukket',
+      one: '1 flaske drukket',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String wineCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count vine',
+      one: '1 vin',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bottles => 'Flasker';
+
+  @override
+  String get wines => 'Vine';
+
+  @override
+  String get cellarValue => 'Kælderens værdi';
+
+  @override
+  String get averagePrice => 'Gennemsnit pr. flaske';
+
+  @override
+  String get byType => 'Flasker pr. type';
+
+  @override
+  String get byCountry => 'Flasker pr. land';
+
+  @override
+  String get byGrape => 'Flasker pr. drue';
+
+  @override
+  String get otherItems => 'Øvrige';
+
+  @override
+  String get drinkThisYear => 'Sidste år at drikke';
+
+  @override
+  String get statsEmptyTitle => 'Ingen statistik endnu';
+
+  @override
+  String get statsEmpty => 'Statistikken vises, når du har flasker i kælderen.';
+
+  @override
+  String get addRack => 'Nyt reol';
+
+  @override
+  String get editRack => 'Rediger reol';
+
+  @override
+  String get deleteRack => 'Slet reol';
+
+  @override
+  String deleteRackConfirm(String name) {
+    return 'Slet reol $name? Vinene bliver i kælderen.';
+  }
+
+  @override
+  String get rackName => 'Navn';
+
+  @override
+  String get rackNameHint => 'F.eks. A eller Køkken';
+
+  @override
+  String get rackShelves => 'Hylder';
+
+  @override
+  String get rackSlots => 'Pladser pr. hylde';
+
+  @override
+  String rackSizeError(int max) {
+    return 'Angiv et tal fra 1 til $max';
+  }
+
+  @override
+  String get rackNameTaken => 'Der findes allerede en reol med det navn';
+
+  @override
+  String get noRacksTitle => 'Ingen reoler endnu';
+
+  @override
+  String get noRacks =>
+      'Tilføj en reol med hylder og pladser for at se, hvor hver flaske ligger.';
+
+  @override
+  String rackUsage(int used, int capacity) {
+    return '$used af $capacity pladser brugt';
+  }
+
+  @override
+  String emptySlot(int shelf, int slot) {
+    return 'Hylde $shelf, plads $slot, tom';
+  }
+
+  @override
+  String filledSlot(int shelf, int slot, String wine) {
+    return 'Hylde $shelf, plads $slot: $wine';
+  }
+
+  @override
+  String placeWine(int shelf, int slot) {
+    return 'Placer en vin på hylde $shelf, plads $slot';
+  }
+
+  @override
+  String get noWinesToPlace => 'Tilføj en vin til kælderen først.';
+
+  @override
+  String get notInGrid => 'I reolen, uden plads';
+
+  @override
+  String get moreOptions => 'Flere valg';
+
+  @override
+  String get exportCsv => 'Eksporter til regneark';
+
+  @override
+  String get exportFileName => 'vinkaelderen';
+
+  @override
+  String shelfShort(int shelf) {
+    return 'Hylde $shelf';
+  }
 }

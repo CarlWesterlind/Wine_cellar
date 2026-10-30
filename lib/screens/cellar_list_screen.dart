@@ -13,17 +13,21 @@ import '../widgets/display_helpers.dart';
 import '../widgets/motion_widgets.dart';
 import '../widgets/wine_photo.dart';
 import 'add_edit_wine_screen.dart';
+import 'export_cellar.dart';
 import 'settings_screen.dart';
 import 'wine_detail_screen.dart';
 
+/// The wines as a searchable list of cards.
 class CellarListScreen extends StatefulWidget {
   const CellarListScreen({
     super.key,
+    required this.cellar,
     required this.services,
     required this.settings,
     this.auth,
   });
 
+  final CellarController cellar;
   final CellarServices services;
   final AppSettings settings;
   final AuthService? auth;
@@ -33,15 +37,12 @@ class CellarListScreen extends StatefulWidget {
 }
 
 class _CellarListScreenState extends State<CellarListScreen> {
-  late final _cellar = CellarController(
-    widget.services.wines,
-    widget.services.photos,
-  )..load();
   final _search = TextEditingController();
+
+  CellarController get _cellar => widget.cellar;
 
   @override
   void dispose() {
-    _cellar.dispose();
     _search.dispose();
     super.dispose();
   }
@@ -77,6 +78,16 @@ class _CellarListScreenState extends State<CellarListScreen> {
         appBar: AppBar(
           title: Text(l10n.appTitle),
           actions: [
+            if (!_cellar.isEmpty)
+              Builder(
+                // Its own context, so the share sheet can point at it.
+                builder: (context) => IconButton(
+                  tooltip: l10n.exportCsv,
+                  icon: const Icon(Icons.ios_share),
+                  onPressed: () =>
+                      exportCellar(context, _cellar, widget.services),
+                ),
+              ),
             IconButton(
               tooltip: l10n.settings,
               icon: const Icon(Icons.settings_outlined),
@@ -127,7 +138,7 @@ class _CellarListScreenState extends State<CellarListScreen> {
     }
     final error = _cellar.error;
     if (error != null) {
-      return _MessageView(
+      return MessageView(
         key: const ValueKey('error'),
         icon: Icons.cloud_off_outlined,
         message: errorMessage(l10n, error),
@@ -138,7 +149,7 @@ class _CellarListScreenState extends State<CellarListScreen> {
       );
     }
     if (_cellar.isEmpty) {
-      return _MessageView(
+      return MessageView(
         key: const ValueKey('empty'),
         icon: Icons.wine_bar_outlined,
         title: l10n.emptyCellarTitle,
@@ -171,7 +182,7 @@ class _CellarListScreenState extends State<CellarListScreen> {
             ),
           ),
           if (wines.isEmpty)
-            _MessageView(
+            MessageView(
               icon: Icons.search_off,
               message: l10n.noResults,
               action: TextButton(
@@ -194,67 +205,6 @@ class _CellarListScreenState extends State<CellarListScreen> {
               ),
             ),
         ],
-      ),
-    );
-  }
-}
-
-/// A centered icon, optional title, message and button, for empty and error
-/// states.
-class _MessageView extends StatelessWidget {
-  const _MessageView({
-    super.key,
-    required this.icon,
-    this.title,
-    required this.message,
-    this.action,
-  });
-
-  final IconData icon;
-  final String? title;
-  final String message;
-  final Widget? action;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    return Center(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ExcludeSemantics(
-              child: Container(
-                width: 72,
-                height: 72,
-                decoration: BoxDecoration(
-                  color: scheme.primaryContainer,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(icon, size: 36, color: scheme.onPrimaryContainer),
-              ),
-            ),
-            const SizedBox(height: 16),
-            if (title != null) ...[
-              Text(
-                title!,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.titleLarge,
-              ),
-              const SizedBox(height: 8),
-            ],
-            Text(
-              message,
-              textAlign: TextAlign.center,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                color: scheme.onSurfaceVariant,
-              ),
-            ),
-            if (action != null) ...[const SizedBox(height: 20), action!],
-          ],
-        ),
       ),
     );
   }

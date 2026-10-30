@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wine_cellar/app.dart';
 import 'package:wine_cellar/data/cellar_services.dart';
+import 'package:wine_cellar/data/file_sharer.dart';
 import 'package:wine_cellar/data/label_scanner.dart';
 import 'package:wine_cellar/data/photo_picker.dart';
 import 'package:wine_cellar/data/photo_storage.dart';
@@ -34,6 +35,7 @@ Future<void> pumpApp(
   PhotoStorage? photos,
   LabelScanner? scanner,
   PhotoPicker? pickPhoto,
+  FileSharer? shareFile,
   bool isDemo = false,
   bool settle = true,
 }) async {
@@ -54,6 +56,7 @@ Future<void> pumpApp(
         photos: photos ?? InMemoryPhotoStorage(),
         scanner: scanner ?? const DemoLabelScanner(delay: Duration.zero),
         pickPhoto: pickPhoto ?? fakePicker([]),
+        shareFile: shareFile ?? _noSharing,
         isDemo: isDemo,
       ),
     ),
@@ -95,3 +98,18 @@ Future<void> tapSave(WidgetTester tester) async {
   await tester.tap(find.text('Save'));
   await tester.pumpAndSettle();
 }
+
+/// Taps "Drink a bottle" on the wine page and confirms the sheet as it is.
+Future<void> drinkABottle(WidgetTester tester, {bool settle = true}) async {
+  await tester.tap(find.text('Drink a bottle'));
+  await tester.pumpAndSettle();
+  await tester.tap(find.widgetWithText(FilledButton, 'Drink'));
+  if (settle) await tester.pumpAndSettle();
+}
+
+Future<void> _noSharing(
+  Uint8List bytes, {
+  required String fileName,
+  required String mimeType,
+  Rect? origin,
+}) async {}

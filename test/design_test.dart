@@ -189,7 +189,7 @@ void main() {
       );
       await tester.tap(find.text('Barolo 2019'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Drink a bottle'));
+      await drinkABottle(tester, settle: false);
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 50));
 

@@ -863,6 +863,312 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The label reader isn\'t available right now. Try again in a moment.'**
   String get errorAiUnavailable;
+
+  /// No description provided for @navCellar.
+  ///
+  /// In en, this message translates to:
+  /// **'Cellar'**
+  String get navCellar;
+
+  /// No description provided for @navMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get navMap;
+
+  /// No description provided for @navStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics'**
+  String get navStats;
+
+  /// No description provided for @navHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get navHistory;
+
+  /// No description provided for @drinkDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get drinkDate;
+
+  /// No description provided for @occasion.
+  ///
+  /// In en, this message translates to:
+  /// **'Occasion or company'**
+  String get occasion;
+
+  /// No description provided for @occasionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'E.g. Christmas Eve, dinner with Anna'**
+  String get occasionHint;
+
+  /// No description provided for @noteOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get noteOptional;
+
+  /// No description provided for @drink.
+  ///
+  /// In en, this message translates to:
+  /// **'Drink'**
+  String get drink;
+
+  /// No description provided for @drankBottle.
+  ///
+  /// In en, this message translates to:
+  /// **'Drank a bottle.'**
+  String get drankBottle;
+
+  /// No description provided for @bottleDrunk.
+  ///
+  /// In en, this message translates to:
+  /// **'One bottle of {name} drunk'**
+  String bottleDrunk(String name);
+
+  /// No description provided for @undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// No description provided for @putBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Put back in cellar'**
+  String get putBack;
+
+  /// No description provided for @putBackConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Put the bottle back in the cellar and remove it from the history?'**
+  String get putBackConfirm;
+
+  /// No description provided for @emptyHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No bottles drunk yet'**
+  String get emptyHistoryTitle;
+
+  /// No description provided for @emptyHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'When you drink a bottle, it shows up here with the date and occasion.'**
+  String get emptyHistory;
+
+  /// No description provided for @drunkTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Drunk 1 bottle} other{Drunk {count} bottles}}'**
+  String drunkTimes(int count);
+
+  /// No description provided for @wineCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 wine} other{{count} wines}}'**
+  String wineCount(int count);
+
+  /// No description provided for @bottles.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottles'**
+  String get bottles;
+
+  /// No description provided for @wines.
+  ///
+  /// In en, this message translates to:
+  /// **'Wines'**
+  String get wines;
+
+  /// No description provided for @cellarValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Cellar value'**
+  String get cellarValue;
+
+  /// No description provided for @averagePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Average per bottle'**
+  String get averagePrice;
+
+  /// No description provided for @byType.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottles by type'**
+  String get byType;
+
+  /// No description provided for @byCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottles by country'**
+  String get byCountry;
+
+  /// No description provided for @byGrape.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottles by grape'**
+  String get byGrape;
+
+  /// No description provided for @otherItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get otherItems;
+
+  /// No description provided for @drinkThisYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Last year to drink'**
+  String get drinkThisYear;
+
+  /// No description provided for @statsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No statistics yet'**
+  String get statsEmptyTitle;
+
+  /// No description provided for @statsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics appear when you have bottles in the cellar.'**
+  String get statsEmpty;
+
+  /// No description provided for @addRack.
+  ///
+  /// In en, this message translates to:
+  /// **'New rack'**
+  String get addRack;
+
+  /// No description provided for @editRack.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit rack'**
+  String get editRack;
+
+  /// No description provided for @deleteRack.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete rack'**
+  String get deleteRack;
+
+  /// No description provided for @deleteRackConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete rack {name}? The wines stay in your cellar.'**
+  String deleteRackConfirm(String name);
+
+  /// No description provided for @rackName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get rackName;
+
+  /// No description provided for @rackNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'E.g. A or Kitchen'**
+  String get rackNameHint;
+
+  /// No description provided for @rackShelves.
+  ///
+  /// In en, this message translates to:
+  /// **'Shelves'**
+  String get rackShelves;
+
+  /// No description provided for @rackSlots.
+  ///
+  /// In en, this message translates to:
+  /// **'Places per shelf'**
+  String get rackSlots;
+
+  /// No description provided for @rackSizeError.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a number from 1 to {max}'**
+  String rackSizeError(int max);
+
+  /// No description provided for @rackNameTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'There is already a rack with this name'**
+  String get rackNameTaken;
+
+  /// No description provided for @noRacksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No racks yet'**
+  String get noRacksTitle;
+
+  /// No description provided for @noRacks.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a rack with its shelves and places to see where every bottle is.'**
+  String get noRacks;
+
+  /// No description provided for @rackUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'{used} of {capacity} places used'**
+  String rackUsage(int used, int capacity);
+
+  /// No description provided for @emptySlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Shelf {shelf}, place {slot}, empty'**
+  String emptySlot(int shelf, int slot);
+
+  /// No description provided for @filledSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Shelf {shelf}, place {slot}: {wine}'**
+  String filledSlot(int shelf, int slot, String wine);
+
+  /// No description provided for @placeWine.
+  ///
+  /// In en, this message translates to:
+  /// **'Place a wine on shelf {shelf}, place {slot}'**
+  String placeWine(int shelf, int slot);
+
+  /// No description provided for @noWinesToPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a wine to the cellar first.'**
+  String get noWinesToPlace;
+
+  /// No description provided for @notInGrid.
+  ///
+  /// In en, this message translates to:
+  /// **'In this rack, without a place'**
+  String get notInGrid;
+
+  /// No description provided for @moreOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'More options'**
+  String get moreOptions;
+
+  /// No description provided for @exportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export to spreadsheet'**
+  String get exportCsv;
+
+  /// No description provided for @exportFileName.
+  ///
+  /// In en, this message translates to:
+  /// **'wine-cellar'**
+  String get exportFileName;
+
+  /// No description provided for @shelfShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Shelf {shelf}'**
+  String shelfShort(int shelf);
 }
 
 class _AppLocalizationsDelegate

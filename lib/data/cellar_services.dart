@@ -1,3 +1,4 @@
+import 'file_sharer.dart';
 import 'label_scanner.dart';
 import 'photo_picker.dart';
 import 'photo_storage.dart';
@@ -11,6 +12,7 @@ class CellarServices {
     required this.photos,
     required this.scanner,
     this.pickPhoto = pickPhotoWithDevice,
+    this.shareFile = shareFileWithDevice,
     this.isDemo = false,
   });
 
@@ -29,6 +31,9 @@ class CellarServices {
 
   /// Takes or chooses a photo; replaced in tests.
   final PhotoPicker pickPhoto;
+
+  /// Opens the share sheet for an exported file; replaced in tests.
+  final FileSharer shareFile;
 
   /// In demo mode the app says that nothing is saved and that scans are
   /// examples.

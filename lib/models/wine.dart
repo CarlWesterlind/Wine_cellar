@@ -110,7 +110,22 @@ class Wine {
 
   Wine withPhotoPath(String path) => _copy(photoPath: path);
 
-  Wine _copy({String? id, int? quantity, String? photoPath}) => Wine(
+  Wine withRack(String rack) => _copy(rack: rack);
+
+  Wine withLocation({
+    required String rack,
+    required String shelf,
+    required String position,
+  }) => _copy(rack: rack, shelf: shelf, position: position);
+
+  Wine _copy({
+    String? id,
+    int? quantity,
+    String? photoPath,
+    String? rack,
+    String? shelf,
+    String? position,
+  }) => Wine(
     id: id ?? this.id,
     name: name,
     producer: producer,
@@ -121,9 +136,9 @@ class Wine {
     grapes: grapes,
     quantity: quantity ?? this.quantity,
     price: price,
-    rack: rack,
-    shelf: shelf,
-    position: position,
+    rack: rack ?? this.rack,
+    shelf: shelf ?? this.shelf,
+    position: position ?? this.position,
     drinkFrom: drinkFrom,
     drinkUntil: drinkUntil,
     purchaseDate: purchaseDate,

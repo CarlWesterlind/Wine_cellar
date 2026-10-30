@@ -1,7 +1,10 @@
+import '../models/consumed_bottle.dart';
+import '../models/rack.dart';
 import '../models/tasting_note.dart';
 import '../models/wine.dart';
 
-/// Storage for the signed-in user's wines and their tasting notes.
+/// Storage for the signed-in user's wines, their tasting notes and drinking
+/// history, and the racks of the cellar map.
 abstract interface class WineRepository {
   Future<List<Wine>> fetchAll();
 
@@ -10,7 +13,7 @@ abstract interface class WineRepository {
 
   Future<Wine> update(Wine wine);
 
-  /// Deletes the wine and all its tasting notes.
+  /// Deletes the wine with all its tasting notes and history.
   Future<void> delete(String id);
 
   /// The tasting notes of one wine, oldest saved first.
@@ -22,6 +25,24 @@ abstract interface class WineRepository {
   Future<TastingNote> updateNote(TastingNote note);
 
   Future<void> deleteNote(String id);
+
+  /// Every bottle drunk, from all wines.
+  Future<List<ConsumedBottle>> fetchHistory();
+
+  /// Saves a new history entry and returns it with its id set.
+  Future<ConsumedBottle> addConsumed(ConsumedBottle bottle);
+
+  Future<void> deleteConsumed(String id);
+
+  Future<List<Rack>> fetchRacks();
+
+  /// Saves a new rack and returns it with its id set.
+  Future<Rack> addRack(Rack rack);
+
+  Future<Rack> updateRack(Rack rack);
+
+  /// Deletes the rack. Its wines keep their location text.
+  Future<void> deleteRack(String id);
 }
 
 /// Keeps wines in memory. Used in demo mode and in tests.
@@ -37,6 +58,19 @@ class InMemoryWineRepository implements WineRepository {
     final repository = InMemoryWineRepository(sampleWines);
     final barolo = repository._wines.values.first;
     final rioja = repository._wines.values.last;
+    for (final rack in [
+      Rack(name: 'A', shelves: 4, slotsPerShelf: 6),
+      Rack(name: 'B', shelves: 3, slotsPerShelf: 8),
+    ]) {
+      repository._addRack(rack);
+    }
+    repository._addConsumed(
+      ConsumedBottle(
+        wineId: rioja.id!,
+        date: DateTime(2025, 12, 24),
+        occasion: 'Julafton',
+      ),
+    );
     for (final note in [
       TastingNote(
         wineId: barolo.id!,
@@ -63,6 +97,8 @@ class InMemoryWineRepository implements WineRepository {
 
   final _wines = <String, Wine>{};
   final _notes = <String, TastingNote>{};
+  final _history = <String, ConsumedBottle>{};
+  final _racks = <String, Rack>{};
   var _nextId = 1;
 
   Wine _add(Wine wine) {
@@ -90,6 +126,7 @@ class InMemoryWineRepository implements WineRepository {
   Future<void> delete(String id) async {
     _wines.remove(id);
     _notes.removeWhere((_, note) => note.wineId == id);
+    _history.removeWhere((_, bottle) => bottle.wineId == id);
   }
 
   @override
@@ -119,6 +156,49 @@ class InMemoryWineRepository implements WineRepository {
 
   @override
   Future<void> deleteNote(String id) async => _notes.remove(id);
+
+  @override
+  Future<List<ConsumedBottle>> fetchHistory() async => _history.values.toList();
+
+  ConsumedBottle _addConsumed(ConsumedBottle bottle) {
+    if (!_wines.containsKey(bottle.wineId)) {
+      throw StateError('No wine with id ${bottle.wineId}');
+    }
+    final saved = bottle.withId('${_nextId++}');
+    _history[saved.id!] = saved;
+    return saved;
+  }
+
+  @override
+  Future<ConsumedBottle> addConsumed(ConsumedBottle bottle) async =>
+      _addConsumed(bottle);
+
+  @override
+  Future<void> deleteConsumed(String id) async => _history.remove(id);
+
+  @override
+  Future<List<Rack>> fetchRacks() async => _racks.values.toList();
+
+  Rack _addRack(Rack rack) {
+    final saved = rack.withId('${_nextId++}');
+    _racks[saved.id!] = saved;
+    return saved;
+  }
+
+  @override
+  Future<Rack> addRack(Rack rack) async => _addRack(rack);
+
+  @override
+  Future<Rack> updateRack(Rack rack) async {
+    if (!_racks.containsKey(rack.id)) {
+      throw StateError('No rack with id ${rack.id}');
+    }
+    _racks[rack.id!] = rack;
+    return rack;
+  }
+
+  @override
+  Future<void> deleteRack(String id) async => _racks.remove(id);
 }
 
 final sampleWines = [

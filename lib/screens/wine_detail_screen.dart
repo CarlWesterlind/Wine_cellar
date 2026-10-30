@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../data/cellar_services.dart';
 import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
+import '../models/consumed_bottle.dart';
 import '../models/tasting_note.dart';
 import '../models/wine.dart';
 import '../state/cellar_controller.dart';
@@ -18,6 +19,7 @@ import '../widgets/rating_stars.dart';
 import '../widgets/sommelier_card.dart';
 import '../widgets/wine_photo.dart';
 import 'add_edit_wine_screen.dart';
+import 'drink_sheet.dart';
 import 'tasting_note_dialog.dart';
 
 /// Everything about one wine, and its tasting notes.
@@ -81,9 +83,51 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
     if (deleted && mounted) Navigator.of(context).pop();
   }
 
-  void _drinkOne(Wine wine) {
+  /// Asks for the date and occasion, then takes a bottle out of stock. A
+  /// rating or note becomes a tasting note.
+  Future<void> _drinkOne(Wine wine) async {
+    final l10n = AppLocalizations.of(context);
+    final details = await showDrinkSheet(context, wineName: wine.name);
+    if (details == null || !mounted) return;
     unawaited(HapticFeedback.lightImpact());
-    unawaited(tryOrShowError(context, () => _cellar.drinkOne(wine)));
+    final bottle = await runOrShowError(
+      context,
+      () => _cellar.drinkOne(
+        wine,
+        date: details.date,
+        occasion: details.occasion,
+      ),
+    );
+    if (bottle == null || !mounted) return;
+    if (details.rating != null || details.note != null) {
+      final note = TastingNote(
+        wineId: wine.id!,
+        date: details.date,
+        rating: details.rating,
+        text: details.note ?? bottle.occasion ?? l10n.drankBottle,
+      );
+      await tryOrShowError(context, () => _notes.save(note));
+      if (!mounted) return;
+    }
+    _showUndo(bottle, wine.name);
+  }
+
+  void _showUndo(ConsumedBottle bottle, String wineName) {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(l10n.bottleDrunk(wineName)),
+        action: SnackBarAction(
+          label: l10n.undo,
+          // Undoing keeps the tasting note; it may still be worth keeping.
+          onPressed: () => unawaited(
+            tryOrShowError(context, () => _cellar.undoDrink(bottle)),
+          ),
+        ),
+      ),
+    );
   }
 
   void _openPhoto(String path) {
@@ -175,7 +219,11 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
               const SizedBox(height: 16),
               _StockRow(wine: wine, onDrinkOne: () => _drinkOne(wine)),
               const SizedBox(height: 16),
-              _DetailsCard(wine: wine, year: _cellar.currentYear),
+              _DetailsCard(
+                wine: wine,
+                year: _cellar.currentYear,
+                history: _cellar.historyOf(wine.id!),
+              ),
               const SizedBox(height: 24),
               if (wine.sommelier != null) ...[
                 SommelierCard(info: wine.sommelier!),
@@ -290,13 +338,20 @@ class _StockRow extends StatelessWidget {
   }
 }
 
-/// Type, vintage, origin, price, purchase, location and drinking window.
-/// Rows without a value are left out.
+/// Type, vintage, origin, price, purchase, location, drinking window and
+/// bottles drunk. Rows without a value are left out.
 class _DetailsCard extends StatelessWidget {
-  const _DetailsCard({required this.wine, required this.year});
+  const _DetailsCard({
+    required this.wine,
+    required this.year,
+    required this.history,
+  });
 
   final Wine wine;
   final int year;
+
+  /// Bottles of this wine drunk, newest first.
+  final List<ConsumedBottle> history;
 
   @override
   Widget build(BuildContext context) {
@@ -328,6 +383,17 @@ class _DetailsCard extends StatelessWidget {
           ],
         ),
       ),
+      if (history.isNotEmpty)
+        LabeledValue(
+          l10n.drunkTimes(history.length),
+          [
+            for (final bottle in history)
+              [
+                formatDate(context, bottle.date),
+                if (bottle.occasion != null) bottle.occasion!,
+              ].join(' · '),
+          ].join('\n'),
+        ),
     ];
 
     return Card(
