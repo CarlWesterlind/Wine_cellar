@@ -1,9 +1,17 @@
+import '../lexicon/lexicon.dart';
+import '../lexicon/normalize.dart';
 import 'wine.dart';
 
 /// Numbers about the bottles in the cellar. Only wines with bottles left
-/// count.
+/// count. With a [Lexicon], grape synonyms count as one grape and a country
+/// counts once however it was spelled, named in [languageCode].
 class CellarStats {
-  factory CellarStats(Iterable<Wine> wines, {required int year}) {
+  factory CellarStats(
+    Iterable<Wine> wines, {
+    required int year,
+    Lexicon? lexicon,
+    String languageCode = 'en',
+  }) {
     final inStock = [
       for (final wine in wines)
         if (wine.quantity > 0) wine,
@@ -12,13 +20,20 @@ class CellarStats {
     final byCountry = NameTally();
     final byGrape = NameTally();
     final byStatus = Tally<DrinkingStatus>();
+    final grapeLabel = _grapeLabels(inStock, lexicon);
     var pricedBottles = 0;
     for (final wine in inStock) {
       byType.add(wine.type, wine.quantity);
-      byCountry.addName(wine.country, wine.quantity);
+      final country = wine.country;
+      byCountry.addName(
+        country == null
+            ? null
+            : lexicon?.countryFor(country)?.nameIn(languageCode) ?? country,
+        wine.quantity,
+      );
       // A blend counts for each of its grapes.
       for (final grape in wine.grapes) {
-        byGrape.addName(grape, wine.quantity);
+        byGrape.addName(grapeLabel(grape), wine.quantity);
       }
       byStatus.add(wine.drinkingStatus(year), wine.quantity);
       if (wine.price != null) pricedBottles += wine.quantity;
@@ -38,6 +53,28 @@ class CellarStats {
           if (wine.drinkUntil == year) wine,
       ],
     );
+  }
+
+  /// Names each grape for the statistics: all names the wines use for the
+  /// same lexicon grape, e.g. "Syrah / Shiraz".
+  static String Function(String) _grapeLabels(
+    List<Wine> wines,
+    Lexicon? lexicon,
+  ) {
+    String key(String grape) =>
+        lexicon?.grapeFor(grape)?.id ?? normalizeForSearch(grape);
+    final spellings = <String, List<String>>{};
+    for (final wine in wines) {
+      for (final grape in wine.grapes) {
+        final names = spellings.putIfAbsent(key(grape), () => []);
+        if (!names.any(
+          (n) => normalizeForSearch(n) == normalizeForSearch(grape),
+        )) {
+          names.add(grape.trim());
+        }
+      }
+    }
+    return (grape) => spellings[key(grape)]!.join(' / ');
   }
 
   CellarStats._({

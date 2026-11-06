@@ -1,11 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wine_cellar/data/photo_storage.dart';
 import 'package:wine_cellar/data/wine_repository.dart';
+import 'package:wine_cellar/lexicon/lexicon.dart';
+import 'package:wine_cellar/lexicon/lexicon_store.dart';
 import 'package:wine_cellar/models/rack.dart';
 import 'package:wine_cellar/models/wine.dart';
 import 'package:wine_cellar/state/cellar_controller.dart';
 
 import 'failing_wine_repository.dart';
+import 'helpers.dart';
 
 /// Fails only when a wine is updated, after the history entry is saved.
 class _FailingUpdate extends InMemoryWineRepository {
@@ -94,10 +97,10 @@ void main() {
     });
 
     test('statistics follow the stock', () async {
-      expect(cellar.stats.bottles, 4);
+      expect(cellar.statsFor('en').bottles, 4);
       await cellar.drinkOne(barolo);
-      expect(cellar.stats.bottles, 3);
-      expect(cellar.stats.lastYear.single.name, 'Barolo');
+      expect(cellar.statsFor('en').bottles, 3);
+      expect(cellar.statsFor('en').lastYear.single.name, 'Barolo');
     });
   });
 
@@ -157,6 +160,45 @@ void main() {
       await failingCellar.load();
       expect(failingCellar.error, isStateError);
       expect(failingCellar.racks, isEmpty);
+    });
+  });
+
+  group('with the lexicon', () {
+    late CellarController lexiconCellar;
+
+    setUp(() async {
+      lexiconCellar = CellarController(
+        InMemoryWineRepository([
+          Wine(name: 'Aussie', grapes: ['Shiraz'], sweetness: 'Dry'),
+          Wine(name: 'Cava', grapes: ['Macabeo'], sweetness: 'Brut'),
+          Wine(name: 'Mosel', grapes: ['Riesling'], sweetness: 'trocken'),
+          Wine(name: 'Sauternes', sweetness: 'Doux'),
+          Wine(name: 'Plain'),
+        ]),
+        InMemoryPhotoStorage(),
+        lexicon: LexiconStore.ready(realLexicon),
+      );
+      await lexiconCellar.load();
+    });
+
+    List<String> names() => [
+      for (final w in lexiconCellar.visibleWines) w.name,
+    ];
+
+    test('searching a grape also finds its synonyms', () {
+      lexiconCellar.setQuery('syrah');
+      expect(names(), ['Aussie']);
+      lexiconCellar.setQuery('viura');
+      expect(names(), ['Cava']);
+    });
+
+    test('the sweetness filter understands label words in any language', () {
+      lexiconCellar.setSweetnessFilter(SweetnessScale.dry);
+      expect(names(), ['Aussie', 'Cava', 'Mosel']);
+      lexiconCellar.setSweetnessFilter(SweetnessScale.sweet);
+      expect(names(), ['Sauternes']);
+      lexiconCellar.clearFilters();
+      expect(names(), hasLength(5));
     });
   });
 }

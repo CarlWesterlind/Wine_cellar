@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wine_cellar/data/wine_repository.dart';
+import 'package:wine_cellar/lexicon/lexicon.dart';
 import 'package:wine_cellar/models/wine.dart';
 
 import 'helpers.dart';
@@ -68,5 +69,35 @@ void main() {
       expect(find.text(label), findsNothing);
     }
     expect(find.byType(Card), findsWidgets);
+  });
+
+  testWidgets('the sweetness filter appears once a wine has sweetness', (
+    tester,
+  ) async {
+    await pumpApp(
+      tester,
+      await settingsWith({'locale': 'en'}),
+      repository: InMemoryWineRepository([
+        Wine(name: 'Cava', sweetness: 'Brut'),
+        Wine(name: 'Sauternes', sweetness: 'Doux'),
+      ]),
+    );
+    final sweetness = find.widgetWithText(
+      DropdownButtonFormField<SweetnessScale?>,
+      'Sweetness',
+    );
+    expect(sweetness, findsOneWidget);
+
+    await tester.tap(sweetness);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Sweet').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Sauternes'), findsOneWidget);
+    expect(find.text('Cava'), findsNothing);
+  });
+
+  testWidgets('no sweetness filter without sweetness words', (tester) async {
+    await pumpApp(tester, await settingsWith({'locale': 'en'}));
+    expect(find.text('Sweetness'), findsNothing);
   });
 }

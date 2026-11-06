@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late final _cellar = CellarController(
     widget.services.wines,
     widget.services.photos,
+    lexicon: widget.services.lexicon,
   )..load();
   var _tab = 0;
 

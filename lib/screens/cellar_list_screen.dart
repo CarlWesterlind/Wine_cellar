@@ -5,6 +5,7 @@ import '../data/cellar_services.dart';
 import '../data/photo_storage.dart';
 import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
+import '../lexicon/lexicon.dart';
 import '../models/wine.dart';
 import '../state/app_settings.dart';
 import '../state/cellar_controller.dart';
@@ -309,6 +310,31 @@ class _SearchAndFilterBar extends StatelessWidget {
                   onChanged: cellar.setStatusFilter,
                 ),
               ),
+              // Only when some wine has a sweetness word to filter on.
+              if (cellar.hasSweetness) ...[
+                const SizedBox(width: 8),
+                Expanded(
+                  child: DropdownButtonFormField<SweetnessScale?>(
+                    key: ValueKey(cellar.sweetnessFilter),
+                    initialValue: cellar.sweetnessFilter,
+                    isExpanded: true,
+                    style: textStyle,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      labelText: l10n.sweetness,
+                    ),
+                    items: [
+                      DropdownMenuItem(value: null, child: oneLine(l10n.all)),
+                      for (final scale in SweetnessScale.values)
+                        DropdownMenuItem(
+                          value: scale,
+                          child: oneLine(scale.displayName(l10n)),
+                        ),
+                    ],
+                    onChanged: cellar.setSweetnessFilter,
+                  ),
+                ),
+              ],
             ],
           ),
         ],

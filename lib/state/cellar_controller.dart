@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import '../data/photo_storage.dart';
 import '../data/wine_repository.dart';
 import '../errors/error_messages.dart';
+import '../lexicon/lexicon.dart';
+import '../lexicon/lexicon_store.dart';
 import '../models/cellar_stats.dart';
 import '../models/consumed_bottle.dart';
 import '../models/rack.dart';
@@ -12,12 +14,19 @@ import 'loading_notifier.dart';
 /// Holds the user's wines, their photos and drinking history, the racks of
 /// the cellar map, and the current search and filters.
 class CellarController extends LoadingNotifier {
-  CellarController(this._repository, this._photos, {DateTime Function()? clock})
-    : _clock = clock ?? DateTime.now;
+  CellarController(
+    this._repository,
+    this._photos, {
+    DateTime Function()? clock,
+    this._lexicon,
+  }) : _clock = clock ?? DateTime.now;
 
   final WineRepository _repository;
   final PhotoStorage _photos;
   final DateTime Function() _clock;
+
+  /// For synonyms in search and the sweetness filter; may be loading.
+  final LexiconStore? _lexicon;
 
   List<Wine> _wines = const [];
   List<ConsumedBottle> _history = const [];
@@ -26,10 +35,13 @@ class CellarController extends LoadingNotifier {
   String _query = '';
   WineType? _typeFilter;
   DrinkingStatus? _statusFilter;
+  SweetnessScale? _sweetnessFilter;
 
   /// [visibleWines], kept until the wines or filters change.
   List<Wine>? _visible;
-  CellarStats? _stats;
+
+  /// The last [statsFor] result, and the language it was made for.
+  (CellarStats, String)? _stats;
 
   /// Where the wines are stored; also used for their tasting notes.
   WineRepository get repository => _repository;
@@ -37,6 +49,19 @@ class CellarController extends LoadingNotifier {
   String get query => _query;
   WineType? get typeFilter => _typeFilter;
   DrinkingStatus? get statusFilter => _statusFilter;
+  SweetnessScale? get sweetnessFilter => _sweetnessFilter;
+
+  /// True if some wine has a sweetness word the lexicon knows, so the
+  /// sweetness filter is worth showing.
+  bool get hasSweetness =>
+      _wines.any((w) => w.sweetness != null && _scaleOf(w) != null);
+
+  SweetnessScale? _scaleOf(Wine wine) {
+    final term = wine.sweetness;
+    if (term == null) return null;
+    return _lexicon?.lexicon?.sweetnessFor(term)?.scale;
+  }
+
   int get currentYear => _clock().year;
 
   bool get isEmpty => _wines.isEmpty;
@@ -49,8 +74,12 @@ class CellarController extends LoadingNotifier {
 
   List<Wine> _filterAndSort() {
     final year = currentYear;
+    final lexicon = _lexicon?.lexicon;
     final matching = _wines.where((wine) {
-      if (!wine.matchesSearch(_query)) return false;
+      if (!wine.matchesSearch(_query, lexicon: lexicon)) return false;
+      if (_sweetnessFilter != null && _scaleOf(wine) != _sweetnessFilter) {
+        return false;
+      }
       if (_typeFilter != null && wine.type != _typeFilter) return false;
       if (_statusFilter != null && wine.drinkingStatus(year) != _statusFilter) {
         return false;
@@ -74,7 +103,19 @@ class CellarController extends LoadingNotifier {
   /// Sorted by name.
   List<Rack> get racks => _racks;
 
-  CellarStats get stats => _stats ??= CellarStats(_wines, year: currentYear);
+  /// Statistics with countries named in [languageCode].
+  CellarStats statsFor(String languageCode) {
+    final cached = _stats;
+    if (cached != null && cached.$2 == languageCode) return cached.$1;
+    final stats = CellarStats(
+      _wines,
+      year: currentYear,
+      lexicon: _lexicon?.lexicon,
+      languageCode: languageCode,
+    );
+    _stats = (stats, languageCode);
+    return stats;
+  }
 
   int get totalBottles => _wines.fold(0, (sum, w) => sum + w.quantity);
 
@@ -136,10 +177,16 @@ class CellarController extends LoadingNotifier {
     _changed();
   }
 
+  void setSweetnessFilter(SweetnessScale? scale) {
+    _sweetnessFilter = scale;
+    _changed();
+  }
+
   void clearFilters() {
     _query = '';
     _typeFilter = null;
     _statusFilter = null;
+    _sweetnessFilter = null;
     _changed();
   }
 

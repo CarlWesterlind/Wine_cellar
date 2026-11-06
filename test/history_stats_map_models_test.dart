@@ -5,6 +5,8 @@ import 'package:wine_cellar/models/csv.dart';
 import 'package:wine_cellar/models/rack.dart';
 import 'package:wine_cellar/models/wine.dart';
 
+import 'helpers.dart';
+
 void main() {
   group('ConsumedBottle', () {
     test('keeps only the date, and a blank occasion becomes null', () {
@@ -173,6 +175,38 @@ void main() {
       // Ties keep the order they were added in.
       expect(tally.sorted.map((e) => e.key), ['B', 'D', 'A', 'C']);
       expect(tally.top(10).$2, 0);
+    });
+  });
+
+  group('CellarStats with the lexicon', () {
+    final stats = CellarStats(
+      [
+        Wine(name: 'A', quantity: 2, grapes: ['Syrah'], country: 'Italia'),
+        Wine(name: 'B', quantity: 3, grapes: ['Shiraz'], country: 'Italy'),
+        Wine(
+          name: 'C',
+          quantity: 1,
+          grapes: ['Rara Neagră'],
+          country: 'Narnia',
+        ),
+      ],
+      year: 2026,
+      lexicon: realLexicon,
+      languageCode: 'sv',
+    );
+
+    test('synonyms count as one grape, named as the wines name it', () {
+      expect(stats.byGrape.sorted.map((e) => (e.key, e.value)), [
+        ('Syrah / Shiraz', 5),
+        ('Rara Neagră', 1),
+      ]);
+    });
+
+    test('one country however it was typed, in the app language', () {
+      expect(stats.byCountry.sorted.map((e) => (e.key, e.value)), [
+        ('Italien', 5),
+        ('Narnia', 1),
+      ]);
     });
   });
 

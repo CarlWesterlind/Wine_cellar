@@ -179,7 +179,7 @@ void main() {
       expect(find.bySemanticsLabel('Cellar value: 2,199.50'), findsOneWidget);
       expect(find.bySemanticsLabel('Red: 3 bottles'), findsOneWidget);
       await scrollTo(tester, find.text('Bottles by country'));
-      expect(find.bySemanticsLabel('Italia: 3 bottles'), findsOneWidget);
+      expect(find.bySemanticsLabel('Italy: 3 bottles'), findsOneWidget);
       semantics.dispose();
     });
 

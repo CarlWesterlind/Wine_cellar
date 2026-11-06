@@ -38,7 +38,9 @@ class StatsScreen extends StatelessWidget {
       body: ListenableBuilder(
         listenable: cellar,
         builder: (context, _) {
-          final stats = cellar.stats;
+          final stats = cellar.statsFor(
+            Localizations.localeOf(context).languageCode,
+          );
           if (stats.bottles == 0) {
             return MessageView(
               icon: Icons.bar_chart,

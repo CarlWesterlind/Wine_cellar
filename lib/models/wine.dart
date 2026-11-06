@@ -1,3 +1,4 @@
+import '../lexicon/lexicon.dart';
 import 'dates.dart';
 import 'sommelier_info.dart';
 
@@ -265,11 +266,13 @@ class Wine {
   }
 
   /// True if [query] appears in the name, producer, any place, a grape, a
-  /// classification or the shop it was bought from.
-  bool matchesSearch(String query) {
+  /// classification or the shop it was bought from. With a [lexicon],
+  /// a grape is also found by its synonyms ("syrah" finds Shiraz) and a
+  /// country by its other names.
+  bool matchesSearch(String query, {Lexicon? lexicon}) {
     final q = query.trim().toLowerCase();
     if (q.isEmpty) return true;
-    return [
+    final found = [
       name,
       producer,
       region,
@@ -281,5 +284,16 @@ class Wine {
       ...grapes,
       ...classifications,
     ].whereType<String>().any((field) => field.toLowerCase().contains(q));
+    if (found || lexicon == null) return found;
+
+    final grape = lexicon.grapeFor(query);
+    if (grape != null && grapes.any((g) => lexicon.grapeFor(g) == grape)) {
+      return true;
+    }
+    final typedCountry = lexicon.countryFor(query);
+    final wineCountry = country;
+    return typedCountry != null &&
+        wineCountry != null &&
+        lexicon.countryFor(wineCountry) == typedCountry;
   }
 }
