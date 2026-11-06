@@ -1,5 +1,9 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -10,6 +14,7 @@ import 'data/label_scanner.dart';
 import 'data/photo_storage.dart';
 import 'data/supabase_wine_repository.dart';
 import 'errors/error_messages.dart';
+import 'lexicon/lexicon_store.dart';
 import 'state/app_settings.dart';
 
 // Pass with --dart-define. Without them the app runs in demo mode.
@@ -21,11 +26,19 @@ const supabasePublishableKey = String.fromEnvironment(
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   catchUnhandledErrors();
-  final settings = AppSettings(await SharedPreferences.getInstance());
+  final prefs = await SharedPreferences.getInstance();
+  final settings = AppSettings(prefs);
+  Future<String> loadBundled() =>
+      rootBundle.loadString('assets/lexicon/lexicon.json');
 
   if (supabaseUrl.isEmpty || supabasePublishableKey.isEmpty) {
+    final lexicon = LexiconStore(loadBundled: loadBundled);
+    unawaited(lexicon.load());
     runApp(
-      WineCellarApp(settings: settings, createServices: CellarServices.demo),
+      WineCellarApp(
+        settings: settings,
+        createServices: () => CellarServices.demo(lexicon),
+      ),
     );
     return;
   }
@@ -35,6 +48,14 @@ Future<void> main() async {
     publishableKey: supabasePublishableKey,
   );
   final client = Supabase.instance.client;
+  final lexicon = LexiconStore(
+    loadBundled: loadBundled,
+    // Published in the public `lexicon` bucket; see tool/publish_lexicon.md.
+    fetch: (file) async =>
+        utf8.decode(await client.storage.from('lexicon').download(file)),
+    prefs: prefs,
+  );
+  unawaited(lexicon.load().then((_) => lexicon.checkForUpdate()));
   runApp(
     WineCellarApp(
       settings: settings,
@@ -43,6 +64,7 @@ Future<void> main() async {
         wines: SupabaseWineRepository(client),
         photos: SupabasePhotoStorage(client),
         scanner: SupabaseLabelScanner(client.functions),
+        lexicon: lexicon,
       ),
     ),
   );

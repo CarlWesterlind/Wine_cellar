@@ -1,3 +1,4 @@
+import '../lexicon/lexicon_store.dart';
 import 'file_sharer.dart';
 import 'label_scanner.dart';
 import 'photo_picker.dart';
@@ -11,6 +12,7 @@ class CellarServices {
     required this.wines,
     required this.photos,
     required this.scanner,
+    required this.lexicon,
     this.pickPhoto = pickPhotoWithDevice,
     this.shareFile = shareFileWithDevice,
     this.isDemo = false,
@@ -18,16 +20,21 @@ class CellarServices {
 
   /// Demo mode: sample wines in memory, nothing saved, and an example
   /// result instead of real label scanning.
-  factory CellarServices.demo() => CellarServices(
+  factory CellarServices.demo(LexiconStore lexicon) => CellarServices(
     wines: InMemoryWineRepository.demo(),
     photos: InMemoryPhotoStorage(),
     scanner: const DemoLabelScanner(),
+    lexicon: lexicon,
     isDemo: true,
   );
 
   final WineRepository wines;
   final PhotoStorage photos;
   final LabelScanner scanner;
+
+  /// Spelling suggestions for grapes, places and label terms. Shared by all
+  /// sessions, so it is loaded once.
+  final LexiconStore lexicon;
 
   /// Takes or chooses a photo; replaced in tests.
   final PhotoPicker pickPhoto;

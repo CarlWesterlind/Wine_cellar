@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wine_cellar/app.dart';
 import 'package:wine_cellar/data/cellar_services.dart';
+import 'package:wine_cellar/lexicon/lexicon_store.dart';
 import 'package:wine_cellar/models/wine.dart';
 
 import 'failing_wine_repository.dart';
@@ -232,7 +233,7 @@ void main() {
           settings: settings,
           createServices: () {
             created++;
-            return CellarServices.demo();
+            return CellarServices.demo(LexiconStore.ready(realLexicon));
           },
         ),
       );

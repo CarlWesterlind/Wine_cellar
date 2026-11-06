@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -11,6 +13,8 @@ import 'package:wine_cellar/data/label_scanner.dart';
 import 'package:wine_cellar/data/photo_picker.dart';
 import 'package:wine_cellar/data/photo_storage.dart';
 import 'package:wine_cellar/data/wine_repository.dart';
+import 'package:wine_cellar/lexicon/lexicon.dart';
+import 'package:wine_cellar/lexicon/lexicon_store.dart';
 import 'package:wine_cellar/models/wine.dart';
 import 'package:wine_cellar/state/app_settings.dart';
 
@@ -27,6 +31,12 @@ PhotoPicker fakePicker(List<Uint8List?> photos) {
   final queue = [...photos];
   return (_) async => queue.isEmpty ? null : queue.removeAt(0);
 }
+
+/// The real lexicon from assets/, read once.
+final realLexicon = Lexicon.fromJson(
+  jsonDecode(File('assets/lexicon/lexicon.json').readAsStringSync())
+      as Map<String, dynamic>,
+);
 
 Future<void> pumpApp(
   WidgetTester tester,
@@ -57,6 +67,7 @@ Future<void> pumpApp(
         scanner: scanner ?? const DemoLabelScanner(delay: Duration.zero),
         pickPhoto: pickPhoto ?? fakePicker([]),
         shareFile: shareFile ?? _noSharing,
+        lexicon: LexiconStore.ready(realLexicon),
         isDemo: isDemo,
       ),
     ),
