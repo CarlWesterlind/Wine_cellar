@@ -1,0 +1,18 @@
+# English name | Swedish | Danish | Norwegian | other names
+Red blend | Röd blend | Rød blend | Rød blend | Cuvée, Assemblage, Uvaggio, Ensamblaje
+White blend | Vit blend | Hvid blend | Hvit blend |
+Bordeaux blend | Bordeaux-blend | Bordeaux-blend | Bordeaux-blend | Meritage, Claret, Cabernet-Merlot
+White Bordeaux blend | Vit Bordeaux-blend | Hvid Bordeaux-blend | Hvit Bordeaux-blend | Sauvignon-Sémillon
+GSM | GSM | GSM | GSM | Grenache-Syrah-Mourvèdre, Rhône blend
+White Rhône blend | Vit Rhône-blend | Hvid Rhône-blend | Hvit Rhône-blend | Marsanne-Roussanne
+Champagne blend | Champagne-blend | Champagne-blend | Champagne-blend | Chardonnay-Pinot Noir-Meunier
+Super Tuscan | Super Tuscan | Super Tuscan | Super Tuscan | Supertoscano
+Field blend | Gemischter Satz-blend | Field blend | Field blend | Gemischter Satz, Field Blend
+Port blend | Portvinsblend | Portvinsblend | Portvinsblend | Douro blend
+Cava blend | Cava-blend | Cava-blend | Cava-blend | Macabeo-Xarel·lo-Parellada
+Rioja blend | Rioja-blend | Rioja-blend | Rioja-blend |
+Cabernet-Shiraz | Cabernet-Shiraz | Cabernet-Shiraz | Cabernet-Shiraz | Cabernet Shiraz, Shiraz Cabernet
+Cape blend | Cape blend | Cape blend | Cape blend | Pinotage blend
+Valpolicella blend | Valpolicella-blend | Valpolicella-blend | Valpolicella-blend | Corvina-Rondinella
+Chianti blend | Chianti-blend | Chianti-blend | Chianti-blend |
+Edelzwicker | Edelzwicker | Edelzwicker | Edelzwicker | Gentil

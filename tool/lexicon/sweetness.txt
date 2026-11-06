@@ -1,0 +1,57 @@
+# Term on the label | dry / offDry / mediumSweet / sweet | countries where it is used (empty: many)
+# Sparkling wine terms
+Brut Nature | dry |
+Pas Dosé | dry | FR
+Dosage Zéro | dry | FR
+Zero Dosage | dry |
+Extra Brut | dry |
+Brut | dry |
+Extra Dry | offDry |
+Extra Sec | offDry | FR
+Sec | mediumSweet | FR
+Demi-Sec | sweet | FR
+Doux | sweet | FR
+Dry | dry |
+Off-dry | offDry |
+Medium Dry | offDry | GB
+Medium | mediumSweet | GB
+Medium Sweet | mediumSweet | GB
+Sweet | sweet |
+Moelleux | mediumSweet | FR
+Liquoreux | sweet | FR
+Demi-Doux | mediumSweet | FR
+# German and Austrian
+trocken | dry | DE AT
+halbtrocken | offDry | DE AT
+feinherb | offDry | DE
+lieblich | mediumSweet | DE AT
+süss | sweet | DE AT
+edelsüss | sweet | DE AT
+Herb | dry | DE
+Extra Trocken | offDry | DE AT
+# Italian
+Secco | dry | IT
+Asciutto | dry | IT
+Abboccato | offDry | IT
+Amabile | mediumSweet | IT
+Dolce | sweet | IT
+Dosaggio Zero | dry | IT
+# Spanish and Portuguese
+Seco | dry | ES PT
+Semiseco | mediumSweet | ES
+Semidulce | mediumSweet | ES
+Dulce | sweet | ES
+Meio Seco | offDry | PT
+Meio Doce | mediumSweet | PT
+Doce | sweet | PT
+Bruto | dry | ES PT
+# Hungarian
+Száraz | dry | HU
+Félszáraz | offDry | HU
+Félédes | mediumSweet | HU
+Édes | sweet | HU
+# Greek
+Xiros | dry | GR
+Imixiros | offDry | GR
+Imiglykos | mediumSweet | GR
+Glykos | sweet | GR

@@ -1,0 +1,204 @@
+@DE
+# R Anbaugebiet, S Bereich, A village (Ortswein), V vineyard (Lage).
+
+R Mosel | Mosel-Saar-Ruwer, Moselle
+S Bernkastel | Mittelmosel, Middle Mosel
+A Bernkastel-Kues | Bernkastel
+V Bernkasteler Doctor | Doctor
+A Graach
+V Graacher Himmelreich | Himmelreich
+V Graacher Domprobst | Domprobst
+A Wehlen
+V Wehlener Sonnenuhr | Sonnenuhr
+A Zeltingen
+A Ürzig
+V Ürziger Würzgarten | Würzgarten
+A Erden
+V Erdener Treppchen | Treppchen
+V Erdener Prälat | Prälat
+A Piesport
+V Piesporter Goldtröpfchen | Goldtröpfchen
+A Brauneberg
+V Brauneberger Juffer | Juffer
+V Brauneberger Juffer-Sonnenuhr | Juffer-Sonnenuhr
+A Trittenheim
+V Trittenheimer Apotheke | Apotheke
+A Kröv
+A Traben-Trarbach
+A Enkirch
+A Kinheim
+A Lieser
+A Mülheim
+A Veldenz
+A Thörnich
+A Klüsserath
+A Leiwen
+V Laurentiuslay
+S Saar
+A Wiltingen
+V Scharzhofberger | Scharzhofberg
+A Ockfen
+V Ockfener Bockstein | Bockstein
+A Ayl
+A Kanzem
+A Serrig
+A Saarburg
+A Wawern
+S Ruwer
+A Kasel
+A Mertesdorf
+V Maximin Grünhaus | Grünhaus
+A Eitelsbach
+S Burg Cochem | Terrassenmosel, Untermosel
+A Winningen
+A Kobern-Gondorf
+A Bremm
+A Pünderich
+S Obermosel
+
+R Rheingau
+A Rüdesheim
+V Berg Schlossberg
+V Berg Rottland
+V Berg Roseneck
+A Assmannshausen
+A Lorch
+A Geisenheim
+A Johannisberg
+V Schloss Johannisberg
+A Winkel
+A Oestrich
+A Hattenheim
+V Steinberg
+A Erbach
+V Marcobrunn
+A Kiedrich
+V Gräfenberg
+A Eltville
+A Rauenthal
+V Baiken
+A Hochheim
+V Hölle
+A Walluf
+
+R Rheinhessen
+A Nierstein
+V Pettenthal
+V Hipping
+V Ölberg
+V Brudersberg
+A Nackenheim
+V Rothenberg
+A Oppenheim
+A Westhofen
+V Morstein
+V Kirchspiel
+A Dalsheim
+V Hubacker
+A Flörsheim-Dalsheim
+A Bingen
+A Siefersheim
+A Hohen-Sülzen
+A Bechtheim
+
+R Pfalz | Palatinate
+S Mittelhaardt | Mittelhaardt-Deutsche Weinstrasse
+A Forst
+V Pechstein
+V Jesuitengarten
+V Kirchenstück
+V Ungeheuer
+A Deidesheim
+V Grainhübel
+A Wachenheim
+V Gerümpel
+A Ruppertsberg
+A Bad Dürkheim
+A Ungstein
+A Kallstadt
+V Saumagen
+S Südliche Weinstrasse
+A Birkweiler
+V Kastanienbusch
+A Siebeldingen
+V Im Sonnenschein
+A Schweigen
+A Leinsweiler
+
+R Nahe
+A Schlossböckelheim
+V Felsenberg
+A Niederhausen
+V Hermannshöhle
+A Norheim
+A Monzingen
+V Halenberg
+A Bad Kreuznach
+A Dorsheim
+A Traisen
+V Bastei
+A Oberhausen
+
+R Franken | Franconia
+A Würzburg
+V Würzburger Stein | Stein
+A Iphofen
+V Julius-Echter-Berg
+A Randersacker
+A Escherndorf
+V Escherndorfer Lump | Lump
+A Sommerach
+A Volkach
+A Bürgstadt
+A Klingenberg
+
+R Baden
+S Kaiserstuhl
+A Ihringen
+V Winklerberg
+A Oberrotweil
+A Achkarren
+A Burkheim
+A Bischoffingen
+A Jechtingen
+A Oberbergen
+S Ortenau
+A Durbach
+A Neuweier
+S Markgräflerland
+S Tuniberg
+S Badische Bergstrasse
+S Bodensee
+S Kraichgau
+S Breisgau
+S Tauberfranken
+
+R Württemberg | Wurttemberg
+S Remstal-Stuttgart
+S Württembergisch Unterland
+A Fellbach
+A Stetten
+A Untertürkheim
+
+R Ahr
+A Ahrweiler
+A Mayschoss
+A Dernau
+A Altenahr
+A Walporzheim
+
+R Mittelrhein | Middle Rhine
+A Bacharach
+A Boppard
+A Oberwesel
+
+R Hessische Bergstrasse
+A Heppenheim
+A Bensheim
+
+R Saale-Unstrut
+A Freyburg
+
+R Sachsen | Saxony
+A Meissen
+A Radebeul

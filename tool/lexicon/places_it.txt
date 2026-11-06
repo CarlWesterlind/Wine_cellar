@@ -1,0 +1,358 @@
+@IT
+# R region, S part of a region, A DOCG/DOC/IGT, V vineyard (MGA, cru).
+
+R Piemonte | Piedmont, Piémont
+A Barolo
+V Cannubi
+V Brunate
+V Cerequio
+V Rocche dell'Annunziata
+V Bussia
+V Monprivato
+V Villero
+V Ravera
+V Vigna Rionda
+V Lazzarito
+V Francia
+V Ginestra
+V Monvigliero
+V Bricco Rocche
+A Barbaresco
+V Asili
+V Rabajà
+V Montestefano
+V Pajè
+V Ovello
+V Montefico
+V Martinenga
+V Gallina
+V Pora
+V Santo Stefano
+V Starderi
+A Roero
+A Roero Arneis
+A Barbera d'Asti
+A Nizza
+A Barbera d'Alba
+A Barbera del Monferrato
+A Barbera del Monferrato Superiore
+A Dolcetto d'Alba
+A Dogliani
+A Dolcetto di Diano d'Alba | Diano d'Alba
+A Dolcetto di Ovada
+A Ovada
+A Langhe
+A Nebbiolo d'Alba
+A Alba
+A Verduno Pelaverga | Verduno
+A Gavi | Cortese di Gavi
+A Asti | Asti Spumante
+A Moscato d'Asti
+A Brachetto d'Acqui | Acqui
+A Ruchè di Castagnole Monferrato
+A Grignolino d'Asti
+A Grignolino del Monferrato Casalese
+A Freisa d'Asti
+A Gattinara
+A Ghemme
+A Boca
+A Bramaterra
+A Lessona
+A Fara
+A Sizzano
+A Carema
+A Colline Novaresi
+A Coste della Sesia
+A Erbaluce di Caluso | Caluso
+A Canavese
+A Alta Langa
+A Colli Tortonesi
+A Terre Alfieri
+A Piemonte
+
+R Valle d'Aosta | Aosta Valley, Vallée d'Aoste
+A Valle d'Aosta | Vallée d'Aoste
+
+R Lombardia | Lombardy, Lombardei
+A Franciacorta
+A Valtellina Superiore
+A Sforzato di Valtellina | Sfursat
+A Rosso di Valtellina
+A Oltrepò Pavese
+A Oltrepò Pavese Metodo Classico
+A Oltrepò Pavese Pinot Grigio
+A Buttafuoco dell'Oltrepò Pavese | Buttafuoco
+A Sangue di Giuda
+A Bonarda dell'Oltrepò Pavese
+A Lugana
+A Moscato di Scanzo
+A Curtefranca
+A Riviera del Garda Classico
+A Valcalepio
+A San Colombano al Lambro
+
+R Trentino-Alto Adige | Trentino-Südtirol
+A Trento | Trentodoc
+A Trentino
+A Teroldego Rotaliano
+A Alto Adige | Südtirol, South Tyrol
+A Alto Adige Santa Maddalena | St. Magdalener
+A Lago di Caldaro | Kalterersee
+A Alto Adige Valle Isarco | Eisacktal
+A Alto Adige Terlano | Terlaner
+A Vigneti delle Dolomiti
+
+R Veneto
+A Amarone della Valpolicella | Amarone
+A Recioto della Valpolicella
+A Valpolicella
+A Valpolicella Ripasso | Ripasso
+A Valpolicella Classico
+A Soave
+A Soave Superiore
+A Recioto di Soave
+A Bardolino
+A Bardolino Superiore
+A Chiaretto di Bardolino
+A Custoza | Bianco di Custoza
+A Prosecco
+A Conegliano Valdobbiadene Prosecco | Prosecco Superiore, Valdobbiadene
+A Cartizze | Superiore di Cartizze
+A Asolo Prosecco | Asolo
+A Lison-Pramaggiore
+A Lison
+A Piave Malanotte
+A Colli Euganei
+A Colli Euganei Fior d'Arancio
+A Colli Berici
+A Breganze
+A Gambellara
+A Lessini Durello | Durello
+A Arcole
+A Venezia
+A Delle Venezie | Pinot Grigio delle Venezie
+A Veneto
+
+R Friuli-Venezia Giulia | Friuli
+A Collio | Collio Goriziano
+A Friuli Colli Orientali | Colli Orientali del Friuli
+A Ramandolo
+A Colli Orientali del Friuli Picolit | Picolit
+A Rosazzo
+A Friuli Isonzo | Isonzo
+A Friuli Grave | Grave
+A Friuli Aquileia
+A Carso
+A Friuli
+
+R Emilia-Romagna
+A Lambrusco di Sorbara
+A Lambrusco Grasparossa di Castelvetro
+A Lambrusco Salamino di Santa Croce
+A Lambrusco di Modena
+A Reggiano
+A Colli Bolognesi Pignoletto | Pignoletto
+A Romagna Albana | Albana di Romagna
+A Romagna
+A Colli Piacentini
+A Gutturnio
+A Ortrugo dei Colli Piacentini
+A Colli di Parma
+
+R Liguria
+A Cinque Terre
+A Cinque Terre Sciacchetrà | Sciacchetrà
+A Riviera Ligure di Ponente
+A Rossese di Dolceacqua | Dolceacqua
+A Colli di Luni
+A Ormeasco di Pornassio
+
+R Toscana | Tuscany, Toskana
+A Chianti
+A Chianti Classico
+A Chianti Rufina
+A Chianti Colli Senesi
+A Chianti Colli Fiorentini
+A Chianti Montalbano
+A Chianti Colline Pisane
+A Chianti Colli Aretini
+A Chianti Montespertoli
+A Brunello di Montalcino | Brunello
+A Rosso di Montalcino
+A Sant'Antimo
+A Moscadello di Montalcino
+A Vino Nobile di Montepulciano | Vino Nobile
+A Rosso di Montepulciano
+A Bolgheri
+A Bolgheri Sassicaia
+A Morellino di Scansano
+A Carmignano
+A Vernaccia di San Gimignano
+A Montecucco Sangiovese
+A Montecucco
+A Maremma Toscana
+A Val di Cornia
+A Suvereto
+A Elba
+A Elba Aleatico Passito
+A Orcia
+A Pomino
+A Cortona
+A Montecarlo
+A Colline Lucchesi
+A Valdarno di Sopra
+A Vin Santo del Chianti Classico
+A Vin Santo di Montepulciano
+A Toscana | IGT Toscana, Toscana IGT
+
+R Umbria
+A Montefalco Sagrantino | Sagrantino di Montefalco
+A Montefalco
+A Torgiano Rosso Riserva
+A Torgiano
+A Orvieto
+A Spoleto
+A Todi
+A Assisi
+A Colli del Trasimeno
+A Lago di Corbara
+A Umbria
+
+R Marche
+A Verdicchio dei Castelli di Jesi | Castelli di Jesi Verdicchio
+A Verdicchio di Matelica
+A Conero | Rosso Conero
+A Rosso Piceno
+A Offida
+A Vernaccia di Serrapetrona
+A Lacrima di Morro d'Alba
+A Bianchello del Metauro
+A Falerio
+A Colli Maceratesi
+
+R Lazio | Latium
+A Cesanese del Piglio | Piglio
+A Cesanese di Olevano Romano
+A Cesanese di Affile
+A Frascati
+A Frascati Superiore
+A Cannellino di Frascati
+A Est! Est!! Est!!! di Montefiascone | Est Est Est
+A Castelli Romani
+A Marino
+A Roma
+A Aleatico di Gradoli
+A Cerveteri
+A Lazio
+
+R Abruzzo
+A Montepulciano d'Abruzzo
+A Montepulciano d'Abruzzo Colline Teramane | Colline Teramane
+A Cerasuolo d'Abruzzo
+A Trebbiano d'Abruzzo
+A Abruzzo
+A Terre Tollesi | Tullum
+A Villamagna
+A Ortona
+A Controguerra
+
+R Molise
+A Tintilia del Molise
+A Biferno
+A Molise
+
+R Campania
+A Taurasi
+A Fiano di Avellino
+A Greco di Tufo
+A Aglianico del Taburno
+A Falanghina del Sannio
+A Sannio
+A Irpinia
+A Campi Flegrei
+A Ischia
+A Vesuvio | Lacryma Christi del Vesuvio, Lacryma Christi
+A Costa d'Amalfi
+A Cilento
+A Falerno del Massico
+A Casavecchia di Pontelatone
+A Penisola Sorrentina
+A Campania
+
+R Puglia | Apulia, Apulien
+A Primitivo di Manduria
+A Primitivo di Manduria Dolce Naturale
+A Gioia del Colle
+A Salice Salentino
+A Castel del Monte
+A Castel del Monte Nero di Troia Riserva
+A Castel del Monte Bombino Nero
+A Brindisi
+A Squinzano
+A Copertino
+A Leverano
+A Nardò
+A Alezio
+A Lizzano
+A Matino
+A San Severo
+A Locorotondo
+A Martina Franca
+A Salento | IGT Salento
+A Puglia
+
+R Basilicata
+A Aglianico del Vulture
+A Aglianico del Vulture Superiore
+A Matera
+A Terre dell'Alta Val d'Agri
+A Grottino di Roccanova
+
+R Calabria
+A Cirò
+A Greco di Bianco
+A Savuto
+A Scavigna
+A Bivongi
+A Lamezia
+A Terre di Cosenza
+A Melissa
+A Calabria
+
+R Sicilia | Sicily, Sizilien
+A Etna
+A Cerasuolo di Vittoria
+A Vittoria
+A Marsala
+A Pantelleria | Passito di Pantelleria, Moscato di Pantelleria
+A Malvasia delle Lipari
+A Faro
+A Noto
+A Moscato di Noto
+A Eloro
+A Menfi
+A Sambuca di Sicilia
+A Alcamo
+A Contea di Sclafani
+A Monreale
+A Riesi
+A Siracusa
+A Mamertino
+A Sicilia | DOC Sicilia
+A Terre Siciliane | IGT Terre Siciliane
+
+R Sardegna | Sardinia, Sardinien
+A Vermentino di Gallura
+A Vermentino di Sardegna
+A Cannonau di Sardegna
+A Carignano del Sulcis
+A Monica di Sardegna
+A Nuragus di Cagliari
+A Vernaccia di Oristano
+A Malvasia di Bosa
+A Alghero
+A Mandrolisai
+A Nasco di Cagliari
+A Girò di Cagliari
+A Moscato di Sardegna
+A Isola dei Nuraghi

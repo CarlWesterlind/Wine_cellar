@@ -1,0 +1,44 @@
+@AT
+# R Bundesland, A wine region / DAC, V Ried (single vineyard).
+
+R Niederösterreich | Lower Austria
+A Wachau | Wachau DAC
+V Achleiten
+V Kellerberg
+V Loibenberg
+V Singerriedel
+V Steinertal
+V Klaus
+A Kremstal | Kremstal DAC
+A Kamptal | Kamptal DAC
+V Heiligenstein
+V Lamm
+V Gaisberg
+A Traisental | Traisental DAC
+A Wagram | Wagram DAC
+A Weinviertel | Weinviertel DAC
+A Carnuntum | Carnuntum DAC
+A Thermenregion | Thermenregion DAC
+A Niederösterreich
+
+R Burgenland
+A Neusiedlersee | Neusiedlersee DAC
+A Leithaberg | Leithaberg DAC
+A Rosalia | Rosalia DAC
+A Mittelburgenland | Mittelburgenland DAC
+A Eisenberg | Eisenberg DAC
+A Ruster Ausbruch | Rust
+A Burgenland
+
+R Steiermark | Styria
+A Südsteiermark | Südsteiermark DAC
+A Vulkanland Steiermark | Vulkanland Steiermark DAC
+A Weststeiermark | Weststeiermark DAC
+A Steiermark
+
+R Wien | Vienna
+A Wiener Gemischter Satz | Wiener Gemischter Satz DAC
+A Wien
+
+R Bergland
+A Bergland

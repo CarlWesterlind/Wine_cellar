@@ -1,0 +1,168 @@
+# Name | kind (ripeness/site/quality/ageing/style) | countries | place ids | other names
+
+# France: sites and classed growths
+Grand Cru | site | FR | fr-bourgogne, fr-alsace, fr-champagne, fr-saint-emilion-grand-cru, fr-banyuls-grand-cru | GC, Gd Cru
+Premier Cru | site | FR | fr-bourgogne, fr-champagne | 1er Cru, 1er, 1 Cru, Premier, 1er cru classé
+Grand Cru Classé | site | FR | fr-saint-emilion-grand-cru, fr-medoc | Grand Cru Classe, GCC
+Premier Grand Cru Classé | site | FR | fr-saint-emilion-grand-cru | Premier Grand Cru Classe, 1er Grand Cru Classé
+Premier Grand Cru Classé A | site | FR | fr-saint-emilion-grand-cru |
+Premier Grand Cru Classé B | site | FR | fr-saint-emilion-grand-cru |
+Premier Grand Cru Classé 1855 | site | FR | fr-medoc | First Growth, 1er Grand Cru Classé en 1855, Premier Cru Classé
+Deuxième Grand Cru Classé 1855 | site | FR | fr-medoc | Second Growth, 2ème Cru Classé
+Troisième Grand Cru Classé 1855 | site | FR | fr-medoc | Third Growth, 3ème Cru Classé
+Quatrième Grand Cru Classé 1855 | site | FR | fr-medoc | Fourth Growth, 4ème Cru Classé
+Cinquième Grand Cru Classé 1855 | site | FR | fr-medoc | Fifth Growth, 5ème Cru Classé
+Premier Cru Supérieur | site | FR | fr-sauternes | Premier Cru Superieur
+Cru Classé de Graves | site | FR | fr-graves, fr-pessac-leognan | Grand Cru Classé de Graves
+Cru Bourgeois | site | FR | fr-medoc |
+Cru Bourgeois Supérieur | site | FR | fr-medoc |
+Cru Bourgeois Exceptionnel | site | FR | fr-medoc |
+Cru Artisan | site | FR | fr-medoc |
+Cru Classé de Provence | site | FR | fr-cotes-de-provence | Cru Classé
+Grand Vin | quality | FR | | Grand Vin de Bordeaux
+Second Vin | quality | FR | | Second Wine
+Vieilles Vignes | quality | | | VV, Old Vines, Alte Reben, Viñas Viejas, Vinhas Velhas
+Monopole | site | FR | fr-bourgogne |
+Village | site | FR | fr-bourgogne |
+Cru du Beaujolais | site | FR | fr-beaujolais | Cru Beaujolais
+Vendanges Tardives | ripeness | FR | fr-alsace | VT
+Sélection de Grains Nobles | ripeness | FR | fr-alsace | SGN
+Vin Jaune | style | FR | fr-jura |
+Vin de Paille | style | FR | fr-jura | Straw wine
+Vin Doux Naturel | style | FR | | VDN
+Blanc de Blancs | style | | |
+Blanc de Noirs | style | | |
+Millésimé | style | FR | fr-champagne | Vintage Champagne, Millesime
+Non Millésimé | style | FR | fr-champagne | NV, Non-Vintage, Sans Année
+Prestige Cuvée | quality | FR | fr-champagne | Cuvée de Prestige, Tête de Cuvée
+Récoltant-Manipulant | quality | FR | fr-champagne | RM, Grower Champagne
+Négociant-Manipulant | quality | FR | fr-champagne | NM
+Sur Lie | style | FR | fr-pays-nantais |
+AOC | quality | FR | | AOP, Appellation d'Origine Contrôlée, Appellation d'Origine Protégée
+IGP | quality | FR | | Vin de Pays, Indication Géographique Protégée
+Vin de France | quality | FR | | Vin de Table
+
+# Italy
+DOCG | quality | IT | | Denominazione di Origine Controllata e Garantita
+DOC | quality | IT PT | | Denominazione di Origine Controllata, DOP
+IGT | quality | IT | | IGP, Indicazione Geografica Tipica
+Vino d'Italia | quality | IT | | Vino da Tavola, Vino Rosso d'Italia
+Riserva | ageing | IT | | Ris.
+Superiore | quality | IT | |
+Classico | site | IT | |
+Gran Selezione | quality | IT | it-chianti-classico |
+MGA | site | IT | it-barolo, it-barbaresco | Menzione Geografica Aggiuntiva
+Vigna | site | IT | | Vineyard designation
+Passito | style | IT | | Appassimento
+Recioto | style | IT | |
+Ripasso | style | IT | |
+Metodo Classico | style | IT | | Méthode Traditionnelle, Méthode Champenoise, Traditional Method
+Rosato | style | IT | | Chiaretto, Cerasuolo
+Vin Santo | style | IT | | Vinsanto
+Frizzante | style | IT | |
+Spumante | style | IT | |
+Satèn | style | IT | it-franciacorta | Saten
+Sciacchetrà | style | IT | it-cinque-terre-sciacchetra |
+Vendemmia Tardiva | ripeness | IT | | Late Harvest
+
+# Spain
+Joven | ageing | ES | |
+Roble | ageing | ES | | Barrica
+Crianza | ageing | ES | |
+Reserva | ageing | ES PT | |
+Gran Reserva | ageing | ES | |
+Vino de Pago | quality | ES | | Pago, VP, Vino de Pago Calificado
+DOCa | quality | ES | | DOQ, Denominación de Origen Calificada
+DO | quality | ES | | Denominación de Origen
+Vino de Calidad | quality | ES | | VC
+Vino de la Tierra | quality | ES | | VdlT, VT
+Viñedo Singular | site | ES | | Vino de Viñedo Singular
+Vino de Zona | site | ES | es-rioja |
+Vino de Municipio | site | ES | | Vino de Pueblo
+Fino | style | ES | es-jerez-xeres-sherry |
+Manzanilla | style | ES | es-manzanilla-sanlucar-de-barrameda |
+Manzanilla Pasada | style | ES | es-manzanilla-sanlucar-de-barrameda |
+Amontillado | style | ES | es-jerez-xeres-sherry |
+Oloroso | style | ES | es-jerez-xeres-sherry |
+Palo Cortado | style | ES | es-jerez-xeres-sherry |
+Pedro Ximénez Sherry | style | ES | es-jerez-xeres-sherry | PX
+Cream | style | ES | es-jerez-xeres-sherry | Cream Sherry
+En Rama | style | ES | es-jerez-xeres-sherry |
+VOS | ageing | ES | es-jerez-xeres-sherry | Very Old Sherry, Vinum Optimum Signatum
+VORS | ageing | ES | es-jerez-xeres-sherry | Very Old Rare Sherry
+Cava de Paraje Calificado | site | ES | es-cava | Paraje Calificado
+Cava Reserva | ageing | ES | es-cava |
+Cava Gran Reserva | ageing | ES | es-cava |
+
+# Portugal
+Vintage | ageing | PT | pt-porto | Vintage Port
+Late Bottled Vintage | ageing | PT | pt-porto | LBV
+Tawny | style | PT | pt-porto |
+Tawny 10 anos | ageing | PT | pt-porto | 10 Year Old Tawny, 10 Years
+Tawny 20 anos | ageing | PT | pt-porto | 20 Year Old Tawny, 20 Years
+Tawny 30 anos | ageing | PT | pt-porto | 30 Year Old Tawny, 30 Years
+Tawny 40 anos | ageing | PT | pt-porto | 40 Year Old Tawny, 40 Years
+Colheita | ageing | PT | pt-porto, pt-madeira |
+Ruby | style | PT | pt-porto |
+Ruby Reserve | ageing | PT | pt-porto | Reserve Ruby
+Crusted | style | PT | pt-porto | Crusted Port
+White Port | style | PT | pt-porto | Porto Branco
+Single Quinta Vintage | site | PT | pt-porto | SQVP
+Garrafeira | ageing | PT | |
+Frasqueira | ageing | PT | pt-madeira | Vintage Madeira
+Vinho Regional | quality | PT | | IG
+
+# Germany
+Kabinett | ripeness | DE AT | |
+Spätlese | ripeness | DE AT | | Spatlese
+Auslese | ripeness | DE AT | |
+Beerenauslese | ripeness | DE AT | | BA
+Trockenbeerenauslese | ripeness | DE AT | | TBA
+Eiswein | ripeness | DE AT | | Ice Wine, Icewine
+Qualitätswein | quality | DE AT | | QbA, Qualitätswein bestimmter Anbaugebiete
+Prädikatswein | quality | DE AT | | QmP, Qualitätswein mit Prädikat
+Landwein | quality | DE AT | |
+Gutswein | site | DE | | Estate wine
+Ortswein | site | DE AT | | Village wine
+VDP.Gutswein | site | DE | |
+VDP.Ortswein | site | DE | |
+VDP.Erste Lage | site | DE | | Erste Lage
+VDP.Grosse Lage | site | DE | | Grosse Lage, Große Lage
+Grosses Gewächs | site | DE | | GG, Großes Gewächs
+Erstes Gewächs | site | DE | de-rheingau |
+Classic | style | DE | |
+Selection | style | DE | |
+Sekt | style | DE AT | |
+Winzersekt | style | DE | |
+Sekt b.A. | style | DE | |
+Weissherbst | style | DE | | Weißherbst
+Schillerwein | style | DE | de-wurttemberg |
+Rotling | style | DE | |
+
+# Austria
+Steinfeder | ripeness | AT | at-wachau |
+Federspiel | ripeness | AT | at-wachau |
+Smaragd | ripeness | AT | at-wachau |
+DAC | quality | AT | | Districtus Austriae Controllatus
+Gebietswein | site | AT | |
+Riedenwein | site | AT | | Ried
+ÖTW Erste Lage | site | AT | | 1ÖTW, Erste Lage (Österreich)
+Grosse Reserve | ageing | AT | |
+Reserve | ageing | AT | |
+Ausbruch | ripeness | AT | at-ruster-ausbruch | Ruster Ausbruch
+Strohwein | ripeness | AT | | Schilfwein
+Sekt g.U. Klassik | style | AT | |
+Sekt g.U. Reserve | style | AT | |
+Sekt g.U. Grosse Reserve | style | AT | |
+Gemischter Satz | style | AT | at-wiener-gemischter-satz |
+
+# Other
+Orange wine | style | | | Skin contact, Amber wine
+Pét-Nat | style | | | Pétillant Naturel, Pet Nat, Ancestral method
+Natural wine | style | | | Vin Nature, Vin Naturel
+Late Harvest | ripeness | | | Vendange Tardive
+Noble Rot | ripeness | | | Botrytis
+Tokaji Aszú | ripeness | HU | | Aszú, Aszu
+Puttonyos | ripeness | HU | | 3 Puttonyos, 4 Puttonyos, 5 Puttonyos, 6 Puttonyos
+Szamorodni | style | HU | |
+Eszencia | ripeness | HU | | Essencia

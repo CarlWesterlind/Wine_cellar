@@ -1,0 +1,85 @@
+@PT
+# R region, S subregion, A DOC/IG.
+
+R Vinho Verde | Minho
+A Vinho Verde
+S Monção e Melgaço
+S Lima
+S Cávado
+S Ave
+S Basto
+S Sousa
+S Amarante
+S Baião
+S Paiva
+
+R Douro
+A Douro
+A Porto | Port, Port Wine, Portvin, Oporto
+A Moscatel do Douro
+S Baixo Corgo
+S Cima Corgo
+S Douro Superior
+
+R Trás-os-Montes
+A Trás-os-Montes
+
+R Távora-Varosa
+A Távora-Varosa
+
+R Dão | Dao
+A Dão
+A Dão Nobre
+
+R Bairrada
+A Bairrada
+
+R Beira Interior
+A Beira Interior
+
+R Lisboa | Lisbon
+A Lisboa | IG Lisboa
+A Colares
+A Bucelas
+A Carcavelos
+A Alenquer
+A Arruda
+A Óbidos
+A Torres Vedras
+A Encostas d'Aire
+A Lourinhã
+
+R Tejo
+A DoTejo | Do Tejo
+A Tejo | IG Tejo
+
+R Península de Setúbal | Setúbal Peninsula
+A Palmela
+A Setúbal | Moscatel de Setúbal
+A Península de Setúbal | IG Península de Setúbal
+
+R Alentejo
+A Alentejo | Alentejano
+S Borba
+S Évora
+S Granja-Amareleja
+S Moura
+S Portalegre
+S Redondo
+S Reguengos
+S Vidigueira
+
+R Algarve
+A Lagos
+A Portimão
+A Lagoa
+A Tavira
+
+R Madeira
+A Madeira | Madeira Wine
+A Madeirense
+
+R Açores | Azores
+A Pico
+A Biscoitos
+A Graciosa

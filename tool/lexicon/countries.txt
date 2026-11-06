@@ -1,0 +1,62 @@
+# ID | Swedish | Danish | Norwegian | English | other names
+FR | Frankrike | Frankrig | Frankrike | France | Francia, Frankreich, França
+IT | Italien | Italien | Italia | Italy | Italia, Italie
+ES | Spanien | Spanien | Spania | Spain | España, Espagne, Spanien, Espanha
+PT | Portugal | Portugal | Portugal | Portugal |
+DE | Tyskland | Tyskland | Tyskland | Germany | Deutschland, Allemagne, Germania, Alemania
+AT | Österrike | Østrig | Østerrike | Austria | Österreich, Autriche
+CH | Schweiz | Schweiz | Sveits | Switzerland | Schweiz, Suisse, Svizzera, Svizra
+HU | Ungern | Ungarn | Ungarn | Hungary | Magyarország, Hongrie
+GR | Grekland | Grækenland | Hellas | Greece | Hellas, Ellada, Grèce
+SI | Slovenien | Slovenien | Slovenia | Slovenia | Slovenija
+HR | Kroatien | Kroatien | Kroatia | Croatia | Hrvatska
+RS | Serbien | Serbien | Serbia | Serbia | Srbija
+BA | Bosnien och Hercegovina | Bosnien-Hercegovina | Bosnia-Hercegovina | Bosnia and Herzegovina | Bosna i Hercegovina
+ME | Montenegro | Montenegro | Montenegro | Montenegro | Crna Gora
+MK | Nordmakedonien | Nordmakedonien | Nord-Makedonia | North Macedonia | Makedonija
+AL | Albanien | Albanien | Albania | Albania | Shqipëria
+BG | Bulgarien | Bulgarien | Bulgaria | Bulgaria | Bălgarija
+RO | Rumänien | Rumænien | Romania | Romania | România
+MD | Moldavien | Moldova | Moldova | Moldova | Moldavia
+UA | Ukraina | Ukraine | Ukraina | Ukraine | Ukraïna
+RU | Ryssland | Rusland | Russland | Russia | Rossija
+GE | Georgien | Georgien | Georgia | Georgia | Sakartvelo
+AM | Armenien | Armenien | Armenia | Armenia | Hayastan
+AZ | Azerbajdzjan | Aserbajdsjan | Aserbajdsjan | Azerbaijan |
+TR | Turkiet | Tyrkiet | Tyrkia | Turkey | Türkiye
+CY | Cypern | Cypern | Kypros | Cyprus | Kypros, Kıbrıs
+MT | Malta | Malta | Malta | Malta |
+LB | Libanon | Libanon | Libanon | Lebanon | Liban
+IL | Israel | Israel | Israel | Israel |
+SK | Slovakien | Slovakiet | Slovakia | Slovakia | Slovensko
+CZ | Tjeckien | Tjekkiet | Tsjekkia | Czechia | Czech Republic, Česko
+PL | Polen | Polen | Polen | Poland | Polska
+LU | Luxemburg | Luxembourg | Luxembourg | Luxembourg | Lëtzebuerg, Luxemburg
+BE | Belgien | Belgien | Belgia | Belgium | Belgique, België
+NL | Nederländerna | Holland | Nederland | Netherlands | Nederland, Holland
+GB | Storbritannien | Storbritannien | Storbritannia | United Kingdom | England, UK, Great Britain, Wales, Scotland
+IE | Irland | Irland | Irland | Ireland | Éire
+DK | Danmark | Danmark | Danmark | Denmark |
+SE | Sverige | Sverige | Sverige | Sweden |
+NO | Norge | Norge | Norge | Norway |
+FI | Finland | Finland | Finland | Finland | Suomi
+US | USA | USA | USA | United States | USA, United States of America, Amerika, America
+CA | Kanada | Canada | Canada | Canada |
+MX | Mexiko | Mexico | Mexico | Mexico | México
+AR | Argentina | Argentina | Argentina | Argentina |
+CL | Chile | Chile | Chile | Chile |
+UY | Uruguay | Uruguay | Uruguay | Uruguay |
+BR | Brasilien | Brasilien | Brasil | Brazil | Brasil
+PE | Peru | Peru | Peru | Peru | Perú
+BO | Bolivia | Bolivia | Bolivia | Bolivia |
+ZA | Sydafrika | Sydafrika | Sør-Afrika | South Africa | Suid-Afrika
+MA | Marocko | Marokko | Marokko | Morocco | Maroc
+TN | Tunisien | Tunesien | Tunisia | Tunisia | Tunisie
+DZ | Algeriet | Algeriet | Algerie | Algeria | Algérie
+EG | Egypten | Egypten | Egypt | Egypt |
+AU | Australien | Australien | Australia | Australia |
+NZ | Nya Zeeland | New Zealand | New Zealand | New Zealand | Aotearoa
+CN | Kina | Kina | Kina | China | Zhongguo
+JP | Japan | Japan | Japan | Japan | Nippon
+IN | Indien | Indien | India | India |
+TH | Thailand | Thailand | Thailand | Thailand |

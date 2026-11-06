@@ -1,0 +1,1052 @@
+# Name | red/white/pink | synonyms (name@countries where it comes first) | countries where the name comes first
+# Ordered roughly by how often they are planted, so famous grapes are suggested first.
+
+# --- The international classics
+Cabernet Sauvignon | red | Cabernet
+Merlot | red | Merlot Noir
+Pinot Noir | red | Spätburgunder@DE, Blauburgunder@AT CH, Pinot Nero@IT, Blauer Burgunder, Pinot Negro, Modri Pinot
+Syrah | red | Shiraz@AU ZA NZ, Sirah | FR
+Chardonnay | white | Morillon, Beaunois
+Sauvignon Blanc | white | Fumé Blanc@US, Muskat-Silvaner, Sauvignon
+Riesling | white | Rheinriesling, Weisser Riesling, Riesling Renano, Johannisberg Riesling, Renski Rizling, Rajnai Rizling@HU
+Grenache | red | Garnacha@ES, Cannonau@IT, Garnatxa, Grenache Noir, Granaccia, Garnacha Tinta, Tai Rosso | FR
+Tempranillo | red | Tinta Roriz@PT, Aragonez@PT, Tinto Fino, Tinta del País, Cencibel, Ull de Llebre, Tinta de Toro, Tinto del País | ES
+Cabernet Franc | red | Bouchet, Breton, Cabernet Frank
+Malbec | red | Côt, Cot, Malbeck, Pressac | AR
+Pinot Gris | pink | Pinot Grigio@IT, Grauburgunder@DE AT, Ruländer, Szürkebarát@HU, Sivi Pinot | FR
+Pinot Blanc | white | Weissburgunder@DE AT, Pinot Bianco@IT, Klevner, Beli Pinot
+Chenin Blanc | white | Steen@ZA, Pineau de la Loire
+Sémillon | white | Semillon, Hunter Riesling
+Gewürztraminer | pink | Traminer@AT, Savagnin Rose, Roter Traminer, Traminac, Tramini
+Viognier | white |
+Zinfandel | red | Primitivo@IT, Tribidrag@HR, Crljenak Kaštelanski, Kratošija | US
+Petit Verdot | red |
+Carménère | red | Carmenère, Grande Vidure, Cabernet Gernischt@CN | CL
+Mourvèdre | red | Monastrell@ES, Mataro@AU, Mataró | FR
+Carignan | red | Cariñena@ES, Mazuelo@ES, Carignano@IT, Samsó, Carinyena | FR
+Cinsault | red | Cinsaut, Ottavianello | FR
+Muscat Blanc à Petits Grains | white | Moscato Bianco@IT, Muscat de Frontignan, Gelber Muskateller@AT DE, Moscatel de Grano Menudo, Muskateller, Muscat Canelli, Moschato Aspro, Muškat Žuti, Sárgamuskotály@HU
+Muscat of Alexandria | white | Moscatel de Alejandría@ES, Zibibbo@IT, Hanepoot@ZA, Moscatel de Setúbal@PT, Muscat d'Alexandrie, Moscatel, Moscatel Graúdo
+Muscat Ottonel | white | Muskat Ottonel, Muscadel Ottonel
+Muscat Hamburg | red | Black Muscat, Moscato di Amburgo
+Petit Manseng | white |
+Gros Manseng | white |
+Marsanne | white |
+Roussanne | white |
+Grenache Blanc | white | Garnacha Blanca@ES, Garnatxa Blanca
+Grenache Gris | pink | Garnacha Gris, Garnatxa Gris, Garnacha Roja
+Muscadelle | white |
+Colombard | white | French Colombard
+Ugni Blanc | white | Trebbiano Toscano@IT, Trebbiano, Talia | FR
+Melon de Bourgogne | white | Melon, Melon B
+Aligoté | white |
+Gamay | red | Gamay Noir, Gamay Noir à Jus Blanc
+Pinot Meunier | red | Meunier, Schwarzriesling@DE, Müllerrebe
+Sylvaner | white | Silvaner@DE, Grüner Silvaner, Johannisberg@CH | FR
+Müller-Thurgau | white | Rivaner@LU, Riesling-Silvaner, Rizlingszilváni
+Tannat | red | Harriague@UY
+Alicante Bouschet | red | Garnacha Tintorera@ES, Alicante Henri Bouschet
+Petite Sirah | red | Durif@FR AU | US
+Vermentino | white | Rolle@FR, Pigato, Favorita, Vermentinu
+Clairette | white | Clairette Blanche
+Picpoul | white | Piquepoul, Picapoll, Piquepoul Blanc
+Bourboulenc | white |
+Mauzac | white | Mauzac Blanc
+Len de l'El | white | Loin de l'Œil
+Duras | red |
+Fer Servadou | red | Fer, Braucol, Mansois, Pinenc
+Négrette | red |
+Abouriou | red |
+Prunelard | red | Prunelart
+Savagnin | white | Savagnin Blanc, Heida@CH, Païen@CH, Naturé
+Poulsard | red | Ploussard
+Trousseau | red | Bastardo@PT, Merenzao, María Ordoña
+Jacquère | white |
+Altesse | white | Roussette
+Mondeuse | red | Mondeuse Noire, Refosco Mondeuse
+Persan | red |
+Gringet | white |
+Chasselas | white | Fendant@CH, Gutedel@DE, Chasselas Doré
+Romorantin | white |
+Pineau d'Aunis | red | Chenin Noir
+Grolleau | red | Groslot
+Folle Blanche | white | Gros Plant
+Baroque | white |
+Arrufiac | white |
+Courbu | white |
+Lauzet | white |
+Camaralet | white |
+Raffiat de Moncade | white |
+Ondenc | white |
+Valdiguié | red | Napa Gamay
+Terret Noir | red |
+Terret Blanc | white |
+Counoise | red |
+Vaccarèse | red | Brun Argenté
+Muscardin | red |
+Picardan | white |
+Calitor | red |
+Aramon | red |
+Caladoc | red |
+Marselan | red |
+Arinarnoa | red |
+Egiodola | red |
+Chenanson | red |
+Portan | red |
+Ekigaïna | red |
+Jurançon Noir | red |
+Graciano | red | Morrastel@ES, Tintilla, Bovale Sardo@IT, Tinta Miúda@PT, Cagnulari | ES
+Sciaccerellu | red | Sciacarello, Sciaccarello
+Barbarossa | red |
+Bianco Gentile | white |
+Tibouren | red | Tibourenc
+Braquet | red | Brachet
+Folle Noire | red | Fuella Nera, Fuella
+Mayorquin | white |
+Sacy | white |
+Auxerrois | white | Auxerrois Blanc, Pinot Auxerrois
+Sauvignon Gris | pink | Sauvignon Rose, Fié Gris
+César | red |
+Tressot | red |
+Petit Meslier | white |
+Arbane | white |
+Montils | white |
+Meslier Saint-François | white |
+Colombaud | white |
+Tourbat | white |
+Carcajolu Neru | red |
+Genovese | white |
+Aleatico | red |
+Morrastel Bouschet | red |
+Grand Noir de la Calmette | red | Grand Noir
+Plantet | red |
+Baco Noir | red |
+Baco Blanc | white | Baco 22A
+Seyval Blanc | white | Seyval
+Vidal Blanc | white | Vidal
+Chambourcin | red |
+Chancellor | red |
+De Chaunac | red |
+Maréchal Foch | red | Foch
+Léon Millot | red |
+Villard Blanc | white |
+Villard Noir | red |
+Couderc Noir | red |
+Rayon d'Or | white |
+Vignoles | white | Ravat 51
+Chardonel | white |
+Traminette | white |
+Frontenac | red |
+Frontenac Gris | pink |
+Frontenac Blanc | white |
+Marquette | red |
+La Crescent | white |
+Brianna | white |
+Itasca | white |
+Petite Pearl | red |
+Saint Croix | red |
+Prairie Star | white |
+Edelweiss | white |
+Concord | red |
+Catawba | pink |
+Delaware | pink |
+Niagara | white |
+Norton | red | Cynthiana
+Isabella | red | Isabel, Fragola, Uva Fragola
+Noah | white |
+Clinton | red |
+Othello | red |
+Herbemont | red |
+Lenoir | red | Black Spanish, Jacquez
+Scuppernong | white |
+Carlos | white |
+Noble | red |
+Magnolia | white |
+
+# --- Italy
+Sangiovese | red | Brunello, Morellino, Prugnolo Gentile, Sangioveto, Nielluccio@FR, Sangiovese Grosso, Calabrese di Montenuovo | IT
+Nebbiolo | red | Spanna, Chiavennasca, Picotendro, Picoutener | IT
+Barbera | red | | IT
+Montepulciano | red | Cordisco | IT
+Aglianico | red | Aglianico del Vulture | IT
+Nero d'Avola | red | Calabrese | IT
+Negroamaro | red | Negro Amaro | IT
+Dolcetto | red | Ormeasco | IT
+Corvina | red | Corvina Veronese, Cruina | IT
+Corvinone | red | | IT
+Rondinella | red | | IT
+Molinara | red | | IT
+Oseleta | red | | IT
+Croatina | red | Bonarda@IT | IT
+Uva Rara | red | Bonarda Novarese | IT
+Vespolina | red | | IT
+Freisa | red | | IT
+Grignolino | red | | IT
+Ruché | red | Ruchè | IT
+Pelaverga | red | | IT
+Brachetto | red | | IT
+Albarossa | red | | IT
+Lambrusco di Sorbara | red | | IT
+Lambrusco Grasparossa | red | | IT
+Lambrusco Salamino | red | | IT
+Lambrusco Maestri | red | | IT
+Lambrusco Marani | red | | IT
+Ancellotta | red | | IT
+Sagrantino | red | | IT
+Canaiolo Nero | red | Canaiolo | IT
+Colorino | red | | IT
+Mammolo | red | | IT
+Ciliegiolo | red | | IT
+Pugnitello | red | | IT
+Foglia Tonda | red | | IT
+Malvasia Nera | red | | IT
+Lacrima | red | Lacrima di Morro | IT
+Vernaccia Nera | red | | IT
+Cesanese | red | Cesanese d'Affile, Cesanese Comune | IT
+Piedirosso | red | Per' e Palummo | IT
+Sciascinoso | red | Olivella | IT
+Casavecchia | red | | IT
+Pallagrello Nero | red | | IT
+Tintore di Tramonti | red | | IT
+Gaglioppo | red | | IT
+Magliocco | red | Magliocco Canino | IT
+Nerello Mascalese | red | | IT
+Nerello Cappuccio | red | Nerello Mantellato | IT
+Frappato | red | | IT
+Perricone | red | Pignatello | IT
+Nocera | red | | IT
+Susumaniello | red | | IT
+Bombino Nero | red | | IT
+Nero di Troia | red | Uva di Troia | IT
+Malvasia di Casorzo | red | | IT
+Bovale Grande | red | | IT
+Monica | red | | IT
+Girò | red | | IT
+Carricante | white | | IT
+Catarratto | white | Catarratto Bianco | IT
+Grillo | white | | IT
+Inzolia | white | Ansonica@IT, Insolia | IT
+Grecanico | white | Grecanico Dorato | IT
+Minnella | white | | IT
+Lagrein | red | | IT
+Schiava | red | Vernatsch@IT, Trollinger@DE, Schiava Grossa | IT
+Teroldego | red | | IT
+Marzemino | red | | IT
+Enantio | red | Lambrusco a Foglia Frastagliata | IT
+Rebo | red | | IT
+Refosco dal Peduncolo Rosso | red | Refosco, Refošk@SI | IT
+Schioppettino | red | Ribolla Nera | IT
+Pignolo | red | | IT
+Tazzelenghe | red | | IT
+Terrano | red | Teran@HR SI, Refosco d'Istria | IT
+Franconia | red | | IT
+Raboso | red | Raboso Piave | IT
+Groppello | red | | IT
+Rossola Nera | red | | IT
+Petit Rouge | red | | IT
+Fumin | red | | IT
+Cornalin | red | | CH
+Mayolet | red | | IT
+Vien de Nus | red | | IT
+Prié Blanc | white | Blanc de Morgex | IT
+Erbaluce | white | | IT
+Arneis | white | | IT
+Cortese | white | | IT
+Timorasso | white | | IT
+Nascetta | white | | IT
+Moscato Giallo | white | Goldmuskateller | IT
+Moscato Rosa | pink | Rosenmuskateller | IT
+Garganega | white | | IT
+Trebbiano di Soave | white | | IT
+Turbiana | white | Trebbiano di Lugana | IT
+Verdicchio | white | | IT
+Glera | white | Prosecco | IT
+Bianchetta Trevigiana | white | | IT
+Perera | white | | IT
+Verdiso | white | | IT
+Durella | white | | IT
+Vespaiola | white | | IT
+Friulano | white | Tocai Friulano, Sauvignonasse | IT
+Ribolla Gialla | white | Rebula@SI | IT
+Malvasia Istriana | white | Malvazija Istarska@HR | IT
+Verduzzo | white | Verduzzo Friulano | IT
+Picolit | white | | IT
+Vitovska | white | | IT
+Trebbiano Romagnolo | white | | IT
+Albana | white | | IT
+Pignoletto | white | Grechetto Gentile | IT
+Grechetto | white | Grechetto di Orvieto | IT
+Procanico | white | | IT
+Vernaccia di San Gimignano | white | | IT
+Malvasia Bianca di Candia | white | | IT
+Malvasia del Lazio | white | Malvasia Puntinata | IT
+Bellone | white | | IT
+Trebbiano Abruzzese | white | | IT
+Pecorino | white | | IT
+Passerina | white | | IT
+Cococciola | white | | IT
+Montonico | white | | IT
+Fiano | white | Fiano di Avellino | IT
+Greco | white | Greco di Tufo, Greco Bianco | IT
+Falanghina | white | | IT
+Coda di Volpe | white | | IT
+Biancolella | white | | IT
+Forastera | white | | IT
+Asprinio | white | | IT
+Pallagrello Bianco | white | | IT
+Fenile | white | | IT
+Ginestra | white | | IT
+Ripoli | white | | IT
+Verdeca | white | | IT
+Bombino Bianco | white | | IT
+Minutolo | white | | IT
+Malvasia di Lipari | white | | IT
+Nuragus | white | | IT
+Vernaccia di Oristano | white | | IT
+Nasco | white | | IT
+Semidano | white | | IT
+Torbato | white | | IT
+Malvasia di Sardegna | white | | IT
+Albanello | white | | IT
+Damaschino | white | | IT
+Guarnaccia | white | | IT
+Mantonico | white | | IT
+Pecorello | white | | IT
+Greco Nero | red | | IT
+Moscato di Scanzo | red | | IT
+Bianco d'Alessano | white | | IT
+Impigno | white | | IT
+Maceratino | white | Ribona | IT
+Biancame | white | Bianchello | IT
+Verdello | white | | IT
+Drupeggio | white | | IT
+Trebbiano Spoletino | white | | IT
+Malvasia di Candia Aromatica | white | | IT
+Ortrugo | white | | IT
+Spergola | white | | IT
+Pinella | white | | IT
+Incrocio Manzoni | white | Manzoni Bianco | IT
+Nosiola | white | | IT
+Kerner | white | | DE
+Lumassina | white | Mataòssu | IT
+Bosco | white | | IT
+Albarola | white | | IT
+Rossese | red | Rossese di Dolceacqua | IT
+Nero Buono | red | | IT
+Abbuoto | red | | IT
+Tintilia | red | | IT
+Aglianicone | red | | IT
+Negrara | red | | IT
+Uva Longanesi | red | Burson | IT
+Centesimino | red | | IT
+Termarina | red | | IT
+
+# --- Spain
+Albariño | white | Alvarinho@PT | ES
+Verdejo | white | | ES
+Macabeo | white | Viura@ES, Macabeu | ES
+Xarel·lo | white | Xarel-lo, Xarello, Pansa Blanca | ES
+Parellada | white | | ES
+Airén | white | | ES
+Palomino | white | Palomino Fino, Listán Blanco, Listán | ES
+Pedro Ximénez | white | PX, Pedro Jiménez | ES
+Godello | white | Gouveio@PT | ES
+Treixadura | white | Trajadura@PT | ES
+Loureira | white | Loureiro@PT | ES
+Caíño Blanco | white | | ES
+Doña Blanca | white | Síria@PT, Roupeiro@PT | ES
+Malvasía Riojana | white | Alarije | ES
+Tempranillo Blanco | white | | ES
+Maturana Blanca | white | | ES
+Maturana Tinta | red | | ES
+Garnacha Peluda | red | Lledoner Pelut | ES
+Mencía | red | Jaen@PT | ES
+Bobal | red | | ES
+Prieto Picudo | red | | ES
+Juan García | red | | ES
+Mandó | red | | ES
+Sousón | red | Vinhão@PT, Sousão@PT | ES
+Caíño Tinto | red | Borraçal@PT | ES
+Brancellao | red | Alvarelhão@PT | ES
+Espadeiro | red | | ES
+Mollar | red | | ES
+Listán Negro | red | | ES
+Negramoll | red | Tinta Negra@PT, Tinta Negra Mole | ES
+Baboso Negro | red | Alfrocheiro@PT | ES
+Vijariego | white | | ES
+Marmajuelo | white | | ES
+Gual | white | Boal@PT | ES
+Forastera Blanca | white | | ES
+Albillo | white | Albillo Real | ES
+Albillo Mayor | white | | ES
+Malvasía | white | Malvasia | ES
+Moll | white | Prensal Blanc, Prensal | ES
+Callet | red | | ES
+Manto Negro | red | | ES
+Fogoneu | red | | ES
+Giró Ros | pink | | ES
+Garró | red | | ES
+Sumoll | red | | ES
+Trepat | red | | ES
+Picapoll Negre | red | | ES
+Hondarrabi Zuri | white | Hondarribi Zuri | ES
+Hondarrabi Beltza | red | Hondarribi Beltza | ES
+Petit Courbu | white | | ES
+Albarín Blanco | white | | ES
+Albarín Tinto | red | | ES
+Verdil | white | | ES
+Merseguera | white | | ES
+Tortosí | white | | ES
+Forcallat | red | | ES
+Moravia Agria | red | | ES
+Moravia Dulce | red | | ES
+Rojal | red | | ES
+Tinto Velasco | red | | ES
+Bruñal | red | | ES
+Rufete | red | | ES
+Vidadillo | red | | ES
+Moristel | red | | ES
+Parraleta | red | | ES
+Alcañón | white | | ES
+Planta Nova | white | Tardana | ES
+Zalema | white | | ES
+Garrido Fino | white | | ES
+Montúa | white | | ES
+Lairén | white | | ES
+Beba | white | | ES
+Cayetana Blanca | white | Pardina, Jaén Blanco | ES
+Morisca | red | | ES
+Torrontés | white | Torrontés Riojano@AR | AR
+
+# --- Portugal
+Touriga Nacional | red | | PT
+Touriga Franca | red | Touriga Francesa | PT
+Tinta Barroca | red | | PT
+Tinto Cão | red | | PT
+Tinta Francisca | red | | PT
+Castelão | red | Periquita, João de Santarém | PT
+Trincadeira | red | Tinta Amarela, Trincadeira Preta | PT
+Baga | red | | PT
+Tinta Caiada | red | | PT
+Moreto | red | | PT
+Ramisco | red | | PT
+Camarate | red | | PT
+Tinta Pinheira | red | | PT
+Marufo | red | Mourisco Tinto | PT
+Tinta Grossa | red | | PT
+Rabo de Ovelha | white | | PT
+Arinto | white | Pedernã | PT
+Encruzado | white | | PT
+Fernão Pires | white | Maria Gomes | PT
+Antão Vaz | white | | PT
+Avesso | white | | PT
+Azal | white | | PT
+Batoca | white | | PT
+Bical | white | Borrado das Moscas | PT
+Cercial | white | | PT
+Sercial | white | Esgana Cão, Esgana | PT
+Verdelho | white | | PT
+Malvasia Fina | white | Vital | PT
+Malvasia Cândida | white | | PT
+Terrantez | white | | PT
+Viosinho | white | | PT
+Rabigato | white | | PT
+Códega do Larinho | white | | PT
+Moscatel Galego | white | | PT
+Moscatel Roxo | pink | | PT
+Tamarez | white | | PT
+Perrum | white | | PT
+Diagalves | white | | PT
+Manteúdo | white | | PT
+Galego Dourado | white | | PT
+Uva Cão | white | | PT
+Arinto dos Açores | white | | PT
+
+# --- Germany
+Dornfelder | red | | DE
+Portugieser | red | Blauer Portugieser, Kékoportó@HU, Portugizac | DE
+Regent | red | | DE
+Acolon | red | | DE
+Cabernet Dorsa | red | | DE
+Cabernet Mitos | red | | DE
+Cabernet Cubin | red | | DE
+Dunkelfelder | red | | DE
+Domina | red | | DE
+Frühburgunder | red | Pinot Madeleine | DE
+Samtrot | red | | DE
+Tauberschwarz | red | | DE
+Heroldrebe | red | | DE
+Helfensteiner | red | | DE
+Deckrot | red | | DE
+Pinotin | red | | DE
+Cabernet Cortis | red | | DE
+Monarch | red | | DE
+Prior | red | | DE
+Cabernet Carol | red | | DE
+Cabernet Jura | red | | CH
+Scheurebe | white | Sämling 88 | DE
+Bacchus | white | | DE
+Ortega | white | | DE
+Huxelrebe | white | | DE
+Faberrebe | white | | DE
+Morio-Muskat | white | | DE
+Optima | white | | DE
+Siegerrebe | white | | DE
+Reichensteiner | white | | DE
+Würzer | white | | DE
+Ehrenfelser | white | | DE
+Rieslaner | white | | DE
+Albalonga | white | | DE
+Kanzler | white | | DE
+Gelber Orleans | white | | DE
+Elbling | white | Weisser Elbling | DE
+Johanniter | white | | DE
+Solaris | white | | DE
+Souvignier Gris | pink | | DE
+Cabernet Blanc | white | | DE
+Sauvitage | white | | DE
+Helios | white | | DE
+Muscaris | white | | DE
+Bronner | white | | DE
+Merzling | white | | DE
+Phoenix | white | | DE
+Orion | white | | DE
+Sirius | white | | DE
+Hibernal | white | | DE
+Calardis Blanc | white | | DE
+Felicia | white | | DE
+Villaris | white | | DE
+Rondo | red | | DE
+Pinot Nova | red | | DE
+Roter Riesling | pink | | DE
+Goldriesling | white | | DE
+Weisser Heunisch | white | Gouais Blanc, Heunisch, Gwäss@CH | DE
+
+# --- Austria
+Grüner Veltliner | white | Veltliner, Weissgipfler, Zöldveltelini | AT
+Zweigelt | red | Blauer Zweigelt, Rotburger | AT
+Blaufränkisch | red | Lemberger@DE, Kékfrankos@HU, Frankovka@SK CZ, Modra Frankinja, Burgenland Red, Limberger | AT
+St. Laurent | red | Sankt Laurent, Saint Laurent, Svatovavřinecké | AT
+Blauburger | red | | AT
+Roesler | red | | AT
+Rathay | red | | AT
+Welschriesling | white | Olaszrizling@HU, Graševina@HR, Laški Rizling@SI, Riesling Italico@IT, Vlašský Ryzlink, Grasevina | AT
+Neuburger | white | | AT
+Rotgipfler | white | | AT
+Zierfandler | white | Spätrot | AT
+Roter Veltliner | pink | | AT
+Frühroter Veltliner | pink | Malvasier | AT
+Goldburger | white | | AT
+Bouvier | white | Ranina@SI | AT
+Blauer Wildbacher | red | Schilcher | AT
+Sauvignac | white | | AT
+
+# --- Switzerland
+Petite Arvine | white | Arvine | CH
+Amigne | white | | CH
+Humagne Blanche | white | | CH
+Humagne Rouge | red | | CH
+Rèze | white | | CH
+Completer | white | | CH
+Räuschling | white | | CH
+Gamaret | red | | CH
+Garanoir | red | | CH
+Diolinoir | red | | CH
+Carminoir | red | | CH
+Divico | red | | CH
+Doral | white | | CH
+Rouge du Pays | red | | CH
+Plant Robert | red | Plant Robez | CH
+Bondola | red | | CH
+Mara | red | | CH
+
+# --- Hungary
+Furmint | white | Šipon@SI, Moslavac@HR, Zapfner | HU
+Hárslevelű | white | Lipovina@SK | HU
+Kabar | white | | HU
+Kövérszőlő | white | | HU
+Zéta | white | Oremus | HU
+Kadarka | red | Gamza@BG, Skadarka | HU
+Juhfark | white | | HU
+Királyleányka | white | Feteasca Regala@RO | HU
+Leányka | white | Feteasca Alba@RO | HU
+Ezerjó | white | | HU
+Kéknyelű | white | | HU
+Cserszegi Fűszeres | white | | HU
+Irsai Olivér | white | Irsai Oliver, Muscat Oliver | HU
+Zenit | white | | HU
+Zengő | white | | HU
+Mézes | white | | HU
+Budai Zöld | white | | HU
+Bakator | pink | | HU
+Bíborkadarka | red | | HU
+Turán | red | | HU
+Csabagyöngye | white | | HU
+Generosa | white | | HU
+
+# --- Slovenia, Croatia, Serbia and the Balkans
+Zelen | white | | SI
+Pinela | white | | SI
+Klarnica | white | | SI
+Žametovka | red | Žametna Črnina | SI
+Kraljevina | pink | | HR
+Plavac Mali | red | | HR
+Pošip | white | | HR
+Grk | white | | HR
+Maraština | white | Rukatac, Malvasia Dubrovačka | HR
+Bogdanuša | white | | HR
+Vugava | white | | HR
+Debit | white | | HR
+Babić | red | | HR
+Lasina | red | | HR
+Plavina | red | | HR
+Kujundžuša | white | | HR
+Žlahtina | white | | HR
+Škrlet | white | | HR
+Prokupac | red | | RS
+Tamjanika | white | | RS
+Smederevka | white | | RS
+Morava | white | | RS
+Probus | red | | RS
+Začinak | red | | RS
+Vranac | red | Vranec@MK | ME
+Krstač | white | | ME
+Žilavka | white | | BA
+Blatina | red | | BA
+Trnjak | red | | BA
+Temjanika | white | | MK
+Stanušina | red | | MK
+Shesh i Zi | red | | AL
+Shesh i Bardhë | white | | AL
+Kallmet | red | | AL
+Puls | white | | AL
+
+# --- Greece and Cyprus
+Assyrtiko | white | Asyrtiko | GR
+Agiorgitiko | red | St. George | GR
+Xinomavro | red | | GR
+Moschofilero | pink | | GR
+Malagousia | white | Malagouzia | GR
+Roditis | pink | Rhoditis | GR
+Savatiano | white | | GR
+Vidiano | white | | GR
+Mavrodaphne | red | | GR
+Limnio | red | | GR
+Mandilaria | red | Mandelaria | GR
+Kotsifali | red | | GR
+Liatiko | red | | GR
+Robola | white | | GR
+Athiri | white | | GR
+Debina | white | | GR
+Mavrotragano | red | | GR
+Monemvasia | white | | GR
+Vilana | white | | GR
+Thrapsathiri | white | | GR
+Dafni | white | | GR
+Plyto | white | | GR
+Kydonitsa | white | | GR
+Aidani | white | | GR
+Negoska | red | | GR
+Krassato | red | | GR
+Stavroto | red | | GR
+Vlahiko | red | | GR
+Mavroudi | red | | GR
+Lagorthi | white | | GR
+Tsaousi | white | | GR
+Zakynthino | white | | GR
+Avgoustiatis | red | | GR
+Kakotrygis | white | | GR
+Mavro | red | | CY
+Xynisteri | white | | CY
+Maratheftiko | red | | CY
+Yiannoudi | red | | CY
+Promara | white | | CY
+Spourtiko | white | | CY
+Morokanella | white | | CY
+Ofthalmo | red | | CY
+
+# --- Romania, Moldova, Bulgaria
+Fetească Neagră | red | Feteasca Neagra | RO
+Băbească Neagră | red | Babeasca Neagra, Rară Neagră@MD | RO
+Grasă de Cotnari | white | Grasa | RO
+Tămâioasă Românească | white | Tamaioasa Romaneasca | RO
+Frâncușă | white | Francusa | RO
+Galbenă de Odobești | white | | RO
+Crâmpoșie Selecționată | white | Crâmposie | RO
+Busuioacă de Bohotin | pink | | RO
+Novac | red | | RO
+Negru de Drăgășani | red | | RO
+Plavaie | white | | MD
+Viorica | white | | MD
+Mavrud | red | | BG
+Melnik | red | Shiroka Melnishka, Broadleaf Melnik | BG
+Rubin | red | | BG
+Dimyat | white | Dimiat | BG
+Misket Cherven | pink | Red Misket | BG
+Pamid | red | | BG
+Keratsuda | white | | BG
+Tamyanka | white | | BG
+Sandanski Misket | white | | BG
+Bouquet | red | | BG
+
+# --- Georgia, Armenia and around the Black Sea
+Saperavi | red | | GE
+Rkatsiteli | white | | GE
+Mtsvane Kakhuri | white | Mtsvane | GE
+Kisi | white | | GE
+Khikhvi | white | | GE
+Tsolikouri | white | | GE
+Tsitska | white | | GE
+Chinuri | white | | GE
+Krakhuna | white | | GE
+Goruli Mtsvane | white | | GE
+Otskhanuri Sapere | red | | GE
+Aleksandrouli | red | | GE
+Mujuretuli | red | | GE
+Ojaleshi | red | | GE
+Tavkveri | red | | GE
+Shavkapito | red | | GE
+Chkhaveri | pink | | GE
+Dzelshavi | red | | GE
+Aladasturi | red | | GE
+Usakhelauri | red | | GE
+Areni | red | Areni Noir | AM
+Voskehat | white | | AM
+Kangun | white | | AM
+Garan Dmak | white | | AM
+Khndoghni | red | Sireni | AM
+Haghtanak | red | | AM
+Madrasa | red | Matrassa | AZ
+Bayan Shirey | white | | AZ
+Tsimlyansky Cherny | red | | RU
+Krasnostop Zolotovsky | red | | RU
+Sibirkovy | white | | RU
+Kokur Bely | white | | UA
+Odesskiy Cherny | red | | UA
+Telti-Kuruk | white | | UA
+
+# --- Turkey, Lebanon, Israel and North Africa
+Öküzgözü | red | Okuzgozu | TR
+Boğazkere | red | Bogazkere | TR
+Kalecik Karası | red | Kalecik Karasi | TR
+Narince | white | | TR
+Emir | white | | TR
+Bornova Misketi | white | | TR
+Çalkarası | red | Calkarasi | TR
+Papazkarası | red | | TR
+Sultaniye | white | Sultana | TR
+Obeideh | white | | LB
+Merwah | white | | LB
+Argaman | red | | IL
+Marawi | white | Hamdani | IL
+Dabouki | white | | IL
+
+# --- Central and Northern Europe
+Pálava | white | | CZ
+André | red | | CZ
+Neronet | red | | CZ
+Cabernet Moravia | red | | CZ
+Devín | white | | SK
+Alibernet | red | | SK
+Madeleine Angevine | white | | GB
+Zilga | red | | SE
+
+# --- The Americas, South Africa and Oceania (local specialities)
+País | red | Listán Prieto@ES, Mission@US, Criolla Chica@AR, Negra Corriente | CL
+Criolla Grande | red | | AR
+Cereza | pink | | AR
+Torrontés Sanjuanino | white | | AR
+Torrontés Mendocino | white | | AR
+Bonarda Argentina | red | Douce Noire, Charbono@US | AR
+Pinotage | red | | ZA
+Nouvelle | white | | ZA
+Roobernet | red | | ZA
+Chenel | white | | ZA
+Weldra | white | | ZA
+Tarrango | red | | AU
+Cienna | red | | AU
+Tyrian | red | | AU
+Ruby Cabernet | red | | US
+Carnelian | red | | US
+Symphony | white | | US
+Emerald Riesling | white | | US
+Flora | white | | US
+Black Corinth | red | Zante Currant | GR
+Koshu | pink | | JP
+Muscat Bailey A | red | | JP
+Yama Sauvignon | red | | JP
+Beichun | red | | CN
+
+# --- More French varieties
+Aubin Blanc | white | | FR
+Aubin Vert | white | | FR
+Aubun | red | | FR
+Blanc Dame | white | | FR
+Bouchalès | red | | FR
+Castets | red | | FR
+Chatus | red | Nebbiolo di Dronero | FR
+Clairette Rose | pink | | FR
+Courbu Noir | red | | FR
+Enfariné | red | | FR
+Étraire de l'Aduï | red | Étraire | FR
+Gros Verdot | red | | FR
+Hibou Noir | red | | FR
+Joubertin | red | | FR
+Manseng Noir | red | | FR
+Mérille | red | | FR
+Mollard | red | | FR
+Mornen Noir | red | | FR
+Petit Bouschet | red | | FR
+Plant Droit | red | | FR
+Rivairenc | red | Aspiran Noir | FR
+Saint-Macaire | red | | FR
+Servanin | red | | FR
+Tardif | red | | FR
+Verdesse | white | | FR
+Peloursin | red | | FR
+Béclan | red | | FR
+Bachet | red | | FR
+Beaunoir | red | | FR
+Gouget Noir | red | | FR
+Mauzac Noir | red | | FR
+Mauzac Rose | pink | | FR
+Jurançon Blanc | white | | FR
+Plant de Graisse | white | Graisse | FR
+Picpoul Noir | red | Piquepoul Noir | FR
+Terret Gris | pink | | FR
+Brun Fourca | red | | FR
+Barbaroux | pink | | FR
+Mondeuse Blanche | white | | FR
+Molette | white | | FR
+Gamay Teinturier | red | Gamay de Bouze, Gamay Fréaux | FR
+Orbois | white | Menu Pineau, Arbois | FR
+Noir Fleurien | red | | FR
+
+# --- More Italian varieties
+Avanà | red | | IT
+Avarengo | red | | IT
+Baratuciat | white | | IT
+Becuet | red | | IT
+Doux d'Henry | red | | IT
+Quagliano | red | | IT
+Neretta Cuneese | red | | IT
+Malvasia Moscata | white | | IT
+Durasa | red | | IT
+Slarina | red | | IT
+Uvalino | red | | IT
+Moradella | red | | IT
+Ughetta | red | | IT
+Barbera Bianca | white | | IT
+Bonarda Piemontese | red | | IT
+Cornarea | red | | IT
+Plassa | red | | IT
+Malvasia di Schierano | red | | IT
+Pollera Nera | red | | IT
+Bianchetta Genovese | white | | IT
+Vermentino Nero | red | | IT
+Massaretta | red | | IT
+Canaiolo Bianco | white | | IT
+Malvasia Bianca Lunga | white | | IT
+Biancone | white | | IT
+Abrusco | red | | IT
+Barsaglina | red | | IT
+Sanforte | red | | IT
+Mazzese | red | | IT
+Malvasia Nera di Brindisi | red | | IT
+Notardomenico | red | | IT
+Pampanuto | white | | IT
+Maresco | white | | IT
+Caprettone | white | | IT
+Pepella | white | | IT
+Catalanesca | white | | IT
+Guardavalle | white | | IT
+Pascale | red | | IT
+Nieddera | red | | IT
+Nieddu Mannu | red | | IT
+Arvesiniadu | white | | IT
+Granazza | white | | IT
+Casetta | red | Foja Tonda | IT
+Groppello di Revò | red | | IT
+Ucelut | white | | IT
+Forgiarin | red | | IT
+Sciaglin | white | | IT
+Dindarella | red | | IT
+Forselina | red | | IT
+Spigamonte | red | | IT
+Turchetta | red | | IT
+Recantina | red | | IT
+Marzemina Bianca | white | | IT
+Pignola Valtellinese | red | | IT
+Erbamat | white | | IT
+Invernenga | white | | IT
+Famoso | white | | IT
+Fortana | red | | IT
+Montù | white | | IT
+Prëmetta | red | Prié Rouge | IT
+Vuillermin | red | | IT
+Malvasia Bianca di Basilicata | white | | IT
+Colombana Nera | red | | IT
+Tocai Rosso | red | | IT
+Fertilia | red | | IT
+Corinto Nero | red | | IT
+
+# --- More Spanish and Portuguese varieties
+Malvar | white | | ES
+Doradilla | white | | ES
+Romé | red | | ES
+Vigiriega | white | | ES
+Melonera | red | | ES
+Mouratón | red | | ES
+Ferrón | red | | ES
+Branco Lexítimo | white | | ES
+Gran Negro | red | | ES
+Pedral | red | | ES
+Malvasía Volcánica | white | | ES
+Malvasía Aromática | white | | ES
+Arcos | red | | ES
+Tinta de Barros | red | | ES
+Malvasia de Sitges | white | | ES
+Amaral | red | Azal Tinto | PT
+Padeiro | red | | PT
+Tinta Carvalha | red | | PT
+Donzelinho Tinto | red | | PT
+Donzelinho Branco | white | | PT
+Malvasia Preta | red | | PT
+Cornifesto | red | | PT
+Tinta da Barca | red | | PT
+Touriga Fêmea | red | | PT
+Folgasão | white | | PT
+Samarrinho | white | | PT
+Fonte Cal | white | | PT
+Malvasia Rei | white | | PT
+Jampal | white | | PT
+Água Santa | red | | PT
+Terrantez do Pico | white | | PT
+
+# --- More German, Swiss and Central European varieties
+Muskat-Trollinger | red | | DE
+Nobling | white | | DE
+Freisamer | white | | DE
+Kernling | white | | DE
+Perle | pink | | DE
+Rotberger | red | | DE
+Schönburger | pink | | DE
+Septimer | white | | DE
+Arnsburger | white | | DE
+Mariensteiner | white | | DE
+Noblessa | white | | DE
+Saphira | white | | DE
+Dakapo | red | | DE
+Accent | red | | DE
+Hegel | red | | DE
+Cabernet Dorio | red | | DE
+Lafnetscha | white | | CH
+Himbertscha | white | | CH
+Durize | red | | CH
+Eyholzer Roter | red | | CH
+Cabernet Noir | red | | CH
+Kövidinka | white | | HU
+Ezerfürtű | white | | HU
+Csókaszőlő | red | | HU
+Szerémi Zöld | white | | HU
+Kunleány | white | | HU
+Rózsakő | white | | HU
+Arany Sárfehér | white | Izsáki Sárfehér | HU
+Pintes | white | | HU
+Bianca | white | | HU
+Kristály | white | | HU
+Pölöskei Muskotály | white | | HU
+Dunaj | red | | SK
+Muškát Moravský | white | Moravian Muscat | CZ
+Aurelius | white | | CZ
+Șarbă | white | Sarba | RO
+Zghihară de Huși | white | Zghihara | RO
+Iordană | white | | RO
+Mustoasă de Măderat | white | | RO
+Coarnă Neagră | red | | RO
+Evmolpia | red | | BG
+Muscat Bleu | red | | CH
+
+# --- More Greek and Caucasian varieties
+Sideritis | pink | | GR
+Fokiano | red | | GR
+Mavro Kalavritino | red | | GR
+Bekari | red | | GR
+Vertzami | red | | GR
+Goustolidi | white | | GR
+Potamisi | white | | GR
+Tetra | red | | GE
+Tsulukidzis Tetra | red | | GE
+Danakharuli | red | | GE
+
+# --- More from the Americas, Africa and Asia
+Ives Noir | red | Bordô@BR, Ives | US
+Quebranta | red | | PE
+Crouchen | white | Cape Riesling@ZA, Clare Riesling@AU, Paarl Riesling | FR
+Aurore | white | | US
+Cayuga White | white | | US
+Chelois | red | | US
+Colobel | red | | FR
+Landot Noir | red | | US
+Melody | white | | US
+Noiret | red | | US
+Corot Noir | red | | US
+Valvin Muscat | white | | US
+Vincent | red | | CA
+Verdelet | white | | US
+Cascade | red | | US
+Rougeon | red | | US
+Petite Amie | white | | US
+L'Acadie Blanc | white | | CA
+Lucie Kuhlmann | red | | FR
+
+# --- Further local varieties
+Coda di Pecora | white | | IT
+Coda di Cavallo | white | | IT
+Moscatello Selvatico | white | | IT
+Prosecco Lungo | white | | IT
+Puverella | white | | IT
+Roscetto | white | | IT
+Trebbiano Giallo | white | | IT
+Trebbiano Modenese | white | | IT
+Lambrusco Viadanese | red | | IT
+Lambrusco Oliva | red | | IT
+Malbo Gentile | red | | IT
+Uva Tosca | red | | IT
+Gamba di Pernice | red | | IT
+Moscato di Terracina | white | | IT
+Glera Lunga | white | | IT
+Cividin | white | | IT
+Pelaverga Piccolo | red | | IT
+Nebbiolo Rosé | red | | IT
+Rossese Bianco | white | | IT
+Caricagiola | red | | IT
+Orange Muscat | white | Moscato Fior d'Arancio@IT, Muscat Fleur d'Oranger | US
+Carrasquín | red | | ES
+Verdejo Negro | red | | ES
+Benedicto | red | | ES
+Jubiläumsrebe | white | | AT
+Blütenmuskateller | white | | AT
+Rubired | red | | US
+Royalty | red | | US
+Salvador | red | | US
+Karmrahyut | red | | AM
+Sukholimansky Bely | white | | UA
+Bastardo Magarachsky | red | | UA
+Rubinovy Magaracha | red | | UA
+Golubok | red | | RU
+Saperavi Severny | red | | RU
+Plechistik | red | | RU
+Dobričić | red | | HR
+Gegić | white | | HR
+Trbljan | white | | HR
+Rumeni Plavec | white | | SI
+Ranfol | white | | SI
+Bagrina | pink | | RS
+Ruen | red | | BG
+Shevka | red | | BG
+Karalahna | red | | TR
+Vasilaki | white | | TR
+Hasandede | white | | TR
+Tinta Lisboa | red | | PT
+Esganinho | white | | PT

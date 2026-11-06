@@ -85,7 +85,8 @@ class LexiconSearch {
   final List<_Option<LexSweetness>> _sweetness;
 
   /// Grapes and their synonyms. Names usual in [countryId] come first, e.g.
-  /// Shiraz before Syrah for Australia.
+  /// Shiraz before Syrah for Australia; otherwise grapes' own names come
+  /// before synonyms.
   List<Suggestion<LexGrape>> grapes(String query, {String? countryId}) =>
       _search(
         query,
@@ -97,7 +98,9 @@ class LexiconSearch {
               : grape.synonyms
                     .firstWhere((s) => s.name == option.text)
                     .preferredIn;
-          return countryId != null && preferredIn.contains(countryId) ? 0 : 1;
+          if (countryId != null && preferredIn.contains(countryId)) return 0;
+          // A grape's own name before another grape's synonym.
+          return option.synonymOf == null ? 1 : 2;
         },
         toSuggestion: (option) => Suggestion(
           option.text,

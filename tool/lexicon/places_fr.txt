@@ -1,0 +1,503 @@
+@FR
+# R region, S part of a region, A appellation, V vineyard (climat, lieu-dit).
+# Appellations that lie directly in a region come before its first S.
+
+R Alsace | Elsass
+A Alsace | Vin d'Alsace
+A Crémant d'Alsace
+A Alsace Grand Cru
+V Altenberg de Bergbieten
+V Altenberg de Bergheim
+V Altenberg de Wolxheim
+V Brand
+V Bruderthal
+V Eichberg
+V Engelberg
+V Florimont
+V Frankstein
+V Froehn
+V Furstentum
+V Geisberg
+V Gloeckelberg
+V Goldert
+V Hatschbourg
+V Hengst
+V Kaefferkopf
+V Kanzlerberg
+V Kastelberg
+V Kessler
+V Kirchberg de Barr
+V Kirchberg de Ribeauvillé
+V Kitterlé
+V Mambourg
+V Mandelberg
+V Marckrain
+V Moenchberg
+V Muenchberg
+V Ollwiller
+V Osterberg
+V Pfersigberg
+V Pfingstberg
+V Praelatenberg
+V Rangen
+V Rosacker
+V Saering
+V Schlossberg
+V Schoenenbourg
+V Sommerberg
+V Sonnenglanz
+V Spiegel
+V Sporen
+V Steinert
+V Steingrubler
+V Steinklotz
+V Vorbourg
+V Wiebelsberg
+V Wineck-Schlossberg
+V Winzenberg
+V Zinnkoepflé
+V Zotzenberg
+
+R Bourgogne | Burgundy, Burgund, Borgogna
+A Bourgogne | Bourgogne Rouge, Bourgogne Blanc, Red Burgundy, White Burgundy
+A Bourgogne Aligoté
+A Bourgogne Passe-Tout-Grains | Passetoutgrain
+A Coteaux Bourguignons | Bourgogne Grand Ordinaire
+A Crémant de Bourgogne
+A Bourgogne Mousseux
+A Bourgogne Côte d'Or
+A Bourgogne Hautes-Côtes de Nuits
+A Bourgogne Hautes-Côtes de Beaune
+A Bourgogne Côte Chalonnaise
+S Chablis et Grand Auxerrois | Yonne, Auxerrois
+A Petit Chablis
+A Chablis
+A Chablis Premier Cru | Chablis 1er Cru, Chablis Premier, Chablis 1er
+V Beauroy
+V Berdiot
+V Chaume de Talvat
+V Côte de Jouan
+V Côte de Léchet
+V Côte de Vaubarousse
+V Fourchaume
+V Les Beauregards
+V Les Fourneaux
+V Mont de Milieu
+V Montée de Tonnerre
+V Montmains
+V Vaillons
+V Vau de Vey
+V Vau Ligneau
+V Vaucoupin
+V Vosgros
+A Chablis Grand Cru
+V Blanchot
+V Bougros
+V Grenouilles
+V Les Clos
+V Preuses
+V Valmur
+V Vaudésir
+A Irancy
+A Saint-Bris
+A Vézelay
+A Bourgogne Tonnerre
+A Bourgogne Chitry
+A Bourgogne Épineuil
+A Bourgogne Coulanges-la-Vineuse
+A Bourgogne Côtes d'Auxerre
+S Côte de Nuits
+A Marsannay
+A Fixin
+A Gevrey-Chambertin
+V Chambertin
+V Chambertin-Clos de Bèze | Clos de Bèze
+V Chapelle-Chambertin
+V Charmes-Chambertin
+V Mazoyères-Chambertin
+V Griotte-Chambertin
+V Latricières-Chambertin
+V Mazis-Chambertin
+V Ruchottes-Chambertin
+V Clos Saint-Jacques
+V Les Cazetiers
+A Morey-Saint-Denis | Morey-St-Denis
+V Clos de la Roche
+V Clos Saint-Denis
+V Clos des Lambrays
+V Clos de Tart
+A Chambolle-Musigny
+V Musigny | Le Musigny
+V Bonnes-Mares
+V Les Amoureuses
+V Les Charmes
+A Vougeot
+V Clos de Vougeot | Clos Vougeot
+A Vosne-Romanée
+V Romanée-Conti
+V La Romanée
+V La Tâche
+V Richebourg
+V Romanée-Saint-Vivant
+V La Grande Rue
+V Échezeaux | Echezeaux
+V Grands-Échezeaux | Grands Echezeaux
+V Les Suchots
+V Les Beaux Monts
+V Cros Parantoux
+V Aux Malconsorts
+V Les Brûlées
+V Clos des Réas
+A Nuits-Saint-Georges | Nuits-St-Georges
+V Les Saint-Georges
+V Les Vaucrains
+V Les Pruliers
+V Clos de la Maréchale
+A Côte de Nuits-Villages
+S Côte de Beaune
+A Ladoix
+A Aloxe-Corton
+V Corton
+V Corton-Charlemagne
+V Charlemagne
+A Pernand-Vergelesses
+A Savigny-lès-Beaune
+A Chorey-lès-Beaune
+A Beaune
+V Clos des Mouches
+V Les Grèves
+A Côte de Beaune
+A Pommard
+V Les Rugiens
+V Les Épenots
+A Volnay
+V Les Caillerets
+V Clos des Chênes
+V Les Santenots
+A Monthélie
+A Auxey-Duresses
+A Saint-Romain
+A Meursault
+V Les Perrières
+V Les Genevrières
+V Les Charmes
+V Les Gouttes d'Or
+A Blagny
+A Puligny-Montrachet
+V Montrachet | Le Montrachet
+V Chevalier-Montrachet
+V Bâtard-Montrachet
+V Bienvenues-Bâtard-Montrachet
+V Les Pucelles
+V Les Folatières
+V Les Combettes
+A Chassagne-Montrachet
+V Criots-Bâtard-Montrachet
+V Morgeot
+V Les Ruchottes
+A Saint-Aubin
+A Santenay
+A Maranges
+A Côte de Beaune-Villages
+S Côte Chalonnaise
+A Bouzeron
+A Rully
+A Mercurey
+A Givry
+A Montagny
+S Mâconnais
+A Mâcon | Macon
+A Mâcon-Villages
+A Viré-Clessé
+A Pouilly-Fuissé
+A Pouilly-Loché
+A Pouilly-Vinzelles
+A Saint-Véran
+
+R Beaujolais
+A Beaujolais
+A Beaujolais-Villages
+A Brouilly
+A Côte de Brouilly
+A Chénas
+A Chiroubles
+A Fleurie
+A Juliénas
+A Morgon
+A Moulin-à-Vent
+A Régnié
+A Saint-Amour
+A Coteaux du Lyonnais
+
+R Champagne
+A Champagne
+A Coteaux Champenois
+A Rosé des Riceys
+S Montagne de Reims
+S Vallée de la Marne
+S Côte des Blancs
+S Côte de Sézanne
+S Côte des Bar | Aube
+
+R Loire | Val de Loire, Loire Valley, Vallée de la Loire
+A Rosé de Loire
+A Crémant de Loire
+A Côtes d'Auvergne
+A Saint-Pourçain
+A Côte Roannaise
+A Côtes du Forez
+A Haut-Poitou
+S Pays Nantais
+A Muscadet
+A Muscadet Sèvre et Maine | Muscadet Sèvre-et-Maine
+A Muscadet Coteaux de la Loire
+A Muscadet Côtes de Grandlieu
+A Gros Plant du Pays Nantais
+A Coteaux d'Ancenis
+A Fiefs Vendéens
+S Anjou-Saumur
+A Anjou
+A Anjou-Villages
+A Anjou-Villages Brissac
+A Rosé d'Anjou
+A Cabernet d'Anjou
+A Savennières
+A Savennières-Roche-aux-Moines
+A Coulée de Serrant
+A Coteaux du Layon
+A Bonnezeaux
+A Quarts de Chaume
+A Coteaux de l'Aubance
+A Saumur
+A Saumur-Champigny
+A Saumur Puy-Notre-Dame
+A Coteaux de Saumur
+A Cabernet de Saumur
+S Touraine
+A Touraine
+A Touraine-Amboise
+A Touraine-Azay-le-Rideau
+A Touraine-Chenonceaux
+A Touraine-Mesland
+A Touraine Noble Joué
+A Touraine-Oisly
+A Vouvray
+A Montlouis-sur-Loire | Montlouis
+A Chinon
+A Bourgueil
+A Saint-Nicolas-de-Bourgueil
+A Cheverny
+A Cour-Cheverny
+A Jasnières
+A Coteaux du Loir
+A Coteaux du Vendômois
+A Valençay
+A Orléans
+S Centre-Loire
+A Sancerre
+A Pouilly-Fumé | Blanc Fumé de Pouilly
+A Pouilly-sur-Loire
+A Menetou-Salon
+A Quincy
+A Reuilly
+A Coteaux du Giennois
+A Châteaumeillant
+
+R Rhône | Vallée du Rhône, Rhone Valley, Côtes du Rhône region
+A Côtes du Rhône
+A Côtes du Rhône-Villages
+S Rhône septentrional | Northern Rhône, Nordrhône
+A Côte-Rôtie
+A Condrieu
+A Château-Grillet
+A Saint-Joseph
+A Crozes-Hermitage
+A Hermitage | Ermitage
+A Cornas
+A Saint-Péray
+S Rhône méridional | Southern Rhône, Sydrhône
+A Châteauneuf-du-Pape
+A Gigondas
+A Vacqueyras
+A Rasteau
+A Cairanne
+A Vinsobres
+A Beaumes-de-Venise
+A Muscat de Beaumes-de-Venise
+A Lirac
+A Tavel
+A Ventoux | Côtes du Ventoux
+A Luberon | Côtes du Luberon
+A Costières de Nîmes
+A Grignan-les-Adhémar
+A Duché d'Uzès
+A Clairette de Bellegarde
+A Côtes du Vivarais
+A Clairette de Die
+A Crémant de Die
+A Châtillon-en-Diois
+A Coteaux de Die
+
+R Bordeaux
+A Bordeaux | Bordeaux Rouge, Bordeaux Blanc, Claret
+A Bordeaux Supérieur
+A Bordeaux Clairet
+A Crémant de Bordeaux
+A Côtes de Bordeaux
+S Médoc | Left Bank
+A Médoc
+A Haut-Médoc
+A Saint-Estèphe
+A Pauillac
+A Saint-Julien
+A Margaux
+A Listrac-Médoc | Listrac
+A Moulis-en-Médoc | Moulis
+S Graves
+A Graves
+A Graves Supérieures
+A Pessac-Léognan
+A Sauternes
+A Barsac
+A Cérons
+S Entre-Deux-Mers
+A Entre-Deux-Mers
+A Entre-Deux-Mers Haut-Benauge
+A Cadillac
+A Cadillac Côtes de Bordeaux | Premières Côtes de Bordeaux
+A Loupiac
+A Sainte-Croix-du-Mont
+A Graves de Vayres
+A Sainte-Foy Côtes de Bordeaux | Sainte-Foy-Bordeaux
+S Libournais | Right Bank, Rive Droite
+A Saint-Émilion | Saint-Emilion, St-Émilion
+A Saint-Émilion Grand Cru
+A Montagne-Saint-Émilion
+A Lussac-Saint-Émilion
+A Puisseguin-Saint-Émilion
+A Saint-Georges-Saint-Émilion
+A Pomerol
+A Lalande-de-Pomerol
+A Fronsac
+A Canon-Fronsac
+A Castillon Côtes de Bordeaux
+A Francs Côtes de Bordeaux
+S Blaye et Bourg
+A Blaye
+A Blaye Côtes de Bordeaux | Premières Côtes de Blaye
+A Côtes de Bourg
+
+R Sud-Ouest | South West France, Southwest France
+A Côtes de Gascogne | IGP Côtes de Gascogne
+A Comté Tolosan
+S Bergerac
+A Bergerac
+A Côtes de Bergerac
+A Monbazillac
+A Pécharmant
+A Montravel
+A Haut-Montravel
+A Côtes de Montravel
+A Saussignac
+A Rosette
+S Garonne et Tarn
+A Cahors
+A Fronton
+A Gaillac
+A Buzet
+A Côtes de Duras
+A Côtes du Marmandais
+A Brulhois
+A Marcillac
+A Entraygues-Le Fel
+A Estaing
+A Côtes de Millau
+A Coteaux du Quercy
+S Pyrénées
+A Madiran
+A Pacherenc du Vic-Bilh
+A Jurançon
+A Béarn
+A Irouléguy
+A Saint-Mont
+A Tursan
+
+R Languedoc | Languedoc-Roussillon
+A Languedoc | Coteaux du Languedoc
+A Pays d'Oc | IGP Pays d'Oc, Vin de Pays d'Oc
+A Corbières
+A Corbières-Boutenac
+A Fitou
+A Minervois
+A Minervois-La Livinière
+A Saint-Chinian
+A Faugères
+A Pic Saint-Loup
+A Terrasses du Larzac
+A La Clape
+A Picpoul de Pinet
+A Pézenas
+A Grès de Montpellier
+A Terrasses de Béziers
+A Limoux
+A Blanquette de Limoux
+A Crémant de Limoux
+A Cabardès
+A Malepère
+A Clairette du Languedoc
+A Muscat de Frontignan | Frontignan
+A Muscat de Lunel
+A Muscat de Mireval
+A Muscat de Saint-Jean-de-Minervois
+
+R Roussillon
+A Côtes du Roussillon
+A Côtes du Roussillon Villages
+A Collioure
+A Banyuls
+A Banyuls Grand Cru
+A Maury
+A Rivesaltes
+A Muscat de Rivesaltes
+A Côtes Catalanes | IGP Côtes Catalanes
+
+R Provence
+A Côtes de Provence
+A Côtes de Provence Sainte-Victoire
+A Côtes de Provence La Londe
+A Côtes de Provence Fréjus
+A Côtes de Provence Pierrefeu
+A Coteaux d'Aix-en-Provence
+A Coteaux Varois en Provence
+A Bandol
+A Cassis
+A Bellet
+A Palette
+A Les Baux-de-Provence
+A Pierrevert
+
+R Corse | Corsica, Korsika
+A Vin de Corse | Corse
+A Patrimonio
+A Ajaccio
+A Muscat du Cap Corse
+
+R Jura
+A Arbois
+A Arbois Pupillin
+A Château-Chalon
+A L'Étoile
+A Côtes du Jura
+A Crémant du Jura
+A Macvin du Jura
+
+R Savoie | Savoy
+A Vin de Savoie | Savoie
+A Roussette de Savoie
+A Seyssel
+A Crémant de Savoie
+
+R Bugey
+A Bugey
+A Roussette du Bugey
+A Bugey Cerdon | Cerdon

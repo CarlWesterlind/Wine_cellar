@@ -1,0 +1,134 @@
+@ES
+# R region (autonomous community), A DO/DOCa/Vino de Pago, V vineyard.
+
+R Galicia
+A Rías Baixas
+A Ribeiro
+A Ribeira Sacra
+A Valdeorras
+A Monterrei
+
+R Castilla y León | Castile and León
+A Ribera del Duero
+A Rueda
+A Toro
+A Bierzo
+A Cigales
+A Arlanza
+A Arribes
+A Tierra de León | León
+A Tierra del Vino de Zamora
+A Valles de Benavente
+A Sierra de Salamanca
+A Cebreros
+A Castilla y León | VT Castilla y León
+
+R La Rioja | Rioja region
+A Rioja | DOCa Rioja, Rioja DOCa
+S Rioja Alta
+S Rioja Alavesa
+S Rioja Oriental | Rioja Baja
+
+R País Vasco | Basque Country, Euskadi
+A Getariako Txakolina | Txakoli de Getaria, Txakolí
+A Bizkaiko Txakolina | Txakoli de Bizkaia
+A Arabako Txakolina | Txakoli de Álava
+
+R Navarra | Navarre
+A Navarra
+A Pago de Arínzano
+A Prado de Irache
+A Pago de Otazu
+
+R Aragón | Aragon
+A Somontano
+A Campo de Borja
+A Calatayud
+A Cariñena
+A Aylés
+
+R Cataluña | Catalonia, Catalunya
+A Cava
+A Corpinnat
+A Penedès
+A Clàssic Penedès
+A Priorat | Priorato, DOQ Priorat
+A Montsant
+A Terra Alta
+A Costers del Segre
+A Conca de Barberà
+A Alella
+A Empordà | Ampurdán
+A Pla de Bages
+A Tarragona
+A Catalunya
+
+R Comunidad Valenciana | Valencia region
+A Valencia
+A Utiel-Requena
+A Alicante
+A Cava de Requena
+A El Terrerazo
+A Los Balagueses
+
+R Murcia | Región de Murcia
+A Jumilla
+A Yecla
+A Bullas
+
+R Castilla-La Mancha | Castile-La Mancha
+A La Mancha
+A Valdepeñas
+A Manchuela
+A Méntrida
+A Mondéjar
+A Almansa
+A Ribera del Júcar
+A Uclés
+A Dominio de Valdepusa
+A Finca Élez
+A Guijoso
+A Dehesa del Carrizal
+A Campo de la Guardia
+A Pago Florentino
+A Casa del Blanco
+A Calzadilla
+A Vino de la Tierra de Castilla | Tierra de Castilla, VT Castilla
+
+R Madrid | Comunidad de Madrid
+A Vinos de Madrid
+
+R Extremadura
+A Ribera del Guadiana
+
+R Andalucía | Andalusia, Andalusien
+A Jerez-Xérès-Sherry | Jerez, Xérès, Sherry
+A Manzanilla-Sanlúcar de Barrameda | Manzanilla
+A Montilla-Moriles
+A Málaga
+A Sierras de Málaga
+A Condado de Huelva
+A Granada
+
+R Islas Baleares | Balearic Islands, Baleares, Mallorca
+A Binissalem
+A Pla i Llevant
+
+R Islas Canarias | Canary Islands, Kanarieöarna, Canarias
+A Lanzarote
+A Tacoronte-Acentejo
+A Valle de la Orotava
+A Ycoden-Daute-Isora
+A Abona
+A Valle de Güímar
+A La Palma
+A El Hierro
+A La Gomera
+A Gran Canaria
+A Islas Canarias
+
+R Asturias
+A Cangas
+
+R Cantabria
+A Costa de Cantabria
