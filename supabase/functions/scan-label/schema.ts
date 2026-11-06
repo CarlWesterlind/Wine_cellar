@@ -30,7 +30,13 @@ export const LabelScanSchema = z.object({
     .describe(`One of: ${WINE_TYPES.join(", ")}`),
   country: z.string().nullable(),
   region: z.string().nullable(),
+  subregion: z.string().nullable(),
+  appellation: z.string().nullable(),
+  vineyard: z.string().nullable(),
   grapes: z.array(z.string()),
+  grapes_blend: z.boolean(),
+  classifications: z.array(z.string()),
+  sweetness: z.string().nullable(),
   drink_from: z.number().int().nullable(),
   drink_until: z.number().int().nullable(),
   sommelier: z
@@ -81,7 +87,8 @@ export interface ScanRequest {
 }
 
 /** Cleans up the model's answer: blank text becomes null, impossible years
- * are dropped, and grapes are trimmed and de-duplicated. */
+ * are dropped, and grapes and classifications are trimmed and
+ * de-duplicated. */
 export function sanitize(scan: RawLabelScan, now: Date): LabelScan {
   const text = (value: string | null) => {
     const trimmed = value?.trim();
@@ -99,8 +106,8 @@ export function sanitize(scan: RawLabelScan, now: Date): LabelScan {
     drinkUntil = null;
   }
 
-  const grapes = [
-    ...new Set(scan.grapes.map((g) => g.trim()).filter((g) => g.length > 0)),
+  const list = (values: string[]) => [
+    ...new Set(values.map((v) => v.trim()).filter((v) => v.length > 0)),
   ];
 
   const sommelier = scan.sommelier && {
@@ -123,7 +130,12 @@ export function sanitize(scan: RawLabelScan, now: Date): LabelScan {
     vintage,
     country: text(scan.country),
     region: text(scan.region),
-    grapes,
+    subregion: text(scan.subregion),
+    appellation: text(scan.appellation),
+    vineyard: text(scan.vineyard),
+    grapes: list(scan.grapes),
+    classifications: list(scan.classifications),
+    sweetness: text(scan.sweetness),
     drink_from: drinkFrom,
     drink_until: drinkUntil,
     sommelier: sommelier && sommelier.tasting_profile ? sommelier : null,

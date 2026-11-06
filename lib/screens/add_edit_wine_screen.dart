@@ -205,9 +205,23 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
     setState(() => _scanning = false);
     if (scan == null) return; // The error has been shown.
 
-    final filled = _applyScan(scan);
+    final filled = _applyScan(_respell(scan));
     unawaited(HapticFeedback.lightImpact());
     showMessage(context, l10n.aiFilledFields(filled));
+  }
+
+  /// [scan] with the names the lexicon knows spelled its way, e.g.
+  /// "burgundy" as Bourgogne, and the country in the app's language.
+  LabelScan _respell(LabelScan scan) {
+    final lexicon = _lexicon;
+    if (lexicon == null) return scan;
+    return scan.respelled(
+      country: (text) => lexicon.countryFor(text)?.nameIn(_language),
+      place: (text, level) => lexicon.placeNamed(text, level: level)?.name,
+      grape: lexicon.grapeSpelling,
+      classification: lexicon.classificationSpelling,
+      sweetnessTerm: (text) => lexicon.sweetnessFor(text)?.term,
+    );
   }
 
   /// Fills in the empty fields from [scan]; what the user already typed
@@ -220,6 +234,10 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
       _WineField.vintage: scan.vintage?.toString(),
       _WineField.country: scan.country,
       _WineField.region: scan.region,
+      _WineField.subregion: scan.subregion,
+      _WineField.appellation: scan.appellation,
+      _WineField.vineyard: scan.vineyard,
+      _WineField.sweetness: scan.sweetness,
       _WineField.drinkFrom: scan.drinkFrom?.toString(),
       _WineField.drinkUntil: scan.drinkUntil?.toString(),
     };
@@ -235,6 +253,14 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
       }
       if (_grapes.isEmpty && !_grapesUnknown && scan.grapes.isNotEmpty) {
         _grapes = [...scan.grapes];
+        filled++;
+      }
+      if (scan.grapesAreBlend && !_grapesAreBlend) {
+        _grapesAreBlend = true;
+        filled++;
+      }
+      if (_classifications.isEmpty && scan.classifications.isNotEmpty) {
+        _classifications = [...scan.classifications];
         filled++;
       }
       if (scan.sommelier != null) {

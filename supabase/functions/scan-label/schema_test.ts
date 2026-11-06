@@ -13,7 +13,13 @@ const base: RawLabelScan = {
   type: "white",
   country: "France",
   region: "Bourgogne",
+  subregion: null,
+  appellation: null,
+  vineyard: null,
   grapes: ["Chardonnay"],
+  grapes_blend: false,
+  classifications: [],
+  sweetness: null,
   drink_from: 2024,
   drink_until: 2030,
   sommelier: null,
@@ -110,4 +116,25 @@ Deno.test("unknown confidence becomes low", () => {
     sanitize({ ...base, confidence: "very" }, NOW).confidence,
     "low",
   );
+});
+
+Deno.test("places, classifications and sweetness are cleaned up too", () => {
+  const scan = sanitize(
+    {
+      ...base,
+      subregion: " ",
+      appellation: " Chablis Premier Cru ",
+      vineyard: "Montée de Tonnerre",
+      classifications: [" Premier Cru", "Premier Cru", ""],
+      sweetness: " ",
+      grapes_blend: true,
+    },
+    NOW,
+  );
+  assertEquals(scan.subregion, null);
+  assertEquals(scan.appellation, "Chablis Premier Cru");
+  assertEquals(scan.vineyard, "Montée de Tonnerre");
+  assertEquals(scan.classifications, ["Premier Cru"]);
+  assertEquals(scan.sweetness, null);
+  assertEquals(scan.grapes_blend, true);
 });

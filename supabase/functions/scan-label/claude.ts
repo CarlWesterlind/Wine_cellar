@@ -29,6 +29,17 @@ from the label. You may also use facts that follow directly from what the \
 label shows, such as the grape required by an appellation (Barolo means \
 Nebbiolo, Piemonte, Italy). If you can't tell, use null or an empty list. \
 Never guess a vintage that isn't on the label.
+- Places, from big to small: region (Bourgogne), subregion (Côte de \
+Nuits), appellation or village (Vosne-Romanée, Chablis Premier Cru, Barolo) \
+and vineyard (Les Suchots, Cannubi). Use null for levels that don't apply \
+or that you can't tell.
+- grapes_blend: true if the wine is a blend of several grapes, even when \
+the label doesn't list them.
+- classifications: terms on the label about quality, ripeness, site or \
+ageing, e.g. Premier Cru, Grand Cru, DOCG, Riserva, Crianza, Gran Reserva, \
+Kabinett, Spätlese, Smaragd, Grosses Gewächs, LBV. Empty if there are none.
+- sweetness: the sweetness word printed on the label (Brut, Extra Dry, \
+trocken, halbtrocken, Secco, Demi-Sec…), or null if there is none.
 - Write names exactly as on the label; don't translate them.
 - drink_from and drink_until: a realistic drinking window in years, based on \
 the wine, producer and vintage. Use null if you can't judge it.

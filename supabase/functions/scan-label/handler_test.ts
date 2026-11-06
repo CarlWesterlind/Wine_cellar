@@ -16,7 +16,13 @@ const barolo: LabelScan = {
   type: "red",
   country: "Italia",
   region: "Piemonte",
+  subregion: null,
+  appellation: null,
+  vineyard: null,
   grapes: ["Nebbiolo"],
+  grapes_blend: false,
+  classifications: [],
+  sweetness: null,
   drink_from: 2027,
   drink_until: 2040,
   sommelier: {

@@ -338,4 +338,25 @@ class Lexicon {
 
   LexSweetness? sweetnessFor(String term) =>
       _sweetnessByTerm[normalizeForSearch(term)];
+
+  /// The lexicon's spelling of the grape name [name], keeping a synonym a
+  /// synonym: "shiraz" gives "Shiraz", not "Syrah".
+  String? grapeSpelling(String name) {
+    final key = normalizeForSearch(name);
+    final grape = _grapesByName[key];
+    if (grape == null) return null;
+    return grape.allNames.firstWhere((n) => normalizeForSearch(n) == key);
+  }
+
+  /// The lexicon's name for the classification called [text] or one of its
+  /// other names: "1er cru" gives "Premier Cru".
+  String? classificationSpelling(String text) {
+    final key = normalizeForSearch(text);
+    for (final c in classifications) {
+      if ([c.name, ...c.aliases].any((n) => normalizeForSearch(n) == key)) {
+        return c.name;
+      }
+    }
+    return null;
+  }
 }

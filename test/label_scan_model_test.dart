@@ -292,4 +292,28 @@ void main() {
       }
     });
   });
+
+  test('reads the place, classification and sweetness fields', () {
+    final scan = LabelScan.fromMap({
+      'subregion': 'Côte de Nuits',
+      'appellation': 'Vosne-Romanée',
+      'vineyard': 'Les Suchots',
+      'grapes_blend': true,
+      'classifications': ['Premier Cru'],
+      'sweetness': 'Brut',
+    });
+    expect(scan.subregion, 'Côte de Nuits');
+    expect(scan.appellation, 'Vosne-Romanée');
+    expect(scan.vineyard, 'Les Suchots');
+    expect(scan.grapesAreBlend, isTrue);
+    expect(scan.classifications, ['Premier Cru']);
+    expect(scan.sweetness, 'Brut');
+  });
+
+  test('answers from the older function still read', () {
+    final scan = LabelScan.fromMap({'name': 'Old'});
+    expect(scan.classifications, isEmpty);
+    expect(scan.grapesAreBlend, isFalse);
+    expect(scan.appellation, isNull);
+  });
 }

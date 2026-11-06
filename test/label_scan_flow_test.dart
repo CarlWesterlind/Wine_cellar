@@ -492,4 +492,38 @@ void main() {
 
     await expectMeetsGuidelines(tester);
   });
+
+  testWidgets('scanned names get the lexicon\'s spelling and new fields', (
+    tester,
+  ) async {
+    final scanner = FakeScanner(
+      result: const LabelScan(
+        name: 'Les Suchots',
+        country: 'france',
+        region: 'burgundy',
+        appellation: 'vosne-romanee',
+        vineyard: 'les suchots',
+        grapes: ['pinot noir', 'shiraz', 'Mystery Grape'],
+        grapesAreBlend: true,
+        classifications: ['1er cru'],
+        sweetness: 'TROCKEN',
+      ),
+    );
+    await openNewWineForm(tester, scanner: scanner, pickedPhotos: [fakeJpeg]);
+    await takePhotoAndSkipBack(tester);
+    await tapSave(tester);
+
+    final wine = (await repository.fetchAll()).firstWhere(
+      (w) => w.name == 'Les Suchots',
+    );
+    expect(wine.country, 'France');
+    expect(wine.region, 'Bourgogne');
+    expect(wine.appellation, 'Vosne-Romanée');
+    expect(wine.vineyard, 'Les Suchots');
+    // A synonym stays a synonym; unknown names stay as read.
+    expect(wine.grapes, ['Pinot Noir', 'Shiraz', 'Mystery Grape']);
+    expect(wine.grapesAreBlend, isTrue);
+    expect(wine.classifications, ['Premier Cru']);
+    expect(wine.sweetness, 'trocken');
+  });
 }

@@ -16,6 +16,12 @@ Available in Swedish, Danish, Norwegian (Bokmål) and English.
 - **Statistics**: Bottles, wines, value and average price; bottles per
   drinking-window status, type, country and grape; and the wines whose last
   year to drink is this year.
+- **Spelling help**: A built-in lexicon suggests grapes (1,000+ with
+  synonyms such as Shiraz/Syrah), countries, regions, villages and
+  vineyards, classifications (Smaragd, Premier Cru, Gran Reserva…) and
+  sweetness words while you type. It forgives typos and missing accents,
+  never changes what you typed, and updates from Supabase without an app
+  release (see `tool/publish_lexicon.md`).
 - **Export**: Share the whole cellar as a CSV file that opens in Excel,
   Numbers or Google Sheets.
 - **Drinking window**: See when each wine is at its best, so nothing gets opened too early or too late.
@@ -90,6 +96,11 @@ the data. Never put the secret (service role) key in the app.
 lib/
   main.dart                       # Starts the app, in Supabase or demo mode
   app.dart                        # MaterialApp, languages, login gate
+  lexicon/
+    lexicon.dart                  # Grapes, places, classifications, sweetness
+    lexicon_search.dart           # Suggestions while typing
+    lexicon_store.dart            # Loads it, fetches updates once a day
+    normalize.dart                # Ignores case/accents, allows typos
   models/
     wine.dart                     # Wine, WineType, DrinkingStatus
     tasting_note.dart             # A dated note with an optional rating
@@ -135,6 +146,7 @@ lib/
     motion.dart                   # Animation timing and easing
   widgets/
     common.dart                   # Banner, messages, confirm dialog, date field
+    suggestion_field.dart         # Text and chip fields with suggestions
     label_photo_section.dart      # Photo and "photograph the label" in form
     display_helpers.dart          # Display names, colors and formatting
     motion_widgets.dart           # Press, fade-in and rolling-number effects
@@ -142,6 +154,11 @@ lib/
     sommelier_card.dart           # The AI sommelier notes
     wine_photo.dart               # Loads and fades in a bottle photo
   l10n/app_*.arb                  # Translations, one file per language
+assets/lexicon/lexicon.json       # Built lexicon (do not edit by hand)
+tool/
+  lexicon/                        # Lexicon sources: grapes.txt, places_xx.txt…
+  build_lexicon.dart              # dart run tool/build_lexicon.dart
+  publish_lexicon.md              # Updating the lexicon in the app stores' apps
 supabase/
   migrations/                     # Database schema, run in order
   functions/scan-label/           # Edge Function: reads labels with Claude

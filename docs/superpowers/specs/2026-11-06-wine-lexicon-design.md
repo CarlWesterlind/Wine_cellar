@@ -44,8 +44,10 @@ publish, and be updatable without a new app release.
    - Or narrow from the top: with France + Bourgogne chosen, the
      appellation field suggests only Bourgogne's appellations.
    - Appellations that are levels of the same place are separate entries:
-     Petit Chablis, Chablis, Chablis Premier Cru, Chablis Grand Cru;
-     Vosne-Romanée, Vosne-Romanée Premier Cru.
+     Petit Chablis, Chablis, Chablis Premier Cru, Chablis Grand Cru. In the
+     Côte d'Or the village is the appellation and "Premier Cru" is picked
+     as a classification (builder's call: avoids doubling every village);
+     Grand Cru sites are vineyards under their village.
    - **Vineyard (climat/lieu-dit/cru)**: a new free-text field. With an
      appellation chosen it suggests that appellation's known vineyards
      (e.g. Chablis Grand Cru → Les Clos, Vaudésir, Valmur, Blanchot,
