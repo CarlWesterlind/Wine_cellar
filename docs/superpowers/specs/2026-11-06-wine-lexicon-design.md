@@ -235,6 +235,18 @@ default false`). CSV export gets the new columns.
 - The wine page shows the new fields only when filled; "Don't know" shows
   as "Grapes: unknown".
 
+## Stages
+
+Built step by step so Carl can use it early (his choice):
+
+1. **Europe**: all features above; data for every wine grape, every
+   country (names only), and places, classifications and sweetness for
+   France, Italy, Spain, Portugal, Germany and Austria. Vineyards for
+   Chablis and the Burgundy Grand Crus.
+2. **Rest of the world**: places and classifications for the remaining
+   countries; more vineyards (Burgundy 1er Cru, Barolo/Barbaresco MGA,
+   German VDP sites, Champagne villages).
+
 ## Left to the builder
 
 - Exact widget for the suggestion list, its animation (use the existing
