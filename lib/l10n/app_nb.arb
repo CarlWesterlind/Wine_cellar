@@ -177,5 +177,20 @@
   "moreOptions": "Flere valg",
   "exportCsv": "Eksporter til regneark",
   "exportFileName": "vinkjelleren",
-  "shelfShort": "Hylle {shelf}"
+  "shelfShort": "Hylle {shelf}",
+  "subregion": "Del av region",
+  "appellation": "Landsby eller appellasjon",
+  "vineyard": "Vinmark",
+  "classification": "Klassifisering",
+  "sweetness": "Sødme",
+  "grapesUnknown": "Vet ikke",
+  "blend": "Blend",
+  "unknownGrapes": "Ukjente",
+  "sweetDry": "Tørr",
+  "sweetOffDry": "Halvtørr",
+  "sweetMediumSweet": "Halvsøt",
+  "sweetSweet": "Søt",
+  "removeItem": "Fjern {item}",
+  "addItemHint": "Skriv og velg fra listen",
+  "origin": "Opprinnelse"
 }

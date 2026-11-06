@@ -177,5 +177,20 @@
   "moreOptions": "Flere valg",
   "exportCsv": "Eksporter til regneark",
   "exportFileName": "vinkaelderen",
-  "shelfShort": "Hylde {shelf}"
+  "shelfShort": "Hylde {shelf}",
+  "subregion": "Del af region",
+  "appellation": "Landsby eller appellation",
+  "vineyard": "Vinmark",
+  "classification": "Klassifikation",
+  "sweetness": "Sødme",
+  "grapesUnknown": "Ved ikke",
+  "blend": "Blend",
+  "unknownGrapes": "Ukendte",
+  "sweetDry": "Tør",
+  "sweetOffDry": "Halvtør",
+  "sweetMediumSweet": "Halvsød",
+  "sweetSweet": "Sød",
+  "removeItem": "Fjern {item}",
+  "addItemHint": "Skriv og vælg på listen",
+  "origin": "Oprindelse"
 }

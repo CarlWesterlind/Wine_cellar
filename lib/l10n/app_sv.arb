@@ -177,5 +177,20 @@
   "moreOptions": "Fler val",
   "exportCsv": "Exportera till kalkylark",
   "exportFileName": "vinkallaren",
-  "shelfShort": "Hylla {shelf}"
+  "shelfShort": "Hylla {shelf}",
+  "subregion": "Del av region",
+  "appellation": "By eller appellation",
+  "vineyard": "Vingårdsläge",
+  "classification": "Klassning",
+  "sweetness": "Sötma",
+  "grapesUnknown": "Vet ej",
+  "blend": "Blend",
+  "unknownGrapes": "Okända",
+  "sweetDry": "Torr",
+  "sweetOffDry": "Halvtorr",
+  "sweetMediumSweet": "Halvsöt",
+  "sweetSweet": "Söt",
+  "removeItem": "Ta bort {item}",
+  "addItemHint": "Skriv och välj i listan",
+  "origin": "Ursprung"
 }

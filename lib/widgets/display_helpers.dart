@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../l10n/app_localizations.dart';
+import '../lexicon/lexicon.dart';
 import '../models/wine.dart';
 import '../theme/app_theme.dart';
 import '../theme/motion.dart';
@@ -44,6 +45,24 @@ extension DrinkingStatusDisplay on DrinkingStatus {
       DrinkingStatus.pastPeak => (c.pastPeak, c.pastPeakContainer),
     };
   }
+}
+
+extension SweetnessScaleDisplay on SweetnessScale {
+  String displayName(AppLocalizations l10n) => switch (this) {
+    SweetnessScale.dry => l10n.sweetDry,
+    SweetnessScale.offDry => l10n.sweetOffDry,
+    SweetnessScale.mediumSweet => l10n.sweetMediumSweet,
+    SweetnessScale.sweet => l10n.sweetSweet,
+  };
+}
+
+/// "Blend: Cabernet Sauvignon, Merlot", "Unknown", or null when nothing is
+/// filled in.
+String? formatGrapes(AppLocalizations l10n, Wine wine) {
+  if (wine.grapesUnknown) return l10n.unknownGrapes;
+  final grapes = wine.grapes.join(', ');
+  if (!wine.grapesAreBlend) return grapes.isEmpty ? null : grapes;
+  return grapes.isEmpty ? l10n.blend : '${l10n.blend}: $grapes';
 }
 
 /// Formats an amount in the app's current language, without currency symbol.

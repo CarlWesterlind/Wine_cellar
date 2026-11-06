@@ -624,4 +624,51 @@ class AppLocalizationsSv extends AppLocalizations {
   String shelfShort(int shelf) {
     return 'Hylla $shelf';
   }
+
+  @override
+  String get subregion => 'Del av region';
+
+  @override
+  String get appellation => 'By eller appellation';
+
+  @override
+  String get vineyard => 'Vingårdsläge';
+
+  @override
+  String get classification => 'Klassning';
+
+  @override
+  String get sweetness => 'Sötma';
+
+  @override
+  String get grapesUnknown => 'Vet ej';
+
+  @override
+  String get blend => 'Blend';
+
+  @override
+  String get unknownGrapes => 'Okända';
+
+  @override
+  String get sweetDry => 'Torr';
+
+  @override
+  String get sweetOffDry => 'Halvtorr';
+
+  @override
+  String get sweetMediumSweet => 'Halvsöt';
+
+  @override
+  String get sweetSweet => 'Söt';
+
+  @override
+  String removeItem(String item) {
+    return 'Ta bort $item';
+  }
+
+  @override
+  String get addItemHint => 'Skriv och välj i listan';
+
+  @override
+  String get origin => 'Ursprung';
 }

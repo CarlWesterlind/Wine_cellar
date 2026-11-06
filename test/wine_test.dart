@@ -41,7 +41,11 @@ void main() {
       type: WineType.rose,
       country: 'Italia',
       region: 'Piemonte',
+      appellation: 'Barolo',
+      vineyard: 'Cannubi',
       grapes: ['Nebbiolo'],
+      classifications: ['DOCG', 'Riserva'],
+      sweetness: 'Secco',
       quantity: 3,
       price: 650.5,
       rack: 'A',
@@ -55,6 +59,60 @@ void main() {
     final copy = Wine.fromMap({...wine.toMap(), 'id': 'abc'});
     expect(copy.toMap(), wine.toMap());
     expect(copy.id, 'abc');
+  });
+
+  test('the new lexicon fields round-trip too', () {
+    final wine = Wine(
+      name: 'Vosne',
+      subregion: 'Côte de Nuits',
+      grapesAreBlend: true,
+    );
+    final copy = Wine.fromMap(wine.toMap());
+    expect(copy.subregion, 'Côte de Nuits');
+    expect(copy.grapesAreBlend, isTrue);
+    expect(copy.grapesUnknown, isFalse);
+
+    final unknown = Wine.fromMap(Wine(name: 'X', grapesUnknown: true).toMap());
+    expect(unknown.grapesUnknown, isTrue);
+  });
+
+  test('rows saved before the lexicon fields existed still load', () {
+    final wine = Wine.fromMap({
+      'id': '1',
+      'name': 'Old',
+      'grapes': ['Merlot'],
+    });
+    expect(wine.classifications, isEmpty);
+    expect(wine.grapesAreBlend, isFalse);
+    expect(wine.grapesUnknown, isFalse);
+    expect(wine.appellation, isNull);
+  });
+
+  test('unknown grapes and a list of grapes contradict each other', () {
+    expect(
+      () => Wine(name: 'X', grapes: ['Syrah'], grapesUnknown: true),
+      throwsArgumentError,
+    );
+    expect(
+      () => Wine.fromMap({
+        'name': 'X',
+        'grapes': ['Syrah'],
+        'grapes_unknown': true,
+      }),
+      throwsFormatException,
+    );
+  });
+
+  test('search also looks at appellation, vineyard and classification', () {
+    final wine = Wine(
+      name: 'Rouge',
+      appellation: 'Vosne-Romanée',
+      vineyard: 'Les Suchots',
+      classifications: ['Premier Cru'],
+    );
+    expect(wine.matchesSearch('vosne'), isTrue);
+    expect(wine.matchesSearch('suchots'), isTrue);
+    expect(wine.matchesSearch('premier'), isTrue);
   });
 
   test('fromMap reads integer prices from the database', () {

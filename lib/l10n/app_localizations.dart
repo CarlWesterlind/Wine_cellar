@@ -1169,6 +1169,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shelf {shelf}'**
   String shelfShort(int shelf);
+
+  /// No description provided for @subregion.
+  ///
+  /// In en, this message translates to:
+  /// **'Part of region'**
+  String get subregion;
+
+  /// No description provided for @appellation.
+  ///
+  /// In en, this message translates to:
+  /// **'Village or appellation'**
+  String get appellation;
+
+  /// No description provided for @vineyard.
+  ///
+  /// In en, this message translates to:
+  /// **'Vineyard'**
+  String get vineyard;
+
+  /// No description provided for @classification.
+  ///
+  /// In en, this message translates to:
+  /// **'Classification'**
+  String get classification;
+
+  /// No description provided for @sweetness.
+  ///
+  /// In en, this message translates to:
+  /// **'Sweetness'**
+  String get sweetness;
+
+  /// No description provided for @grapesUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t know'**
+  String get grapesUnknown;
+
+  /// No description provided for @blend.
+  ///
+  /// In en, this message translates to:
+  /// **'Blend'**
+  String get blend;
+
+  /// No description provided for @unknownGrapes.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknownGrapes;
+
+  /// No description provided for @sweetDry.
+  ///
+  /// In en, this message translates to:
+  /// **'Dry'**
+  String get sweetDry;
+
+  /// No description provided for @sweetOffDry.
+  ///
+  /// In en, this message translates to:
+  /// **'Off-dry'**
+  String get sweetOffDry;
+
+  /// No description provided for @sweetMediumSweet.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium sweet'**
+  String get sweetMediumSweet;
+
+  /// No description provided for @sweetSweet.
+  ///
+  /// In en, this message translates to:
+  /// **'Sweet'**
+  String get sweetSweet;
+
+  /// No description provided for @removeItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {item}'**
+  String removeItem(String item);
+
+  /// No description provided for @addItemHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type and pick from the list'**
+  String get addItemHint;
+
+  /// No description provided for @origin.
+  ///
+  /// In en, this message translates to:
+  /// **'Origin'**
+  String get origin;
 }
 
 class _AppLocalizationsDelegate

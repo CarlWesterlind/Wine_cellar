@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../data/cellar_services.dart';
 import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
+import '../lexicon/lexicon.dart';
 import '../models/consumed_bottle.dart';
 import '../models/tasting_note.dart';
 import '../models/wine.dart';
@@ -223,6 +224,7 @@ class _WineDetailScreenState extends State<WineDetailScreen> {
                 wine: wine,
                 year: _cellar.currentYear,
                 history: _cellar.historyOf(wine.id!),
+                lexicon: widget.services.lexicon.lexicon,
               ),
               const SizedBox(height: 24),
               if (wine.sommelier != null) ...[
@@ -345,6 +347,7 @@ class _DetailsCard extends StatelessWidget {
     required this.wine,
     required this.year,
     required this.history,
+    required this.lexicon,
   });
 
   final Wine wine;
@@ -352,6 +355,9 @@ class _DetailsCard extends StatelessWidget {
 
   /// Bottles of this wine drunk, newest first.
   final List<ConsumedBottle> history;
+
+  /// For the sweetness scale of the label's word; null while loading.
+  final Lexicon? lexicon;
 
   @override
   Widget build(BuildContext context) {
@@ -363,8 +369,23 @@ class _DetailsCard extends StatelessWidget {
       if (wine.vintage != null) LabeledValue(l10n.vintage, '${wine.vintage}'),
       if (wine.country != null) LabeledValue(l10n.country, wine.country!),
       if (wine.region != null) LabeledValue(l10n.region, wine.region!),
-      if (wine.grapes.isNotEmpty)
-        LabeledValue(l10n.grapes, wine.grapes.join(', ')),
+      if (wine.subregion != null) LabeledValue(l10n.subregion, wine.subregion!),
+      if (wine.appellation != null)
+        LabeledValue(l10n.appellation, wine.appellation!),
+      if (wine.vineyard != null) LabeledValue(l10n.vineyard, wine.vineyard!),
+      if (formatGrapes(l10n, wine) case final grapes?)
+        LabeledValue(l10n.grapes, grapes),
+      if (wine.classifications.isNotEmpty)
+        LabeledValue(l10n.classification, wine.classifications.join(', ')),
+      if (wine.sweetness != null)
+        LabeledValue(
+          l10n.sweetness,
+          [
+            wine.sweetness!,
+            if (lexicon?.sweetnessFor(wine.sweetness!) case final term?)
+              term.scale.displayName(l10n),
+          ].join(' · '),
+        ),
       if (wine.price != null)
         LabeledValue(l10n.price, formatMoney(context, wine.price!)),
       if (wine.hasPurchaseInfo)

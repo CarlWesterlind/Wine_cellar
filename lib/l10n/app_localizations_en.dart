@@ -625,4 +625,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String shelfShort(int shelf) {
     return 'Shelf $shelf';
   }
+
+  @override
+  String get subregion => 'Part of region';
+
+  @override
+  String get appellation => 'Village or appellation';
+
+  @override
+  String get vineyard => 'Vineyard';
+
+  @override
+  String get classification => 'Classification';
+
+  @override
+  String get sweetness => 'Sweetness';
+
+  @override
+  String get grapesUnknown => 'Don\'t know';
+
+  @override
+  String get blend => 'Blend';
+
+  @override
+  String get unknownGrapes => 'Unknown';
+
+  @override
+  String get sweetDry => 'Dry';
+
+  @override
+  String get sweetOffDry => 'Off-dry';
+
+  @override
+  String get sweetMediumSweet => 'Medium sweet';
+
+  @override
+  String get sweetSweet => 'Sweet';
+
+  @override
+  String removeItem(String item) {
+    return 'Remove $item';
+  }
+
+  @override
+  String get addItemHint => 'Type and pick from the list';
+
+  @override
+  String get origin => 'Origin';
 }

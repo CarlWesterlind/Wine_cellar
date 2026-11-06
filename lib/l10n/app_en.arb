@@ -311,5 +311,27 @@
         "type": "int"
       }
     }
-  }
+  },
+  "subregion": "Part of region",
+  "appellation": "Village or appellation",
+  "vineyard": "Vineyard",
+  "classification": "Classification",
+  "sweetness": "Sweetness",
+  "grapesUnknown": "Don't know",
+  "blend": "Blend",
+  "unknownGrapes": "Unknown",
+  "sweetDry": "Dry",
+  "sweetOffDry": "Off-dry",
+  "sweetMediumSweet": "Medium sweet",
+  "sweetSweet": "Sweet",
+  "removeItem": "Remove {item}",
+  "@removeItem": {
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "addItemHint": "Type and pick from the list",
+  "origin": "Origin"
 }

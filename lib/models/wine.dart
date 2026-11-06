@@ -24,7 +24,14 @@ class Wine {
     this.type = WineType.red,
     this.country,
     this.region,
+    this.subregion,
+    this.appellation,
+    this.vineyard,
     this.grapes = const [],
+    this.grapesAreBlend = false,
+    this.grapesUnknown = false,
+    this.classifications = const [],
+    this.sweetness,
     this.quantity = 1,
     this.price,
     this.rack,
@@ -39,6 +46,13 @@ class Wine {
   }) : purchaseDate = purchaseDate == null ? null : dateOnly(purchaseDate) {
     if (name.trim().isEmpty) {
       throw ArgumentError.value(name, 'name', 'must not be empty');
+    }
+    if (grapesUnknown && grapes.isNotEmpty) {
+      throw ArgumentError.value(
+        grapes,
+        'grapes',
+        'must be empty when the grapes are unknown',
+      );
     }
     if (quantity < 0) {
       throw ArgumentError.value(quantity, 'quantity', 'must not be negative');
@@ -63,7 +77,31 @@ class Wine {
   final WineType type;
   final String? country;
   final String? region;
+
+  /// A part of the region, e.g. Côte de Nuits in Bourgogne.
+  final String? subregion;
+
+  /// The village or appellation, e.g. Vosne-Romanée.
+  final String? appellation;
+
+  /// The single vineyard (climat, lieu-dit, cru), e.g. Les Suchots.
+  final String? vineyard;
+
+  /// As named on the label: Shiraz stays Shiraz.
   final List<String> grapes;
+
+  /// The wine is a blend; [grapes] may list some or none of them.
+  final bool grapesAreBlend;
+
+  /// The user doesn't know the grapes, which is different from not having
+  /// filled them in. [grapes] is then empty.
+  final bool grapesUnknown;
+
+  /// Label terms such as Smaragd, Premier Cru or Gran Reserva.
+  final List<String> classifications;
+
+  /// The sweetness word on the label, e.g. Brut or halbtrocken.
+  final String? sweetness;
   final int quantity;
 
   /// Price per bottle.
@@ -133,7 +171,14 @@ class Wine {
     type: type,
     country: country,
     region: region,
+    subregion: subregion,
+    appellation: appellation,
+    vineyard: vineyard,
     grapes: grapes,
+    grapesAreBlend: grapesAreBlend,
+    grapesUnknown: grapesUnknown,
+    classifications: classifications,
+    sweetness: sweetness,
     quantity: quantity ?? this.quantity,
     price: price,
     rack: rack ?? this.rack,
@@ -156,7 +201,14 @@ class Wine {
     'type': type.name,
     'country': country,
     'region': region,
+    'subregion': subregion,
+    'appellation': appellation,
+    'vineyard': vineyard,
     'grapes': grapes,
+    'grapes_blend': grapesAreBlend,
+    'grapes_unknown': grapesUnknown,
+    'classifications': classifications,
+    'sweetness': sweetness,
     'quantity': quantity,
     'price': price,
     'rack': rack,
@@ -184,7 +236,15 @@ class Wine {
         type: WineType.values.asNameMap()[map['type']] ?? WineType.red,
         country: map['country'] as String?,
         region: map['region'] as String?,
+        subregion: map['subregion'] as String?,
+        appellation: map['appellation'] as String?,
+        vineyard: map['vineyard'] as String?,
         grapes: (map['grapes'] as List<dynamic>? ?? const []).cast<String>(),
+        grapesAreBlend: map['grapes_blend'] as bool? ?? false,
+        grapesUnknown: map['grapes_unknown'] as bool? ?? false,
+        classifications: (map['classifications'] as List<dynamic>? ?? const [])
+            .cast<String>(),
+        sweetness: map['sweetness'] as String?,
         quantity: map['quantity'] as int? ?? 0,
         price: (map['price'] as num?)?.toDouble(),
         rack: map['rack'] as String?,
@@ -204,8 +264,8 @@ class Wine {
     }
   }
 
-  /// True if [query] appears in the name, producer, region, country, a grape
-  /// or the shop it was bought from.
+  /// True if [query] appears in the name, producer, any place, a grape, a
+  /// classification or the shop it was bought from.
   bool matchesSearch(String query) {
     final q = query.trim().toLowerCase();
     if (q.isEmpty) return true;
@@ -213,9 +273,13 @@ class Wine {
       name,
       producer,
       region,
+      subregion,
+      appellation,
+      vineyard,
       country,
       purchasedFrom,
       ...grapes,
+      ...classifications,
     ].whereType<String>().any((field) => field.toLowerCase().contains(q));
   }
 }

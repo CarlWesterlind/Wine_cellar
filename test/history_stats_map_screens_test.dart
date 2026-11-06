@@ -334,8 +334,8 @@ void main() {
       // A byte order mark first, so Excel reads å, æ and ø.
       expect(shared!.take(3), [0xEF, 0xBB, 0xBF]);
       expect(text, startsWith('Name;Producer;Vintage;Type'));
-      expect(text, contains('\r\nBarolo;;;Red;Italia;;Nebbiolo;3;650;'));
-      expect(text, contains('\r\nChablis;;;White;France;;;1;249.5;'));
+      expect(text, contains('\r\nBarolo;;;Red;Italia;;;;;Nebbiolo;;;3;650;'));
+      expect(text, contains('\r\nChablis;;;White;France;;;;;;;;1;249.5;'));
     });
 
     testWidgets('a failed share shows a message, not a crash', (tester) async {
