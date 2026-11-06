@@ -116,10 +116,10 @@ void main() {
     expect(fieldText(tester, 'Name'), 'Barolo Cannubi');
     expect(fieldText(tester, 'Producer'), 'Paolo Scavino');
     expect(fieldText(tester, 'Vintage'), '2019');
-    expect(fieldText(tester, 'Grapes'), 'Nebbiolo');
+    expect(find.widgetWithText(InputChip, 'Nebbiolo'), findsOneWidget);
     expect(fieldText(tester, 'Drink from (year)'), '2027');
     expect(find.text('Suggested by AI'), findsWidgets);
-    // 8 text fields + type + sommelier.
+    // 7 text fields + grapes + type + sommelier.
     expect(
       find.text('AI filled in 10 fields. Check them before saving.'),
       findsOneWidget,

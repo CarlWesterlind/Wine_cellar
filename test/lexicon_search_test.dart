@@ -306,6 +306,20 @@ void main() {
       expect(testLexicon.grapeFor('Rara Neagra'), isNull);
     });
 
+    test('find a place by name or alias', () {
+      expect(testLexicon.placeNamed('burgundy')?.id, 'fr-bourgogne');
+      expect(
+        testLexicon
+            .placeNamed('Vosne-Romanee', level: PlaceLevel.appellation)
+            ?.id,
+        'fr-vosne-romanee',
+      );
+      expect(
+        testLexicon.placeNamed('Morgon', level: PlaceLevel.region),
+        isNull,
+      );
+    });
+
     test('find a sweetness term', () {
       expect(testLexicon.sweetnessFor('TROCKEN')?.scale, SweetnessScale.dry);
     });

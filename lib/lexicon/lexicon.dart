@@ -152,6 +152,11 @@ class Lexicon {
     }
     for (final place in places) {
       _checkParent(place);
+      for (final name in [place.name, ...place.aliases]) {
+        _placesByName
+            .putIfAbsent(normalizeForSearch(name), () => [])
+            .add(place);
+      }
     }
     for (final country in countries) {
       for (final name in [...country.names.values, ...country.aliases]) {
@@ -267,6 +272,7 @@ class Lexicon {
   final List<LexSweetness> sweetness;
 
   final _places = <String, LexPlace>{};
+  final _placesByName = <String, List<LexPlace>>{};
   final _countriesByName = <String, LexCountry>{};
   final _grapesByName = <String, LexGrape>{};
   final _sweetnessByTerm = <String, LexSweetness>{};
@@ -299,6 +305,22 @@ class Lexicon {
       path.add(current);
     }
     return path;
+  }
+
+  /// The place called [name] (or one of its other names), preferring
+  /// [level] and places inside [withinId] when several share the name.
+  LexPlace? placeNamed(String name, {PlaceLevel? level, String? withinId}) {
+    final matches = _placesByName[normalizeForSearch(name)] ?? const [];
+    final candidates = [
+      for (final p in matches)
+        if (level == null || p.level == level) p,
+    ];
+    if (withinId != null) {
+      for (final p in candidates) {
+        if (pathOf(p).any((a) => a.id == withinId)) return p;
+      }
+    }
+    return candidates.firstOrNull;
   }
 
   /// The country [place] lies in.

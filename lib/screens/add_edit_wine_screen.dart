@@ -7,6 +7,8 @@ import '../data/cellar_services.dart';
 import '../data/photo_picker.dart';
 import '../errors/error_messages.dart';
 import '../l10n/app_localizations.dart';
+import '../lexicon/lexicon.dart';
+import '../lexicon/lexicon_search.dart';
 import '../models/label_scan.dart';
 import '../models/number_input.dart';
 import '../models/sommelier_info.dart';
@@ -16,6 +18,7 @@ import '../widgets/common.dart';
 import '../widgets/display_helpers.dart';
 import '../widgets/label_photo_section.dart';
 import '../widgets/sommelier_card.dart';
+import '../widgets/suggestion_field.dart';
 
 /// The text fields in the form, one per [Wine] property.
 enum _WineField {
@@ -24,7 +27,10 @@ enum _WineField {
   vintage,
   country,
   region,
-  grapes,
+  subregion,
+  appellation,
+  vineyard,
+  sweetness,
   quantity,
   price,
   rack,
@@ -43,7 +49,10 @@ enum _WineField {
       vintage => text(wine?.vintage),
       country => text(wine?.country),
       region => text(wine?.region),
-      grapes => wine?.grapes.join(', ') ?? '',
+      subregion => text(wine?.subregion),
+      appellation => text(wine?.appellation),
+      vineyard => text(wine?.vineyard),
+      sweetness => text(wine?.sweetness),
       quantity => text(wine?.quantity ?? 1),
       price => _priceText(wine?.price),
       rack => text(wine?.rack),
@@ -86,6 +95,10 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
   late WineType _type = widget.wine?.type ?? WineType.red;
   late DateTime? _purchaseDate = widget.wine?.purchaseDate;
   late SommelierInfo? _sommelier = widget.wine?.sommelier;
+  late List<String> _grapes = [...?widget.wine?.grapes];
+  late bool _grapesAreBlend = widget.wine?.grapesAreBlend ?? false;
+  late bool _grapesUnknown = widget.wine?.grapesUnknown ?? false;
+  late List<String> _classifications = [...?widget.wine?.classifications];
   var _saving = false;
   Object? _error;
 
@@ -207,7 +220,6 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
       _WineField.vintage: scan.vintage?.toString(),
       _WineField.country: scan.country,
       _WineField.region: scan.region,
-      _WineField.grapes: scan.grapes.isEmpty ? null : scan.grapes.join(', '),
       _WineField.drinkFrom: scan.drinkFrom?.toString(),
       _WineField.drinkUntil: scan.drinkUntil?.toString(),
     };
@@ -219,6 +231,10 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
       if (scan.type != null && widget.wine == null) {
         _type = scan.type!;
         _aiType = scan.type;
+        filled++;
+      }
+      if (_grapes.isEmpty && !_grapesUnknown && scan.grapes.isNotEmpty) {
+        _grapes = [...scan.grapes];
         filled++;
       }
       if (scan.sommelier != null) {
@@ -245,6 +261,108 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
     _storedPhotoRemoved = true;
   });
 
+  // --- Spelling suggestions from the lexicon ---
+
+  /// Null while the lexicon loads; there are no suggestions until then.
+  LexiconSearch? get _search => _services.lexicon.search;
+  Lexicon? get _lexicon => _services.lexicon.lexicon;
+  String get _language => Localizations.localeOf(context).languageCode;
+
+  /// The country typed so far, if the lexicon knows it.
+  String? get _countryId {
+    final text = _text(_WineField.country);
+    return text == null ? null : _lexicon?.countryFor(text)?.id;
+  }
+
+  /// The lexicon place typed in [field], if any.
+  LexPlace? _placeIn(_WineField field, PlaceLevel level, {String? withinId}) {
+    final text = _text(field);
+    if (text == null) return null;
+    return _lexicon?.placeNamed(text, level: level, withinId: withinId);
+  }
+
+  LexPlace? get _region => _placeIn(_WineField.region, PlaceLevel.region);
+  LexPlace? get _subregion => _placeIn(
+    _WineField.subregion,
+    PlaceLevel.subregion,
+    withinId: _region?.id,
+  );
+  LexPlace? get _appellation => _placeIn(
+    _WineField.appellation,
+    PlaceLevel.appellation,
+    withinId: _subregion?.id ?? _region?.id,
+  );
+
+  /// The smallest place typed so far, for ordering classifications.
+  String? get _placeId => (_appellation ?? _subregion ?? _region)?.id;
+
+  /// Places of [level] for [text]. Inside [withinId] first; if nothing
+  /// there matches, anywhere. With nothing typed, only the places inside
+  /// [withinId] are listed.
+  List<Suggestion<LexPlace>> _suggestPlaces(
+    String text,
+    PlaceLevel level, {
+    String? withinId,
+  }) {
+    final search = _search;
+    if (search == null) return const [];
+    if (text.trim().isEmpty && withinId == null) return const [];
+    List<Suggestion<LexPlace>> find(String? within) => search.places(
+      text,
+      level: level,
+      countryId: _countryId,
+      withinId: within,
+      languageCode: _language,
+    );
+    final inside = find(withinId);
+    return inside.isEmpty && withinId != null && text.trim().isNotEmpty
+        ? find(null)
+        : inside;
+  }
+
+  /// After a place is picked, fills in the empty fields for the places it
+  /// lies in and its country. What the user typed is never replaced.
+  void _fillAround(LexPlace place) {
+    final lexicon = _lexicon;
+    if (lexicon == null) return;
+    setState(() {
+      for (final p in lexicon.pathOf(place).skip(1)) {
+        final field = switch (p.level) {
+          PlaceLevel.region => _WineField.region,
+          PlaceLevel.subregion => _WineField.subregion,
+          PlaceLevel.appellation => _WineField.appellation,
+          PlaceLevel.vineyard => null,
+        };
+        if (field != null && _text(field) == null) {
+          _controllers[field]!.text = p.name;
+        }
+      }
+      final country = lexicon.countryById(lexicon.countryIdOf(place));
+      if (country != null && _text(_WineField.country) == null) {
+        _controllers[_WineField.country]!.text = country.nameIn(_language);
+      }
+    });
+  }
+
+  /// Grapes and named blends for [text]. The wine's country decides which
+  /// name comes first, e.g. Shiraz or Syrah.
+  List<Suggestion<Object>> _suggestGrapes(String text) {
+    final search = _search;
+    if (search == null || text.trim().isEmpty) return const [];
+    return [
+      for (final s in search.grapes(text, countryId: _countryId))
+        Suggestion<Object>(s.text, s.entry, detail: s.detail),
+      for (final s in search.blends(text, _language))
+        Suggestion<Object>(s.text, s.entry),
+    ].take(LexiconSearch.limit).toList();
+  }
+
+  void _setGrapes(List<String> grapes) => setState(() {
+    _grapes = grapes;
+    // Naming a grape answers "don't know".
+    if (grapes.isNotEmpty) _grapesUnknown = false;
+  });
+
   // --- Saving ---
 
   Future<void> _save() async {
@@ -262,10 +380,14 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
         type: _type,
         country: _text(_WineField.country),
         region: _text(_WineField.region),
-        grapes: [
-          for (final grape in (_text(_WineField.grapes) ?? '').split(','))
-            if (grape.trim().isNotEmpty) grape.trim(),
-        ],
+        subregion: _text(_WineField.subregion),
+        appellation: _text(_WineField.appellation),
+        vineyard: _text(_WineField.vineyard),
+        grapes: _grapes,
+        grapesAreBlend: _grapesAreBlend,
+        grapesUnknown: _grapesUnknown,
+        classifications: _classifications,
+        sweetness: _text(_WineField.sweetness),
         quantity: parseWholeNumber(_text(_WineField.quantity)) ?? 0,
         price: parseDecimal(_text(_WineField.price)),
         rack: _text(_WineField.rack),
@@ -295,6 +417,23 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
 
   // --- Building the form ---
 
+  /// Shows "Suggested by AI" while [field] has the value the AI filled in.
+  InputDecoration _decoration(_WineField field, String label, {String? hint}) {
+    final fromAi = _isFromAi(field);
+    return InputDecoration(
+      labelText: label,
+      hintText: hint,
+      helperText: fromAi ? AppLocalizations.of(context).filledByAi : null,
+      suffixIcon: fromAi
+          ? Icon(
+              Icons.auto_awesome,
+              size: 18,
+              color: Theme.of(context).colorScheme.primary,
+            )
+          : null,
+    );
+  }
+
   Widget _textField(
     _WineField field,
     String label, {
@@ -302,24 +441,11 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
     TextInputType? keyboard,
     String? Function(String?)? validator,
   }) {
-    final l10n = AppLocalizations.of(context);
-    final fromAi = _isFromAi(field);
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: TextFormField(
         controller: _controllers[field],
-        decoration: InputDecoration(
-          labelText: label,
-          hintText: hint,
-          helperText: fromAi ? l10n.filledByAi : null,
-          suffixIcon: fromAi
-              ? Icon(
-                  Icons.auto_awesome,
-                  size: 18,
-                  color: Theme.of(context).colorScheme.primary,
-                )
-              : null,
-        ),
+        decoration: _decoration(field, label, hint: hint),
         keyboardType: keyboard,
         validator: validator,
         textCapitalization: keyboard == null
@@ -328,6 +454,24 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
       ),
     );
   }
+
+  /// A text field with lexicon suggestions under it.
+  Widget _suggestionField<T>(
+    _WineField field,
+    String label,
+    List<Suggestion<T>> Function(String text) suggest, {
+    ValueChanged<Suggestion<T>>? onPicked,
+  }) => SuggestionField<T>(
+    controller: _controllers[field]!,
+    label: label,
+    decoration: _decoration(field, label),
+    suggest: suggest,
+    onPicked: (s) {
+      // Rebuild, so fields below suggest within the picked place.
+      setState(() {});
+      onPicked?.call(s);
+    },
+  );
 
   /// Two widgets side by side, sharing the width.
   Widget _pair(Widget left, Widget right) => Row(
@@ -419,9 +563,92 @@ class _AddEditWineScreenState extends State<AddEditWineScreen> {
                   onChanged: (type) => setState(() => _type = type),
                 ),
               ),
-              _textField(_WineField.country, l10n.country),
-              _textField(_WineField.region, l10n.region),
-              _textField(_WineField.grapes, l10n.grapes, hint: l10n.grapesHint),
+              _SectionTitle(l10n.origin),
+              _suggestionField<LexCountry>(
+                _WineField.country,
+                l10n.country,
+                (text) => text.trim().isEmpty
+                    ? const []
+                    : _search?.countries(text, _language) ?? const [],
+              ),
+              _suggestionField<LexPlace>(
+                _WineField.region,
+                l10n.region,
+                (text) => _suggestPlaces(text, PlaceLevel.region),
+                onPicked: (s) => _fillAround(s.entry),
+              ),
+              _suggestionField<LexPlace>(
+                _WineField.subregion,
+                l10n.subregion,
+                (text) => _suggestPlaces(
+                  text,
+                  PlaceLevel.subregion,
+                  withinId: _region?.id,
+                ),
+                onPicked: (s) => _fillAround(s.entry),
+              ),
+              _suggestionField<LexPlace>(
+                _WineField.appellation,
+                l10n.appellation,
+                (text) => _suggestPlaces(
+                  text,
+                  PlaceLevel.appellation,
+                  withinId: _subregion?.id ?? _region?.id,
+                ),
+                onPicked: (s) => _fillAround(s.entry),
+              ),
+              _suggestionField<LexPlace>(
+                _WineField.vineyard,
+                l10n.vineyard,
+                (text) => _suggestPlaces(
+                  text,
+                  PlaceLevel.vineyard,
+                  withinId: _appellation?.id,
+                ),
+                onPicked: (s) => _fillAround(s.entry),
+              ),
+              _SectionTitle(l10n.grapes),
+              ChipSuggestionField<Object>(
+                label: l10n.grapes,
+                values: _grapes,
+                onChanged: _setGrapes,
+                suggest: _suggestGrapes,
+                onPicked: (s) {
+                  if (s.entry is LexBlend) {
+                    setState(() => _grapesAreBlend = true);
+                  }
+                },
+                extra: _GrapeOptions(
+                  blend: _grapesAreBlend,
+                  unknown: _grapesUnknown,
+                  // "Don't know" only while no grape is named.
+                  canBeUnknown: _grapes.isEmpty,
+                  onBlend: (value) => setState(() => _grapesAreBlend = value),
+                  onUnknown: (value) => setState(() => _grapesUnknown = value),
+                ),
+              ),
+              ChipSuggestionField<LexClassification>(
+                label: l10n.classification,
+                values: _classifications,
+                onChanged: (values) =>
+                    setState(() => _classifications = values),
+                suggest: (text) => text.trim().isEmpty
+                    ? const []
+                    : _search?.classifications(
+                            text,
+                            countryId: _countryId,
+                            placeId: _placeId,
+                          ) ??
+                          const [],
+              ),
+              _suggestionField<LexSweetness>(
+                _WineField.sweetness,
+                l10n.sweetness,
+                (text) => text.trim().isEmpty
+                    ? const []
+                    : _search?.sweetness(text, countryId: _countryId) ??
+                          const [],
+              ),
               _pair(
                 _textField(
                   _WineField.quantity,
@@ -562,6 +789,43 @@ class _Spaced extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       Padding(padding: const EdgeInsets.only(top: 8), child: child);
+}
+
+/// The "Blend" and "Don't know" switches under the grapes.
+class _GrapeOptions extends StatelessWidget {
+  const _GrapeOptions({
+    required this.blend,
+    required this.unknown,
+    required this.canBeUnknown,
+    required this.onBlend,
+    required this.onUnknown,
+  });
+
+  final bool blend;
+  final bool unknown;
+  final bool canBeUnknown;
+  final ValueChanged<bool> onBlend;
+  final ValueChanged<bool> onUnknown;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Wrap(
+      spacing: 8,
+      children: [
+        FilterChip(
+          label: Text(l10n.blend),
+          selected: blend,
+          onSelected: onBlend,
+        ),
+        FilterChip(
+          label: Text(l10n.grapesUnknown),
+          selected: unknown,
+          onSelected: canBeUnknown ? onUnknown : null,
+        ),
+      ],
+    );
+  }
 }
 
 class _TypeDropdown extends StatelessWidget {
